@@ -33,19 +33,19 @@ def preprocessing_ubfc_dataset(gen_path: str, nFramesVideo) -> None:
     patternPuls = "*.csv"
 
     # %%  Delete dataset folder (inside of output folder)
-    datasetpath = os.path.join(gen_path + '\\output\\UBFCDataset')
-    gen_path = os.path.join(gen_path + '\\data\\UBFC')
+    datasetpath = os.path.join(gen_path, "output", "UBFCDataset")
+    gen_path = os.path.join(gen_path, "data", "UBFC")
     if os.path.exists(datasetpath) and os.path.isdir(datasetpath):
         shutil.rmtree(datasetpath)
     os.mkdir(datasetpath)
     for path, subdirs, files in os.walk(gen_path):
         for name in files:
-            currentPath = os.path.join(path + '\\' + name)
-            destinationPath = os.path.join(datasetpath + '\\' + name)
+            currentPath = os.path.join(path, name)
+            destinationPath = os.path.join(datasetpath, name)
             # Generate temp path for video processing
             tempPath = currentPath.replace("data", "rPPGCode")
             tempPath = os.path.dirname(os.path.dirname(os.path.dirname(tempPath)))
-            tempPath = os.path.join(tempPath, 'temp\\' + name)
+            tempPath = os.path.join(tempPath, "temp", name)
             tempPathNofile = os.path.dirname(tempPath)
 
             if fnmatch(name, patternVideo):
@@ -73,11 +73,11 @@ def preprocessing_ubfc_dataset(gen_path: str, nFramesVideo) -> None:
     # %% 4: Change sampling rate of pulse data to 30Hz and delet BVP values if no face detected
     for path, subdirs, files in os.walk(gen_path):
         for name in files:
-            currentPath = os.path.join(path + '\\' + name)
+            currentPath = os.path.join(path, name)
             # Generate temp path for saving temp pulse data
             tempPath = currentPath.replace("data", "rPPGCode")
             tempPath = os.path.dirname(os.path.dirname(os.path.dirname(tempPath)))
-            tempPath = os.path.join(tempPath, 'temp\\' + name)
+            tempPath = os.path.join(tempPath, "temp", name)
             if fnmatch(name, patternPuls):
                 nameNoExten = os.path.splitext(name)[0]
                 tempvidFile = nameNoExten.replace("bvp", "vid")
@@ -94,5 +94,5 @@ def preprocessing_ubfc_dataset(gen_path: str, nFramesVideo) -> None:
     # Number of Frames per video -> 128
     tempPath = os.path.dirname(gen_path)
     tempPath = os.path.dirname(tempPath)
-    tempPath = os.path.join(tempPath + '\\rPPGCode\\temp')
+    tempPath = os.path.join(tempPath, "rPPGCode", "temp")
     makeTxt.makeAnnotation(tempPath, datasetpath, nFramesVideo)

@@ -25,14 +25,14 @@ def load_data(outputDataUBFCPath: str, nFramesVideo):
 
 
     # load train data
-    train_Data_path = os.path.join(outputDataUBFCPath + '\\train')
-    train_annotation_file = os.path.join(train_Data_path + '\\train_annotation.txt')
+    train_Data_path = os.path.join(outputDataUBFCPath, "train")
+    train_annotation_file = os.path.join(train_Data_path, "train_annotation.txt")
     train_dataset = VideoFrameDataset(
         root_path=train_Data_path,
         annotationfile_path=train_annotation_file,
         num_segments=1,
         frames_per_segment=nFramesVideo,
-        imagefile_template='img_{:05d}.jpg',
+        imagefile_template="img_{:05d}.jpg",
         transform=trans,
         random_shift=False,
         test_mode=False
@@ -42,14 +42,14 @@ def load_data(outputDataUBFCPath: str, nFramesVideo):
                                                   pin_memory=GPU)
 
     # load validation data
-    val_Data_path = os.path.join(outputDataUBFCPath + '\\validation')
-    val_annotation_file = os.path.join(val_Data_path + '\\val_annotation.txt')
+    val_Data_path = os.path.join(outputDataUBFCPath, "validation")
+    val_annotation_file = os.path.join(val_Data_path, "val_annotation.txt")
     val_dataset = VideoFrameDataset(
         root_path=val_Data_path,
         annotationfile_path=val_annotation_file,
         num_segments=1,
         frames_per_segment=nFramesVideo,
-        imagefile_template='img_{:05d}.jpg',
+        imagefile_template="img_{:05d}.jpg",
         transform=trans,
         random_shift=False,
         test_mode=False
@@ -58,14 +58,14 @@ def load_data(outputDataUBFCPath: str, nFramesVideo):
                                                     pin_memory=GPU)
 
     # load test data
-    test_Data_path = os.path.join(outputDataUBFCPath + '\\test')
-    test_annotation_file = os.path.join(test_Data_path + '\\test_annotation.txt')
+    test_Data_path = os.path.join(outputDataUBFCPath, "test")
+    test_annotation_file = os.path.join(test_Data_path, "test_annotation.txt")
     test_dataset = VideoFrameDataset(
         root_path=test_Data_path,
         annotationfile_path=test_annotation_file,
         num_segments=1,
         frames_per_segment=nFramesVideo,
-        imagefile_template='img_{:05d}.jpg',
+        imagefile_template="img_{:05d}.jpg",
         transform=trans,
         random_shift=False,
         test_mode=True

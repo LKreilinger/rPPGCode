@@ -30,17 +30,17 @@ def preprocessing_wcd_dataset(gen_path: str, nFramesVideo) -> None:
     NEW_SIZE_IMAGE = (128, 128)  # of the face
     noFaceListAllVideos = []
     # %%  Delete dataset folder (inside of output folder)
-    datasetpath = os.path.join(gen_path + '\\output\\WCDDataset')
-    camera_data = os.path.join(gen_path + '\\data\\WCD\\data_Realsense')
+    datasetpath = os.path.join(gen_path, "output", "WCDDataset")
+    camera_data = os.path.join(gen_path, "data", "WCD", "data_Realsense")
     if os.path.exists(datasetpath) and os.path.isdir(datasetpath):
         shutil.rmtree(datasetpath)
     os.mkdir(datasetpath)
     for path, subdirs, files in os.walk(camera_data):
-        if camera_data != path and (os.path.split(os.path.split(path)[0])[1] != 'data_Realsense'):
+        if camera_data != path and (os.path.split(os.path.split(path)[0])[1] != "data_Realsense"):
             Tx = os.path.basename(path)
             Sx = os.path.split(os.path.split(path)[0])[1]
-            name = 'vid_' + Sx + '_' + Tx + '.avi'
-            destinationPath = os.path.join(datasetpath + '\\' + name)
+            name = "vid_" + Sx + "_" + Tx + ".avi"
+            destinationPath = os.path.join(datasetpath, name)
             if not (os.path.exists(destinationPath) and os.path.isdir(destinationPath)):
                 os.mkdir(destinationPath)
             noFaceList = faceDetectionImg.viola_jonas_face_detector_img(path, destinationPath,
@@ -50,13 +50,13 @@ def preprocessing_wcd_dataset(gen_path: str, nFramesVideo) -> None:
             noFaceListAllVideos.append(noFaceList)
 
     #%%save noFaceListAllVideos
-    file_name = r'/code/Preprocessing/WCD/noFaceListAllVideos.pkl'
+    file_name = r"/code/Preprocessing/WCD/noFaceListAllVideos.pkl"
     open_file = open(file_name, "wb")
     pickle.dump(noFaceListAllVideos, open_file)
     open_file.close()
 
     # open noFaceListAllVideos
-    file_name = r'/code/Preprocessing/WCD/noFaceListAllVideos.pkl'
+    file_name = r"/code/Preprocessing/WCD/noFaceListAllVideos.pkl"
     open_file = open(file_name, "rb")
     noFaceListAllVideos = pickle.load(open_file)
     open_file.close()
@@ -67,21 +67,21 @@ def preprocessing_wcd_dataset(gen_path: str, nFramesVideo) -> None:
     #        synchronize BVP data with images
 
     # Generate temp path for saving temp pulse data
-    tempPath = os.path.join(gen_path + '\\rPPGCode\\temp')
+    tempPath = os.path.join(gen_path, "rPPGCode", "temp")
     if os.path.exists(tempPath) and os.path.isdir(tempPath):
         shutil.rmtree(tempPath)
     os.mkdir(tempPath)
-    polar_data = os.path.join(gen_path + '\\data\\WCD\\data_Polar')
-    camera_data = os.path.join(gen_path + '\\data\\WCD\\data_Realsense')
+    polar_data = os.path.join(gen_path, "data", "WCD", "data_Polar")
+    camera_data = os.path.join(gen_path, "data", "WCD", "data_Realsense")
     for path, subdirs, files in os.walk(polar_data):
-        if polar_data != path and (os.path.split(os.path.split(path)[0])[1] != 'data_Polar'):
+        if polar_data != path and (os.path.split(os.path.split(path)[0])[1] != "data_Polar"):
             Tx = os.path.basename(path)
             Sx = os.path.split(os.path.split(path)[0])[1]
-            app_name = ''.join(files)
-            name = 'bvp_' + Sx + '_' + Tx + '.csv'
-            currentPath = os.path.join(path + '\\' + app_name)
-            camera_data_path = os.path.join(camera_data + '\\' + Sx + '\\' + Tx)
-            tempPathName = os.path.join(tempPath + '\\' + name)
+            app_name = "".join(files)
+            name = "bvp_" + Sx + "_" + Tx + ".csv"
+            currentPath = os.path.join(path, app_name)
+            camera_data_path = os.path.join(camera_data, Sx, Tx)
+            tempPathName = os.path.join(tempPath, name)
 
             nameNoExten = os.path.splitext(name)[0]
             tempvidFile = nameNoExten.replace("bvp", "vid")
@@ -99,5 +99,5 @@ def preprocessing_wcd_dataset(gen_path: str, nFramesVideo) -> None:
     #   videoname.png 1 17 0
     #   Name; start Frame; end frame; label (pulsedata)
     # Number of Frames per video -> 128
-    tempPath = os.path.join(gen_path + '\\rPPGCode\\temp')
+    tempPath = os.path.join(gen_path + "rPPGCode", "temp")
     makeTxt.makeAnnotation(tempPath, datasetpath, nFramesVideo)

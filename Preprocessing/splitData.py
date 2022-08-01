@@ -21,9 +21,9 @@ def split_data(outputDataPath, nFramesVideo):
     if os.path.exists(main_path) and os.path.isdir(main_path):
         shutil.rmtree(main_path)
     os.mkdir(main_path)
-    train_path = os.path.join(main_path + '\\train')
-    val_path = os.path.join(main_path + '\\validation')
-    test_path = os.path.join(main_path + '\\test')
+    train_path = os.path.join(main_path, "train")
+    val_path = os.path.join(main_path, "validation")
+    test_path = os.path.join(main_path, "test")
     os.mkdir(train_path)
     os.mkdir(val_path)
     os.mkdir(test_path)
@@ -60,9 +60,9 @@ def split_data(outputDataPath, nFramesVideo):
     val_annotation = [data_into_list[i] for i in ran_val_list]
     test_annotation = [data_into_list[i] for i in ran_test_list]
     # write annotation list in txt
-    train_annotation_path = os.path.join(train_path + "\\train_annotation.txt")
-    val_annotation_path = os.path.join(val_path + "\\val_annotation.txt")
-    test_annotation_path = os.path.join(test_path + "\\test_annotation.txt")
+    train_annotation_path = os.path.join(train_path, "train_annotation.txt")
+    val_annotation_path = os.path.join(val_path, "val_annotation.txt")
+    test_annotation_path = os.path.join(test_path, "test_annotation.txt")
     f_train = open(train_annotation_path,   "w")
     f_train.write('\n'.join(train_annotation))
     f_train.close()
@@ -79,7 +79,7 @@ def split_data(outputDataPath, nFramesVideo):
         single_annotation = train_annotation[element:element + 1]
         string_an = ''.join(single_annotation)
         temp_new_folder = string_an[:string_an.index(" ")]
-        dst_path = os.path.join(train_path + "\\" + temp_new_folder)
+        dst_path = os.path.join(train_path, temp_new_folder)
         if not (os.path.exists(dst_path) and os.path.isdir(dst_path)):
             os.mkdir(dst_path)
         string_an = string_an[string_an.find(' ') + 1:]
@@ -87,11 +87,11 @@ def split_data(outputDataPath, nFramesVideo):
         string_an = string_an[string_an.find(' ') + 1:]
         end_frame = int(string_an[:string_an.index(" ")])
 
-        src_path = os.path.join(outputDataPath + "\\" + temp_new_folder)
+        src_path = os.path.join(outputDataPath, temp_new_folder)
         for frame in range(st_frame, end_frame + 1):
             iteratImagName = f'img_{frame:05}.jpg'
-            src_path_frame = os.path.join(src_path + "\\" + iteratImagName)
-            dst_path_frame = os.path.join(dst_path + "\\" + iteratImagName)
+            src_path_frame = os.path.join(src_path, iteratImagName)
+            dst_path_frame = os.path.join(dst_path, iteratImagName)
             shutil.move(src_path_frame, dst_path_frame)
 
     # generate validation set
@@ -99,7 +99,7 @@ def split_data(outputDataPath, nFramesVideo):
         single_annotation = val_annotation[element:element + 1]
         string_an = ''.join(single_annotation)
         temp_new_folder = string_an[:string_an.index(" ")]
-        dst_path = os.path.join(val_path + "\\" + temp_new_folder)
+        dst_path = os.path.join(val_path, temp_new_folder)
         if not (os.path.exists(dst_path) and os.path.isdir(dst_path)):
             os.mkdir(dst_path)
         string_an = string_an[string_an.find(' ') + 1:]
@@ -107,11 +107,11 @@ def split_data(outputDataPath, nFramesVideo):
         string_an = string_an[string_an.find(' ') + 1:]
         end_frame = int(string_an[:string_an.index(" ")])
 
-        src_path = os.path.join(outputDataPath + "\\" + temp_new_folder)
+        src_path = os.path.join(outputDataPath, temp_new_folder)
         for frame in range(st_frame, end_frame + 1):
             iteratImagName = f'img_{frame:05}.jpg'
-            src_path_frame = os.path.join(src_path + "\\" + iteratImagName)
-            dst_path_frame = os.path.join(dst_path + "\\" + iteratImagName)
+            src_path_frame = os.path.join(src_path, iteratImagName)
+            dst_path_frame = os.path.join(dst_path, iteratImagName)
             shutil.move(src_path_frame, dst_path_frame)
 
     # generate test set
@@ -119,7 +119,7 @@ def split_data(outputDataPath, nFramesVideo):
         single_annotation = test_annotation[element:element + 1]
         string_an = ''.join(single_annotation)
         temp_new_folder = string_an[:string_an.index(" ")]
-        dst_path = os.path.join(test_path + "\\" + temp_new_folder)
+        dst_path = os.path.join(test_path, temp_new_folder)
         if not (os.path.exists(dst_path) and os.path.isdir(dst_path)):
             os.mkdir(dst_path)
         string_an = string_an[string_an.find(' ') + 1:]
@@ -127,9 +127,9 @@ def split_data(outputDataPath, nFramesVideo):
         string_an = string_an[string_an.find(' ') + 1:]
         end_frame = int(string_an[:string_an.index(" ")])
 
-        src_path = os.path.join(outputDataPath + "\\" + temp_new_folder)
+        src_path = os.path.join(outputDataPath, temp_new_folder)
         for frame in range(st_frame, end_frame + 1):
             iteratImagName = f'img_{frame:05}.jpg'
-            src_path_frame = os.path.join(src_path + "\\" + iteratImagName)
-            dst_path_frame = os.path.join(dst_path + "\\" + iteratImagName)
+            src_path_frame = os.path.join(src_path, iteratImagName)
+            dst_path_frame = os.path.join(dst_path, iteratImagName)
             shutil.move(src_path_frame, dst_path_frame)

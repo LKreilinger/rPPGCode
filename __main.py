@@ -4,10 +4,10 @@ Change venv:    Run in Terminal -> .\venv\Scripts\activate
                 Set-ExecutionPolicy Unrestricted -Scope Process
 
 Install required packages
-pip install -r .\PythonPakete.txt
+pip install -r .\requirements.txt
 pip uninstall
 """
-
+import time
 import os
 # internal modules
 from TestModel import Testmain
@@ -20,12 +20,15 @@ if __name__ == '__main__':
     docker = True
     if docker:
         print("Docker is working")
-        workingPath = 'C:\\Users\\Chaputa\\Documents\\Trier\\Master\\Masterarbeit\\rPPGCode'
+        workingPath = '\\Users\\Chaputa\\Documents\\Trier\\Master\\Masterarbeit\\rPPGCode'
+        #while True:
+        #    time.sleep(1)
+        #    print('Still working')
     else:
         workingPath = os.path.abspath(os.getcwd())
     genPath = os.path.dirname(workingPath)
-    outputDataUBFCPath = os.path.join(genPath + '\\output\\UBFCDataset')
-    outputDataWCDPath = os.path.join(genPath + '\\output\\WCDDataset')
+    outputDataUBFCPath = os.path.join(genPath, "output", "UBFCDataset")
+    outputDataWCDPath = os.path.join(genPath, "output", "WCDDataset")
     nFramesVideo = 128  # number of Frames used fpr training Model
     #############################
     #       Preprocessing UBFC Dataset
@@ -40,13 +43,13 @@ if __name__ == '__main__':
     #############################
     #       Split and load data
     # UBFC
-    splitData.split_data(outputDataUBFCPath, nFramesVideo)
-    outputDataUBFCSplitPath = os.path.join(genPath + '\\output\\UBFCDatasetSplit')
+    #splitData.split_data(outputDataUBFCPath, nFramesVideo)
+    outputDataUBFCSplitPath = os.path.join(genPath, "output", "UBFCDatasetSplit")
     training_loader, validation_loader, test_loader = loadData.load_data(outputDataUBFCSplitPath, nFramesVideo)
 
     # WCD
     # splitData.split_data(outputDataWCDPath, nFramesVideo)
-    # outputDataWCDSplitPath = os.path.join(genPath + '\\output\\WCDDatasetSplit')
+    # outputDataWCDSplitPath = os.path.join(genPath, "output", "WCDDatasetSplit")
     # training_loader, validation_loader, test_loader = loadData.load_data(outputDataWCDSplitPath, nFramesVideo)
     #############################
 
@@ -59,6 +62,6 @@ if __name__ == '__main__':
     #############################
     #       Test PhysNet Model
     Plot_results = True
-    model_path = os.path.join(genPath + '\\output\\Model')
+    model_path = os.path.join(genPath, "output", "Model")
     Testmain.test_model(model_path, test_loader, Plot_results)
-    #############################
+    ############################

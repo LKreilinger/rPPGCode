@@ -29,8 +29,7 @@ def viola_jonas_face_detector_img(currentPath: str, destinationPath: str,
     :param newsizeImage:
     """
     # load trained modul for face detection
-    cascPathface = os.path.dirname(
-        cv2.__file__) + "/data/haarcascade_frontalface_alt2.xml"
+    cascPathface = os.path.join(os.path.dirname(cv2.__file__), "data", "haarcascade_frontalface_alt2.xml")
     faceCascade = cv2.CascadeClassifier(cascPathface)
     file_count = 0
     for path in os.listdir(currentPath):
@@ -39,7 +38,7 @@ def viola_jonas_face_detector_img(currentPath: str, destinationPath: str,
             file_count += 1
 
     noFaceList = np.zeros(file_count)  # 0=face detectet; 1=no face detected
-    base_string = '\\img'
+    base_string = "img"
     firstRectagle = 0  # selecting first rectangele size. Use this size for all the other
     iteratImagIndex = 0
     iterating = 0
@@ -47,7 +46,7 @@ def viola_jonas_face_detector_img(currentPath: str, destinationPath: str,
     for filename in directory:
 
         # read image and convert to ndarray (h,w,d) d->rgb
-        file_path = os.path.join(currentPath + '\\' + filename)
+        file_path = os.path.join(currentPath, filename)
         frame = cv2.imread(file_path, cv2.IMREAD_COLOR)
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         # todo What to do if two or more faces are detected
@@ -81,6 +80,8 @@ def viola_jonas_face_detector_img(currentPath: str, destinationPath: str,
                 iteratImagIndex = iteratImagIndex + 1
                 iteratImagName = f'{base_string}_{iteratImagIndex:05}.jpg'
                 cv2.imwrite(destinationPath + iteratImagName, faceROIResized)
+                destinationPathFile = os.path.join(destinationPath, iteratImagName)
+                cv2.imwrite(destinationPathFile, faceROIResized)
             else:
                 warnings.warn('Warning Message: Face detection detected more than one face')
                 noFaceList[iterating] = 1

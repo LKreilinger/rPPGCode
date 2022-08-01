@@ -29,7 +29,7 @@ def train_model(outputDataUBFCPath: str, Plot_results: bool,training_loader, val
     :type Plot_results: bool
     """
     model_root = os.path.dirname(outputDataUBFCPath)
-    model_root = os.path.join(model_root + '\\Model')
+    model_root = os.path.join(model_root, "Model")
     loader_device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     #%% Define parameter for training
     EPOCHS = 5
@@ -112,8 +112,8 @@ def train_model(outputDataUBFCPath: str, Plot_results: bool,training_loader, val
         if avg_vloss < best_vloss:
             best_vloss = avg_vloss
             timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-            model_path = '\\model_{}_{}'.format(timestamp, epoch_number)
-            model_path = os.path.join(model_root + model_path)
+            model_path = "model_{}_{}".format(timestamp, epoch_number)
+            model_path = os.path.join(model_root, model_path)
             torch.save(model.state_dict(), model_path)
 
         epoch_number += 1

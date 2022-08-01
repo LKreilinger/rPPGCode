@@ -11,7 +11,7 @@ from TrainValidate import PhysNet
 def test_model(model_path, test_loader, Plot_results):
     # load best (newest) model
     saved_model = PhysNet.PhysNet_padding_Encoder_Decoder_MAX()
-    model_path = os.path.join(model_path + '\\*')
+    model_path = os.path.join(model_path, "*")
     files = glob.glob(model_path)
     best_model_path = max(files, key=os.path.getctime)
     device = torch.device('cpu')

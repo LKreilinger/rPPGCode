@@ -29,8 +29,7 @@ def viola_jonas_face_detector(currentPath: str, destinationPath: str, tempPath: 
     :param newsizeImage:
     """
     # load trained modul for face detection
-    cascPathface = os.path.dirname(
-        cv2.__file__) + "/data/haarcascade_frontalface_alt2.xml"
+    cascPathface = os.path.join(os.path.dirname(cv2.__file__), "data", "haarcascade_frontalface_alt2.xml")
     faceCascade = cv2.CascadeClassifier(cascPathface)
 
     # Change fps to NewSamplingRate
@@ -54,7 +53,7 @@ def viola_jonas_face_detector(currentPath: str, destinationPath: str, tempPath: 
     fps = int(video_capture.get(cv2.CAP_PROP_FPS))
     length = int(video_capture.get(cv2.CAP_PROP_FRAME_COUNT))
     noFaceList = np.zeros(length)  # 0=face detectet; 1=no face detected
-    base_string = '\\img'
+    base_string = "img"
     # videoLength=2 # new "Face video" length in seconds
     # maxFrames=int(length/128)
     maxFrames = length
@@ -93,7 +92,8 @@ def viola_jonas_face_detector(currentPath: str, destinationPath: str, tempPath: 
                 # save the resulting frame as png
                 iteratImagIndex = iteratImagIndex + 1
                 iteratImagName = f'{base_string}_{iteratImagIndex:05}.jpg'
-                cv2.imwrite(destinationPath + iteratImagName, faceROIResized)
+                destinationPathFile = os.path.join(destinationPath, iteratImagName)
+                cv2.imwrite(destinationPathFile, faceROIResized)
             else:
                 warnings.warn('Warning Message: Face detection detected more than one face')
                 noFaceList[iteratingFrames] = 1

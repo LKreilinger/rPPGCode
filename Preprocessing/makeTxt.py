@@ -14,14 +14,14 @@ import pandas
 # Number of Frames per video -> 128
 
 def makeAnnotation(tempPath, Datasetpath, nFramesVideo):
-    destinationPath=os.path.join(Datasetpath + "\\annotations.txt")
+    destinationPath=os.path.join(Datasetpath, "annotations.txt")
     f = open(destinationPath, "w")   # 'r' for reading and 'w' for writing
     for path, subdirs, files in os.walk(Datasetpath):
         if files != [] and 'annotations.txt' not in files:
             nOfElements = len(files)
             numberVideos=int(nOfElements/nFramesVideo)
             Name=os.path.basename(os.path.normpath(path))
-            tempPathAName=os.path.join(tempPath + "\\" + Name)
+            tempPathAName=os.path.join(tempPath,  Name)
             temPvpFile=tempPathAName.replace("vid", "bvp")
             temPvpFile=temPvpFile.replace("avi", "csv")
             dfLabels = pandas.read_csv(temPvpFile, header=None)
