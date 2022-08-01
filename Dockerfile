@@ -24,7 +24,7 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 # Install dependencies:
 WORKDIR /
-COPY . .
+COPY . ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-CMD ['python3', '__main.py']
+CMD ["python3", "__main.py"]
