@@ -1,0 +1,6 @@
+version: "3.8"
+services:
+    wichtigName:
+        image: masterarbeitkreilinger
+        volumes:
+            - $C:\Users\Chaputa\Documents\Trier\Master\Masterarbeit\output
