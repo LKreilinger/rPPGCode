@@ -16,8 +16,13 @@ from Preprocessing import splitData
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print("Docker is working")
-    workingPath = os.path.abspath(os.getcwd())
+    # for docker change workdir
+    docker = True
+    if docker:
+        print("Docker is working")
+        workingPath = 'C:\\Users\\Chaputa\\Documents\\Trier\\Master\\Masterarbeit\\rPPGCode'
+    else:
+        workingPath = os.path.abspath(os.getcwd())
     genPath = os.path.dirname(workingPath)
     outputDataUBFCPath = os.path.join(genPath + '\\output\\UBFCDataset')
     outputDataWCDPath = os.path.join(genPath + '\\output\\WCDDataset')
