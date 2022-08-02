@@ -1,6 +1,6 @@
 # Zugrundeliegendes Image
 #FROM pytorch/pytorch:1.12.0-cuda11.3-cudnn8-runtime
-FROM python:3.8-slim
+FROM pure/python:3.8-cuda10.1-cudnn7-runtime
 
 # Information
 LABEL version="0.0.1"
