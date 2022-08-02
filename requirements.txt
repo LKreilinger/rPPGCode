@@ -1,5 +1,4 @@
-torch==1.8.1+cu111 -f https://download.pytorch.org/whl/torch_stable.html
-torchvision==0.9.1+cu111 -f https://download.pytorch.org/whl/torch_stable.html
+-i https://download.pytorch.org/whl/cu113
 Pillow==9.0.1
 typing==3.5
 numpy==1.22.3
