@@ -29,8 +29,8 @@ def viola_jonas_face_detector(currentPath: str, destinationPath: str, tempPath: 
     :param newsizeImage:
     """
     # load trained modul for face detection
-    cascPathface = os.path.join(os.path.dirname(cv2.__file__), "data", "haarcascade_frontalface_alt2.xml")
-    faceCascade = cv2.CascadeClassifier(cascPathface)
+    #cascPathface = os.path.join(os.path.dirname(cv2.__file__), "data", "haarcascade_frontalface_alt2.xml")
+    faceCascade = cv2.CascadeClassifier("haarcascade_frontalface_alt2.xml")
 
     # Change fps to NewSamplingRate
     clip = VideoFileClip(currentPath)

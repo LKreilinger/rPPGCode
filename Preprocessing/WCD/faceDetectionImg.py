@@ -29,8 +29,8 @@ def viola_jonas_face_detector_img(currentPath: str, destinationPath: str,
     :param newsizeImage:
     """
     # load trained modul for face detection
-    cascPathface = os.path.join(os.path.dirname(cv2.__file__), "data", "haarcascade_frontalface_alt2.xml")
-    faceCascade = cv2.CascadeClassifier(cascPathface)
+    #cascPathface = os.path.join(os.path.dirname(cv2.__file__), "data", "haarcascade_frontalface_alt2.xml")
+    faceCascade = cv2.CascadeClassifier("haarcascade_frontalface_alt2.xml")
     file_count = 0
     for path in os.listdir(currentPath):
         # check if current path is a file

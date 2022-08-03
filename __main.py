@@ -19,7 +19,7 @@ from Preprocessing.WCD import PreprocessingWCDMain
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     # for docker change workdir
-    docker = False
+    docker = True
     if docker:
         print("Docker is working")
         workingPath = os.path.abspath(os.getcwd())
@@ -41,7 +41,7 @@ if __name__ == '__main__':
     nFramesVideo = 3  # number of Frames used fpr training Model
     #%%
     #       Preprocessing UBFC Dataset
-    #PreprocessingUBFCMain.preprocessing_ubfc_dataset(genPath, nFramesVideo, workingPath)
+    PreprocessingUBFCMain.preprocessing_ubfc_dataset(genPath, nFramesVideo, workingPath)
 
 
     #%%

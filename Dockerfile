@@ -8,6 +8,9 @@ LABEL maintainer="Laurens Kreilinger"
 #LABEL org.opencontainers.image.source = "https://github.com/SauravMaheshkar/gnn-lspe"
 
 
+# Kopieren des aktuellen Verzeichnisses in /laurens
+#ADD /laurens
+
 # Helpers
 # PYTHONUNBUFFERED: python output direkt in logs -> real time
 # DEBIAN_FRONTEND: avoid debconf warnings while building
@@ -19,13 +22,10 @@ ENV VIRTUAL_ENV=/opt/venv
 RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
-# Copy all files except .dockerignore in image
+# Install dependencies:
 WORKDIR /
 COPY . ./
-
-# Install dependencies:
 RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install --no-cache-dir torch==1.9.0+cu111 torchvision==0.10.0+cu111 torchaudio==0.9.0 -f https://download.pytorch.org/whl/torch_stable.html
-
 
 CMD ["python3", "__main.py"]
