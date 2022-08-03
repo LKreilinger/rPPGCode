@@ -36,17 +36,17 @@ def viola_jonas_face_detector(currentPath: str, destinationPath: str, tempPath: 
     clip = VideoFileClip(currentPath)
     fpsOriginal = clip.fps
     # %%
-    clip = clip.subclip(0, 3)  # !!!!! only first 12 seconds!!!!
+    clip = clip.subclip(0, 1)  # !!!!! only first 12 seconds!!!!
     # %%
     if fpsOriginal != NewSamplingRate:
         clip.write_videofile(tempPath, fps=NewSamplingRate, codec="libx264")
     else:
         # !!!!! only first 12 seconds!!!!
         clip = VideoFileClip(currentPath)
-        clip = clip.subclip(0, 3)
+        clip = clip.subclip(0, 1)
         clip.write_videofile(tempPath, fps=NewSamplingRate, codec="libx264")
-        #
-        shutil.copyfile(currentPath, tempPath)
+        # only copy file to tempPath
+        #shutil.copyfile(currentPath, tempPath)
 
     video_capture = cv2.VideoCapture(tempPath)
     # fps frames per second from original video
@@ -83,10 +83,10 @@ def viola_jonas_face_detector(currentPath: str, destinationPath: str, tempPath: 
                 x = int(x)
                 y = int(y)
                 faceROI = frame[y:y + hF, x:x + wF]
-                # only to show single faceROI
-                from matplotlib import pyplot as plt
-                plt.imshow(faceROI, interpolation='nearest')
-                plt.show()
+                # # only to show single faceROI
+                # from matplotlib import pyplot as plt
+                # plt.imshow(faceROI, interpolation='nearest')
+                # plt.show()
 
                 faceROIResized = cv2.resize(faceROI, newsizeImage, interpolation=cv2.INTER_AREA)
                 # save the resulting frame as png

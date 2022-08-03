@@ -13,23 +13,23 @@ import os
 from TestModel import Testmain
 from TrainValidate import loadData, trainMain
 from Preprocessing import splitData
+from Preprocessing.UBFC import PreprocessingUBFCMain
+from Preprocessing.WCD import PreprocessingWCDMain
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     # for docker change workdir
-    docker = True
+    docker = False
     if docker:
         print("Docker is working")
         workingPath = os.path.abspath(os.getcwd())
-        outputData = os.path.join(workingPath, "var",)
+        gen_path = workingPath
+        outputData = os.path.join(workingPath, "output",)
         outputDataUBFCPath = os.path.join(outputData, "UBFCDataset")
         outputDataWCDPath = os.path.join(outputData, "WCDDataset")
         outputDataUBFCSplitPath = os.path.join(outputData, "UBFCDatasetSplit")
         outputDataWCDSplitPath = os.path.join(outputData, "WCDDatasetSplit")
         model_path = os.path.join(outputData, "Model")
-        #while True:
-        #    time.sleep(1)
-        #    print('Still working')
     else:
         workingPath = os.path.abspath(os.getcwd())
         genPath = os.path.dirname(workingPath)
@@ -38,10 +38,10 @@ if __name__ == '__main__':
         outputDataUBFCSplitPath = os.path.join(genPath, "output", "UBFCDatasetSplit")
         outputDataWCDSplitPath = os.path.join(genPath, "output", "WCDDatasetSplit")
         model_path = os.path.join(genPath, "output", "Model")
-    nFramesVideo = 128  # number of Frames used fpr training Model
+    nFramesVideo = 3  # number of Frames used fpr training Model
     #%%
     #       Preprocessing UBFC Dataset
-    #PreprocessingUBFCMain.preprocessing_ubfc_dataset(genPath, nFramesVideo)
+    #PreprocessingUBFCMain.preprocessing_ubfc_dataset(genPath, nFramesVideo, workingPath)
 
 
     #%%
@@ -52,7 +52,7 @@ if __name__ == '__main__':
     #%%
     #       Split and load data
     # UBFC
-    #splitData.split_data(outputDataUBFCPath, nFramesVideo)
+    splitData.split_data(outputDataUBFCPath, nFramesVideo)
     training_loader, validation_loader, test_loader = loadData.load_data(outputDataUBFCSplitPath, nFramesVideo)
     
     # WCD
