@@ -23,7 +23,7 @@ if __name__ == '__main__':
     if docker:
         print("Docker is working")
         workingPath = os.path.abspath(os.getcwd())
-        gen_path = workingPath
+        genPath = workingPath
         outputData = os.path.join(workingPath, "output",)
         outputDataUBFCPath = os.path.join(outputData, "UBFCDataset")
         outputDataWCDPath = os.path.join(outputData, "WCDDataset")

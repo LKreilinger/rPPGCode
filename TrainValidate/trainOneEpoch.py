@@ -1,7 +1,7 @@
 import torch
 
 
-def train_one_epoch(epoch_index, tb_writer, training_loader, optimizer, model, loss_Inst):
+def train_one_epoch(epoch_index, training_loader, optimizer, model, loss_Inst):
     running_loss = 0.
     last_loss = 0.
 
@@ -43,7 +43,7 @@ def train_one_epoch(epoch_index, tb_writer, training_loader, optimizer, model, l
             last_loss = running_loss / 10  # loss per batch
             print('  batch {} loss: {}'.format(i + 1, last_loss))
             tb_x = epoch_index * len(training_loader) + i + 1
-            tb_writer.add_scalar('Loss/train', last_loss, tb_x)
+            #tb_writer.add_scalar('Loss/train', last_loss, tb_x)
             running_loss = 0.
 
     return last_loss

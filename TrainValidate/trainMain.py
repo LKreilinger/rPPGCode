@@ -10,7 +10,7 @@ import os
 from torchvision import transforms
 import torch
 import torch.optim as optim
-from torch.utils.tensorboard import SummaryWriter
+#from torch.utils.tensorboard import SummaryWriter #problem with version torch-1.9.0+cu111
 from datetime import datetime
 import numpy as np
 import matplotlib.pyplot as plt
@@ -43,7 +43,7 @@ def train_model(outputDataUBFCPath: str, Plot_results: bool,training_loader, val
     loss_Inst = lossFunction.Neg_Pearson()
     # Initializing in a separate cell so we can easily add more epochs to the same run
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-    writer = SummaryWriter('runs/fashion_trainer_{}'.format(timestamp))
+    #writer = SummaryWriter('runs/fashion_trainer_{}'.format(timestamp))
     epoch_number = 0
 
     #%% train and validate modell
@@ -53,13 +53,13 @@ def train_model(outputDataUBFCPath: str, Plot_results: bool,training_loader, val
 
         # gradient tracking is on, and do a pass over the data
         model.train(True)
-        avg_loss = trainOneEpoch.train_one_epoch(epoch_number, writer, training_loader, optimizer, model, loss_Inst)
+        avg_loss = trainOneEpoch.train_one_epoch(epoch_number,  training_loader, optimizer, model, loss_Inst)
 
         # gradient tracking of
         model.train(False)
 
         running_vloss = 0.0
-
+        i = 0
         # Check model with validation data
         for i, vdata in enumerate(validation_loader):
             vinputs, BVP_vlabel = vdata
@@ -84,10 +84,10 @@ def train_model(outputDataUBFCPath: str, Plot_results: bool,training_loader, val
 
         # Log the running loss averaged per batch
         # for both training and validation
-        writer.add_scalars('Training vs. Validation Loss',
-                           {'Training': avg_loss, 'Validation': avg_vloss},
-                           epoch_number + 1)
-        writer.flush()
+        # writer.add_scalars('Training vs. Validation Loss',
+        #                    {'Training': avg_loss, 'Validation': avg_vloss},
+        #                    epoch_number + 1)
+        # writer.flush()
         # Plot
         if Plot_results:
             fps = 30

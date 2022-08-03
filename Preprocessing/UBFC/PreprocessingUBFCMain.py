@@ -67,7 +67,7 @@ def preprocessing_ubfc_dataset(gen_path: str, nFramesVideo, workingPath) -> None
     if os.path.exists(list_path) and os.path.isdir(list_path):
         shutil.rmtree(list_path)
     os.mkdir(list_path)
-    file_path_name = datasetpath = os.path.join(list_path, list_name)
+    file_path_name = os.path.join(list_path, list_name)
     open_file = open(file_path_name, "wb")
     pickle.dump(noFaceListAllVideos, open_file)
     open_file.close()
@@ -78,6 +78,8 @@ def preprocessing_ubfc_dataset(gen_path: str, nFramesVideo, workingPath) -> None
     open_file.close()
 
     # %% 4: Change sampling rate of pulse data to 30Hz and delet BVP values if no face detected
+    if os.path.exists(tempPathNofile) and os.path.isdir(tempPathNofile):
+        shutil.rmtree(tempPathNofile)
     os.mkdir(tempPathNofile)
     for path, subdirs, files in os.walk(gen_path_data):
         for name in files:

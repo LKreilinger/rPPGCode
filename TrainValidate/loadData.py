@@ -3,7 +3,7 @@ from kale.prepdata.video_transform import ImglistToTensor
 import os
 from torchvision import transforms
 import torch
-from torch.utils.tensorboard import SummaryWriter
+
 
 
 def load_data(outputDataUBFCPath: str, nFramesVideo):
