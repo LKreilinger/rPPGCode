@@ -18,11 +18,15 @@ ARG UID=1004
 ARG GID=1004
 # default password for user
 ARG PW=29653847
+# Option1: Using unencrypted password/ specifying password
+RUN useradd -m ${USER} --uid=${UID} && echo "${USER}:${PW}" | \
+      chpasswd
 
 # Option2: Using the same encrypted password as host
-COPY /etc/group /etc/group
-COPY /etc/passwd /etc/passwd
-COPY /etc/shadow /etc/shadow
+#COPY /etc/group /etc/group
+#COPY /etc/passwd /etc/passwd
+#COPY /etc/shadow /etc/shadow
+
 USER ${UID}:${GID}
 WORKDIR /home/${USER}
 #RUN mkdir -p /workdir
