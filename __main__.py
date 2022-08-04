@@ -19,7 +19,7 @@ from Preprocessing.WCD import PreprocessingWCDMain
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     # for docker change workdir
-    docker = True
+    docker = False
     if docker:
         print("Docker is working")
         workingPath = os.path.abspath(os.getcwd())
@@ -38,10 +38,10 @@ if __name__ == '__main__':
         outputDataUBFCSplitPath = os.path.join(genPath, "output", "UBFCDatasetSplit")
         outputDataWCDSplitPath = os.path.join(genPath, "output", "WCDDatasetSplit")
         model_path = os.path.join(genPath, "output", "Model")
-    nFramesVideo = 3  # number of Frames used fpr training Model
+    nFramesVideo = 128  # number of Frames used fpr training Model
     #%%
     #       Preprocessing UBFC Dataset
-    PreprocessingUBFCMain.preprocessing_ubfc_dataset(genPath, nFramesVideo, workingPath)
+    #PreprocessingUBFCMain.preprocessing_ubfc_dataset(genPath, nFramesVideo, workingPath)
 
 
     #%%
@@ -52,7 +52,7 @@ if __name__ == '__main__':
     #%%
     #       Split and load data
     # UBFC
-    splitData.split_data(outputDataUBFCPath, nFramesVideo)
+    #splitData.split_data(outputDataUBFCPath, nFramesVideo)
     training_loader, validation_loader, test_loader = loadData.load_data(outputDataUBFCSplitPath, nFramesVideo)
     
     # WCD

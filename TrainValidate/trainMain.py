@@ -67,10 +67,10 @@ def train_model(outputDataUBFCPath: str, Plot_results: bool,training_loader, val
             vinputs = vinputs.permute(0, 2, 1, 3, 4)  # [batch,channel,length,width,height] = x.shape
             # print(inputs.shape)
             BVP_label = torch.stack(BVP_vlabel)
-            if torch.cuda.is_available() == True:
+            if torch.cuda.is_available():
                 vinputs = vinputs.cuda()
             rPPG, x_visual, x_visual3232, x_visual1616 = model(vinputs)
-            if torch.cuda.is_available() == True:
+            if torch.cuda.is_available():
                 rPPG = rPPG.cpu()
             # Calculate the loss
             rPPG = (rPPG - torch.mean(rPPG)) / torch.std(rPPG)  # normalize
