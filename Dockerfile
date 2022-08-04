@@ -24,16 +24,13 @@ ENV PYTHONUNBUFFERED=1
 
 # Permission for creator of the image info. ad to docker run --build-arg USER_ID=$(id -u) \
                                                              #  --build-arg GROUP_ID=$(id -g)
-ARG USER_ID
-ARG GROUP_ID
-RUN addgroup --gid $GROUP_ID user
-RUN adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID user
-USER user
-
+RUN useradd -ms /bin/bash newuser
+USER newuser
+WORKDIR /home/newuser
 # Install dependencies:
-WORKDIR /
+#WORKDIR /
 COPY . ./
-RUN pip install --no-cache-dir -r requirements.txt --user
-RUN pip install --no-cache-dir torch==1.9.0+cu111 torchvision==0.10.0+cu111 -f https://download.pytorch.org/whl/torch_stable.html --user
+RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir torch==1.9.0+cu111 torchvision==0.10.0+cu111 -f https://download.pytorch.org/whl/torch_stable.html
 
 CMD ["python3", "__main__.py"]
