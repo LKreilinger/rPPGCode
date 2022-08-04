@@ -16,7 +16,6 @@ from Preprocessing import splitData
 from Preprocessing.UBFC import PreprocessingUBFCMain
 from Preprocessing.WCD import PreprocessingWCDMain
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     # for docker change workdir
     docker = False
@@ -41,7 +40,7 @@ if __name__ == '__main__':
     nFramesVideo = 128  # number of Frames used fpr training Model
     #%%
     #       Preprocessing UBFC Dataset
-    #PreprocessingUBFCMain.preprocessing_ubfc_dataset(genPath, nFramesVideo, workingPath)
+    PreprocessingUBFCMain.preprocessing_ubfc_dataset(genPath, nFramesVideo, workingPath)
 
 
     #%%
@@ -52,7 +51,7 @@ if __name__ == '__main__':
     #%%
     #       Split and load data
     # UBFC
-    #splitData.split_data(outputDataUBFCPath, nFramesVideo)
+    splitData.split_data(outputDataUBFCPath, nFramesVideo)
     training_loader, validation_loader, test_loader = loadData.load_data(outputDataUBFCSplitPath, nFramesVideo)
     
     # WCD
