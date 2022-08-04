@@ -60,6 +60,10 @@ def viola_jonas_face_detector(currentPath: str, destinationPath: str, tempPath: 
     firstRectagle = 0  # selecting first rectangele size for all, in one video
     iteratImagIndex = 0
 
+    print("tempPath", tempPath)
+    print("currentPath", currentPath)
+    print("destinationPath", destinationPath)
+
     for iteratingFrames in range(maxFrames):
         ret, frame = video_capture.read()
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
