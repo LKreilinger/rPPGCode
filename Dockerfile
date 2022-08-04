@@ -26,7 +26,7 @@ ENV PYTHONUNBUFFERED=1
                                                              #  --build-arg GROUP_ID=$(id -g)
 RUN useradd -ms /bin/bash lkreilinger
 USER lkreilinger
-WORKDIR /home/lkreilinger
+WORKDIR /home/lkreilinger/Masterarbeit
 # Install dependencies:
 #WORKDIR /
 COPY . ./
