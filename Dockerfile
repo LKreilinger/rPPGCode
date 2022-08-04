@@ -26,9 +26,9 @@ ENV PYTHONUNBUFFERED=1
                                                              #  --build-arg GROUP_ID=$(id -g)
 RUN useradd -ms /bin/bash lkreilinger
 USER lkreilinger
-WORKDIR /home/lkreilinger/Masterarbeit
+#WORKDIR /home/lkreilinger/Masterarbeit
 # Install dependencies:
-#WORKDIR /
+WORKDIR /
 COPY . ./
 RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install --no-cache-dir torch==1.9.0+cu111 torchvision==0.10.0+cu111 -f https://download.pytorch.org/whl/torch_stable.html
