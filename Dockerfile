@@ -28,8 +28,8 @@ ENV PYTHONUNBUFFERED=1
 
 
 RUN mkdir -p /workdir
-RUN chown lkreilinger /workdir
-USER lkreilinger
+RUN chown 1004:1004 /workdir
+USER 1004:1004
 WORKDIR /workdir
 #WORKDIR /home/lkreilinger/Masterarbeit
 # Install dependencies:
