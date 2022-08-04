@@ -1,6 +1,13 @@
-version: "3.8"
+# docker-compose.yml
+version: '3'
 services:
-    wichtigName:
-        image: masterarbeitkreilinger
-        volumes:
-            - $C:\Users\Chaputa\Documents\Trier\Master\Masterarbeit\output
+ kreilinger:
+    image: masterarbeitkreilinger:1.0
+    user: $UID:$GID
+    working_dir: $HOME
+    stdin_open: true
+    volumes:
+      - /home/lkreilinger/Masterarbeit/output:/output
+      - /home/lkreilinger/Masterarbeit/data:/data
+    tty: true
+    command: tail -f /dev/null

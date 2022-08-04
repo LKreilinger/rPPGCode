@@ -27,13 +27,13 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 
 
-RUN mkdir -p /workdir
-RUN chown 1004:1004 /workdir
-USER 1004:1004
-WORKDIR /workdir
+#RUN mkdir -p /workdir
+#RUN chown 1004:1004 /workdir
+#USER 1004:1004
+#WORKDIR /workdir
 #WORKDIR /home/lkreilinger/Masterarbeit
 # Install dependencies:
-
+WORKDIR /
 COPY . ./
 RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install --no-cache-dir torch==1.9.0+cu111 torchvision==0.10.0+cu111 -f https://download.pytorch.org/whl/torch_stable.html
