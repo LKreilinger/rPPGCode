@@ -25,8 +25,8 @@ ENV PYTHONUNBUFFERED=1
 # Permission for creator of the image info. ad to docker run --build-arg USER_ID=$(id -u) \
                                                              #  --build-arg GROUP_ID=$(id -g)
 RUN useradd -ms /bin/bash newuser
-USER newuser
-WORKDIR /home/newuser
+USER lkreilinger
+WORKDIR /home/lkreilinger
 # Install dependencies:
 #WORKDIR /
 COPY . ./
