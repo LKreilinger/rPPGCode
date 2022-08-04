@@ -2,18 +2,9 @@
 #FROM pytorch/pytorch:1.12.0-cuda11.3-cudnn8-runtime
 FROM wallies/python-cuda:3.8-cuda11.3-runtime
 
-# Information
-LABEL version="0.0.1"
-LABEL maintainer="Laurens Kreilinger"
-#LABEL org.opencontainers.image.source = "https://github.com/SauravMaheshkar/gnn-lspe"
 
-
-# Kopieren des aktuellen Verzeichnisses in /laurens
-#ADD /laurens
 
 # Helpers
-# PYTHONUNBUFFERED: python output direkt in logs -> real time
-# DEBIAN_FRONTEND: avoid debconf warnings while building
 ARG DEBIAN_FRONTEND=noninteractive
 ENV PYTHONUNBUFFERED=1
 
@@ -22,11 +13,18 @@ ENV VIRTUAL_ENV=/opt/venv
 RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
-# Permission for creator of the image info. ad to docker run --build-arg USER_ID=$(id -u) \
-                                                             #  --build-arg GROUP_ID=$(id -g)
+ARG USER=lkreilinger
+ARG UID=1004
+ARG GID=1004
+# default password for user
+ARG PW=29653847
 
-
-
+# Option2: Using the same encrypted password as host
+COPY /etc/group /etc/group
+COPY /etc/passwd /etc/passwd
+COPY /etc/shadow /etc/shadow
+USER ${UID}:${GID}
+WORKDIR /home/${USER}
 #RUN mkdir -p /workdir
 #RUN chown 1004:1004 /workdir
 #USER 1004:1004
