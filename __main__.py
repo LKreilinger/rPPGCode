@@ -4,7 +4,7 @@ Change venv:    Run in Terminal -> .\venv\Scripts\activate
                 Set-ExecutionPolicy Unrestricted -Scope Process
 
 Install required packages
-pip install -r .\requirements.txt
+pip install -r .\pythonPackages.txt
 pip uninstall
 """
 import time
@@ -40,7 +40,7 @@ if __name__ == '__main__':
     nFramesVideo = 128  # number of Frames used fpr training Model
     #%%
     #       Preprocessing UBFC Dataset
-    PreprocessingUBFCMain.preprocessing_ubfc_dataset(genPath, nFramesVideo, workingPath)
+    PreprocessingUBFCMain.preprocessing_ubfc_dataset(genPath, nFramesVideo, workingPath, docker)
 
 
     #%%
