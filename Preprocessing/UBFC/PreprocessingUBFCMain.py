@@ -41,7 +41,7 @@ def preprocessing_ubfc_dataset(gen_path: str, nFramesVideo, workingPath) -> None
     os.mkdir(datasetpath)
 
     # Generate temp path for video and BCP-data processing
-    tempPathNofile = os.path.join(workingPath, "temp")
+    tempPathNofile = os.path.join(workingPath, "output", "temp")
     if os.path.exists(tempPathNofile) and os.path.isdir(tempPathNofile):
         shutil.rmtree(tempPathNofile)
     os.mkdir(tempPathNofile)
