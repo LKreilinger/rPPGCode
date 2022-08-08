@@ -34,14 +34,15 @@ RUN apt-get update
 RUN apt-get install ffmpeg libsm6 libxext6  -y
 
 USER ${UID}:${GID}
-WORKDIR /home/${USER}/Masterarbeit
+WORKDIR /
+COPY . ./
 #RUN mkdir -p /workdir
 #RUN chown 1004:1004 /workdir
 #USER 1004:1004
 #WORKDIR /workdir
 #WORKDIR /home/lkreilinger/Masterarbeit
 # Install dependencies:
-COPY . ./
+
 RUN pip install --no-cache-dir -r requirements.txt --user
 RUN pip install --no-cache-dir torch==1.9.0+cu111 torchvision==0.10.0+cu111 -f https://download.pytorch.org/whl/torch_stable.html --user
 
