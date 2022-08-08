@@ -5,8 +5,9 @@ import glob
 import os
 
 # local Packages
-from TrainValidate import get_pulse
-from TrainValidate import PhysNet
+from cnn_process.TrainValidate import get_pulse
+from cnn_process.load.load_main import PhysNet
+
 
 def test_model(model_path, test_loader, Plot_results):
     # load best (newest) model

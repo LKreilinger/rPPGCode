@@ -9,27 +9,28 @@ import os
 import random
 import shutil
 
-def split_data(outputDataPath, nFramesVideo):
+def split_data(config):
 
     # Split in %
-    trainSplit = 60
-    validationSplit = 25
-    testSplit = 15
+    trainSplit = config.train_split
+    validationSplit = config.validation_split
+    testSplit = config.test_split
+    path_dataset = config.path_dataset
+    path_dataset_split = config.path_dataset_split
 
     # new folder of dataset with the subfolders train, validate and test
-    main_path = os.path.join(outputDataPath + 'Split')
-    if os.path.exists(main_path) and os.path.isdir(main_path):
-        shutil.rmtree(main_path)
-    os.mkdir(main_path)
-    train_path = os.path.join(main_path, "train")
-    val_path = os.path.join(main_path, "validation")
-    test_path = os.path.join(main_path, "test")
+    if os.path.exists(path_dataset_split) and os.path.isdir(path_dataset_split):
+        shutil.rmtree(path_dataset_split)
+    os.mkdir(path_dataset_split)
+    train_path = os.path.join(path_dataset_split, "train")
+    val_path = os.path.join(path_dataset_split, "validation")
+    test_path = os.path.join(path_dataset_split, "test")
     os.mkdir(train_path)
     os.mkdir(val_path)
     os.mkdir(test_path)
 
     # opening the annotation file
-    annotation_file = os.path.join(outputDataPath, 'annotations.txt')
+    annotation_file = os.path.join(path_dataset, 'annotations.txt')
     full_annotation_file = open(annotation_file, "r")
 
     # reading the file
@@ -87,7 +88,7 @@ def split_data(outputDataPath, nFramesVideo):
         string_an = string_an[string_an.find(' ') + 1:]
         end_frame = int(string_an[:string_an.index(" ")])
 
-        src_path = os.path.join(outputDataPath, temp_new_folder)
+        src_path = os.path.join(path_dataset, temp_new_folder)
         for frame in range(st_frame, end_frame + 1):
             iteratImagName = f'img_{frame:05}.jpg'
             src_path_frame = os.path.join(src_path, iteratImagName)
@@ -107,7 +108,7 @@ def split_data(outputDataPath, nFramesVideo):
         string_an = string_an[string_an.find(' ') + 1:]
         end_frame = int(string_an[:string_an.index(" ")])
 
-        src_path = os.path.join(outputDataPath, temp_new_folder)
+        src_path = os.path.join(path_dataset, temp_new_folder)
         for frame in range(st_frame, end_frame + 1):
             iteratImagName = f'img_{frame:05}.jpg'
             src_path_frame = os.path.join(src_path, iteratImagName)
@@ -127,7 +128,7 @@ def split_data(outputDataPath, nFramesVideo):
         string_an = string_an[string_an.find(' ') + 1:]
         end_frame = int(string_an[:string_an.index(" ")])
 
-        src_path = os.path.join(outputDataPath, temp_new_folder)
+        src_path = os.path.join(path_dataset, temp_new_folder)
         for frame in range(st_frame, end_frame + 1):
             iteratImagName = f'img_{frame:05}.jpg'
             src_path_frame = os.path.join(src_path, iteratImagName)
