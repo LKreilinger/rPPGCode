@@ -27,6 +27,10 @@ RUN useradd -m ${USER} --uid=${UID} && echo "${USER}:${PW}" | \
 #COPY /etc/passwd /etc/passwd
 #COPY /etc/shadow /etc/shadow
 
+# install the cv2 dependencies
+RUN apt-get update
+RUN apt-get install ffmpeg libsm6 libxext6  -y
+
 USER ${UID}:${GID}
 WORKDIR /home/${USER}
 #RUN mkdir -p /workdir
