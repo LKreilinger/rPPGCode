@@ -9,10 +9,10 @@ from cnn_process.TrainValidate import get_pulse
 from cnn_process.load.load_main import PhysNet
 
 
-def test_model(model_path, test_loader, Plot_results):
+def test_model(config, test_loader):
     # load best (newest) model
     saved_model = PhysNet.PhysNet_padding_Encoder_Decoder_MAX()
-    model_path = os.path.join(model_path, "*")
+    model_path = os.path.join(config.path_model, "*")
     files = glob.glob(model_path)
     best_model_path = max(files, key=os.path.getctime)
     device = torch.device('cpu')
@@ -32,7 +32,7 @@ def test_model(model_path, test_loader, Plot_results):
             if torch.cuda.is_available():
                 rPPG = rPPG.cpu()
 
-            if Plot_results:
+            if True:
                 fps = 30
                 rPPGNP = rPPG.detach().numpy()
                 rPPGNP = np.transpose(rPPGNP)

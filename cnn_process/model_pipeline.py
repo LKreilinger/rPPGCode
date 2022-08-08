@@ -3,6 +3,7 @@ import wandb
 from load import load_main
 import splitData
 from TrainValidate import trainMain
+from TestModel import Testmain
 
 def model_pipeline(hyperparameters):
     # tell wandb to get started
@@ -21,6 +22,6 @@ def model_pipeline(hyperparameters):
         trainMain.train_and_validate_model(model, train_loader, validation_loader, loss_Inst, optimizer, config)
 
         # and test its final performance
-        test(model, test_loader)
+        Testmain.test_model(config, test_loader)
 
     return model
