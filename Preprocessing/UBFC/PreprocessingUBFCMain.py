@@ -94,7 +94,7 @@ def preprocessing_ubfc_dataset(gen_path: str, nFramesVideo, workingPath, docker)
         for name in files:
             currentPath = os.path.join(path, name)
             tempPath = os.path.join(tempPathNofile, name)
-            if fnmatch(name, patternPuls):
+            if fnmatch(name, patternPuls) and name[0] == 'b':
                 nameNoExten = os.path.splitext(name)[0]
                 tempvidFile = nameNoExten.replace("bvp", "vid")
                 correspondingVidName = np.array([tempvidFile])
