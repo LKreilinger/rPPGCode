@@ -50,7 +50,23 @@ if __name__ == '__main__':
     # Preprocessing WCD Dataset
     #PreprocessingWCDMain.preprocessing_wcd_dataset(genPath, nFramesVideo)
 
+    #%%
+    # Complete deep neuronal network process including
+    #   - data splitting
+    #   - data loading
+    #   - define training environment
+    #   - define model
+    #   - train and validate model
+    #   - evaluate model
 
+    config = dict(
+        epochs=5,
+        classes=10,
+        kernels=[16, 32],
+        batch_size=128,
+        learning_rate=0.005,
+        dataset="MNIST",
+        architecture="CNN")
     #%%
     #       Split and load data
     # UBFC
