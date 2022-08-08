@@ -41,7 +41,6 @@ WORKDIR /home/${USER}
 #WORKDIR /workdir
 #WORKDIR /home/lkreilinger/Masterarbeit
 # Install dependencies:
-WORKDIR /
 COPY . ./
 RUN pip install --no-cache-dir -r requirements.txt --user
 RUN pip install --no-cache-dir torch==1.9.0+cu111 torchvision==0.10.0+cu111 -f https://download.pytorch.org/whl/torch_stable.html --user

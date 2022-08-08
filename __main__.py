@@ -38,6 +38,9 @@ if __name__ == '__main__':
         outputDataWCDSplitPath = os.path.join(genPath, "output", "WCDDatasetSplit")
         model_path = os.path.join(genPath, "output", "Model")
     nFramesVideo = 128  # number of Frames used fpr training Model
+    print("workingPath", workingPath)
+    print("outputDataUBFCPath", outputDataUBFCPath)
+    print("model_path", model_path)
     #%%
     #       Preprocessing UBFC Dataset
     PreprocessingUBFCMain.preprocessing_ubfc_dataset(genPath, nFramesVideo, workingPath, docker)
