@@ -34,7 +34,7 @@ RUN apt-get update
 RUN apt-get install ffmpeg libsm6 libxext6  -y
 
 USER ${UID}:${GID}
-WORKDIR /home/${USER}
+WORKDIR /home/${USER}/Masterarbeit
 #RUN mkdir -p /workdir
 #RUN chown 1004:1004 /workdir
 #USER 1004:1004
