@@ -28,6 +28,8 @@ RUN useradd -m ${USER} --uid=${UID} && echo "${USER}:${PW}" | \
 #COPY /etc/shadow /etc/shadow
 
 # install the cv2 dependencies
+RUN rm /etc/apt/sources.list.d/cuda.list
+RUN rm /etc/apt/sources.list.d/nvidia-ml.list
 RUN apt-get update
 RUN apt-get install ffmpeg libsm6 libxext6  -y
 
