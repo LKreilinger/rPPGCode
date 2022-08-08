@@ -37,17 +37,18 @@ def viola_jonas_face_detector(currentPath: str, destinationPath: str, tempPath: 
     clip = VideoFileClip(currentPath)
     fpsOriginal = clip.fps
     # %%
-    clip = clip.subclip(0, 5)  # !!!!! only first 12 seconds!!!!
+    #clip = clip.subclip(0, 5)  # !!!!! only first 12 seconds!!!!
     # %%
     if fpsOriginal != NewSamplingRate:
         clip.write_videofile(tempPath, fps=NewSamplingRate, codec="libx264")
     else:
         # !!!!! only first 12 seconds!!!!
-        clip = VideoFileClip(currentPath)
-        clip = clip.subclip(0, 5)
-        clip.write_videofile(tempPath, fps=NewSamplingRate, codec="libx264")
-        # only copy file to tempPath
-        #shutil.copyfile(currentPath, tempPath)
+        #clip = VideoFileClip(currentPath)
+        #clip = clip.subclip(0, 5)
+        #clip.write_videofile(tempPath, fps=NewSamplingRate, codec="libx264")
+
+        # copy file to tempPath
+        shutil.copyfile(currentPath, tempPath)
 
     video_capture = cv2.VideoCapture(tempPath)
     # fps frames per second from original video
