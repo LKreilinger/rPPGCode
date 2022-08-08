@@ -78,8 +78,13 @@ def viola_jonas_face_detector(currentPath: str, destinationPath: str, tempPath: 
         if firstRectagle == 0 and len(faces) != 0:
             firstRectagle = 1
             (xF, yF, wF, hF) = faces.T
-            wF = int(wF)
-            hF = int(hF)
+            if wF.__len__() == 1:
+                wF = int(wF)
+                hF = int(hF)
+            else:
+                warnings.warn('Warning Message: Face detection detected more than one face')
+                noFaceList[iteratingFrames] = 1
+
 
         # write video frame by frame
         if len(faces) != 0:
