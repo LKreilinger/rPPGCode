@@ -49,9 +49,6 @@ def preprocessing_ubfc_dataset(gen_path: str, nFramesVideo, workingPath, docker)
         shutil.rmtree(tempPathNofile)
     os.mkdir(tempPathNofile)
     #%% Face detection and save images in folder of video name
-    print("gen_path_data", gen_path_data)
-    print("datasetpath", datasetpath)
-    print("tempPathNofile", tempPathNofile)
     for path, subdirs, files in os.walk(gen_path_data):
         for name in files:
             currentPath = os.path.join(path, name)
@@ -60,9 +57,6 @@ def preprocessing_ubfc_dataset(gen_path: str, nFramesVideo, workingPath, docker)
             if fnmatch(name, patternVideo):
                 os.mkdir(destinationPath)  # make as many folders as videos excist, Foldername is equal the videoname
                 os.makedirs(tempPathNofile, exist_ok=True)
-                print("currentPath", currentPath)
-                print("destinationPath", destinationPath)
-                print("tempPath", tempPath)
                 noFaceList = FaceDetection.viola_jonas_face_detector(currentPath, destinationPath, tempPath,
                                                                      NEW_SAMPLING_RATE, NEW_SIZE_IMAGE)
                 shutil.rmtree(tempPathNofile)
@@ -73,7 +67,6 @@ def preprocessing_ubfc_dataset(gen_path: str, nFramesVideo, workingPath, docker)
     # save noFaceListAllVideos
     list_name = "noFaceListAllVideos.pkl"
     list_path = os.path.join(gen_path, "output", "noFaceList")
-    print("list_path", list_path)
     if os.path.exists(list_path) and os.path.isdir(list_path):
         shutil.rmtree(list_path)
     os.mkdir(list_path)

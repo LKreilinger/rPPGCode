@@ -37,13 +37,8 @@ RUN wandb login b2b87b7a47a54d74a79cf8ceb131c26efe9418a5
 
 WORKDIR /
 COPY . ./
-#RUN mkdir -p /workdir
-#RUN chown 1004:1004 /workdir
-#USER 1004:1004
-#WORKDIR /workdir
-#WORKDIR /home/lkreilinger/Masterarbeit
-# Install dependencies:
 
+# Install dependencies:
 RUN pip install --no-cache-dir -r requirements.txt --user
 RUN pip install --no-cache-dir torch==1.9.0+cu111 torchvision==0.10.0+cu111 -f https://download.pytorch.org/whl/torch_stable.html --user
 

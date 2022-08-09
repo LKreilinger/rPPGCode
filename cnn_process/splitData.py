@@ -75,16 +75,11 @@ def split_data(config):
 
     # split frames by moving them to new folder
     # generate train set
-    print("numberTrainData", numberTrainData)
     for element in range(numberTrainData):
         single_annotation = train_annotation[element:element + 1]
         string_an = ''.join(single_annotation)
         temp_new_folder = string_an[:string_an.index(" ")]
         dst_path = os.path.join(train_path, temp_new_folder)
-        print("single_annotation", single_annotation)
-        print("string_an", string_an)
-        print("temp_new_folder", temp_new_folder)
-        print("dst_path", dst_path)
         if not (os.path.exists(dst_path) and os.path.isdir(dst_path)):
             os.mkdir(dst_path)
         string_an = string_an[string_an.find(' ') + 1:]
@@ -93,16 +88,10 @@ def split_data(config):
         end_frame = int(string_an[:string_an.index(" ")])
 
         src_path = os.path.join(path_dataset, temp_new_folder)
-        print("st_frame", st_frame)
-        print("end_frame", end_frame)
-        print("src_path", src_path)
         for frame in range(st_frame, end_frame + 1):
             iteratImagName = f'img_{frame:05}.jpg'
             src_path_frame = os.path.join(src_path, iteratImagName)
             dst_path_frame = os.path.join(dst_path, iteratImagName)
-            print("iteratImagName", iteratImagName)
-            print("src_path_frame", src_path_frame)
-            print("dst_path_frame", dst_path_frame)
             shutil.move(src_path_frame, dst_path_frame)
 
     # generate validation set
