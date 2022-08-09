@@ -21,7 +21,7 @@ ARG PW=29653847
 # Option1: Using unencrypted password/ specifying password
 RUN useradd -m ${USER} --uid=${UID} && echo "${USER}:${PW}" | \
       chpasswd
-USER ${UID}:${GID}
+
 # Option2: Using the same encrypted password as host
 #COPY /etc/group /etc/group
 #COPY /etc/passwd /etc/passwd
@@ -34,7 +34,7 @@ RUN apt-get update
 RUN apt-get install ffmpeg libsm6 libxext6  -y
 
 RUN wandb login b2b87b7a47a54d74a79cf8ceb131c26efe9418a5
-
+USER ${UID}:${GID}
 WORKDIR /
 COPY . ./
 
