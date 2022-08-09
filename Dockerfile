@@ -33,7 +33,7 @@ RUN rm /etc/apt/sources.list.d/nvidia-ml.list
 RUN apt-get update
 RUN apt-get install ffmpeg libsm6 libxext6  -y
 
-#RUN wandb login b2b87b7a47a54d74a79cf8ceb131c26efe9418a5
+RUN wandb login b2b87b7a47a54d74a79cf8ceb131c26efe9418a5
 USER ${UID}:${GID}
 WORKDIR /
 COPY . ./
