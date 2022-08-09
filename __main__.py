@@ -71,7 +71,7 @@ if __name__ == '__main__':
         dataset="UBFC",
         architecture="CNN")
 
-    cnn_process_main.cnn_process_main(config_cnn)
+    #cnn_process_main.cnn_process_main(config_cnn)
 
 
     # WCD
