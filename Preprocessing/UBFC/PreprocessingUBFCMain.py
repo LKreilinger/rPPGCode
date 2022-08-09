@@ -73,6 +73,7 @@ def preprocessing_ubfc_dataset(gen_path: str, nFramesVideo, workingPath, docker)
     # save noFaceListAllVideos
     list_name = "noFaceListAllVideos.pkl"
     list_path = os.path.join(gen_path, "output", "noFaceList")
+    print("list_path", list_path)
     if os.path.exists(list_path) and os.path.isdir(list_path):
         shutil.rmtree(list_path)
     os.mkdir(list_path)
