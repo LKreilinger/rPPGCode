@@ -8,4 +8,4 @@ docker build --build-arg USER=$USER \
              -t masterarbeitkreilinger:1.0 \
              .
 
-wandb login b2b87b7a47a54d74a79cf8ceb131c26efe9418a5
+

@@ -32,7 +32,6 @@ if __name__ == '__main__':
     outputDataWCDPath = os.path.join(outputData, "WCDDataset")
     outputDataUBFCSplitPath = os.path.join(outputData, "UBFCDatasetSplit")
     outputDataWCDSplitPath = os.path.join(outputData, "WCDDatasetSplit")
-    model_path = os.path.join(outputData, "Model")
     nFramesVideo = 128  # number of Frames used fpr training Model
     #%%
     #       Preprocessing UBFC Dataset
