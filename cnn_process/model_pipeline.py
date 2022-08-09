@@ -1,7 +1,7 @@
 import wandb
 # internal modules
 from cnn_process.load import load_main
-import cnn_process.splitData
+from cnn_process import splitData
 from cnn_process.TrainValidate import trainMain
 from cnn_process.TestModel import Testmain
 
@@ -12,7 +12,7 @@ def model_pipeline(hyperparameters):
         config = wandb.config
 
         # split data
-        #splitData.split_data(config)
+        splitData.split_data(config)
 
         # make the model, data, and optimization problem
         model, train_loader, validation_loader, test_loader, loss_Inst, optimizer = load_main.load_main(config)

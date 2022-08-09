@@ -22,23 +22,17 @@ if __name__ == '__main__':
         print("Docker is working")
         workingPath = os.path.abspath(os.getcwd())
         genPath = workingPath
-        outputData = os.path.join(workingPath, "output",)
-        outputDataUBFCPath = os.path.join(outputData, "UBFCDataset")
-        path_model = os.path.join(outputData, "Model")
-        outputDataWCDPath = os.path.join(outputData, "WCDDataset")
-        outputDataUBFCSplitPath = os.path.join(outputData, "UBFCDatasetSplit")
-        outputDataWCDSplitPath = os.path.join(outputData, "WCDDatasetSplit")
-        model_path = os.path.join(outputData, "Model")
     else:
         workingPath = os.path.abspath(os.getcwd())
         genPath = os.path.dirname(workingPath)
-        outputDataUBFCPath = os.path.join(genPath, "output", "UBFCDataset")
-        path_model = os.path.join(genPath, "output", "Model")
-        outputDataWCDPath = os.path.join(genPath, "output", "WCDDataset")
-        outputDataUBFCSplitPath = os.path.join(genPath, "output", "UBFCDatasetSplit")
-        outputDataWCDSplitPath = os.path.join(genPath, "output", "WCDDatasetSplit")
-        model_path = os.path.join(genPath, "output", "Model")
 
+    outputData = os.path.join(genPath, "output", )
+    outputDataUBFCPath = os.path.join(outputData, "UBFCDataset")
+    path_model = os.path.join(outputData, "Model")
+    outputDataWCDPath = os.path.join(outputData, "WCDDataset")
+    outputDataUBFCSplitPath = os.path.join(outputData, "UBFCDatasetSplit")
+    outputDataWCDSplitPath = os.path.join(outputData, "WCDDatasetSplit")
+    model_path = os.path.join(outputData, "Model")
     nFramesVideo = 128  # number of Frames used fpr training Model
     #%%
     #       Preprocessing UBFC Dataset

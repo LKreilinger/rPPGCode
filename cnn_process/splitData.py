@@ -52,7 +52,6 @@ def split_data(config):
         numberTrainData = numberTrainData + 1
 
     # get for every split an extra annotation file
-    random.seed(9001)
     ran_list = random.sample(range(numberEntries), numberEntries)
     ran_train_list = ran_list[:numberTrainData]
     ran_val_list = ran_list[numberTrainData: (numberTrainData + numberValidationData)]
