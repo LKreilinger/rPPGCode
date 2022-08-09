@@ -17,7 +17,7 @@ from cnn_process import cnn_process_main, splitData
 
 if __name__ == '__main__':
     # for docker change workdir
-    docker = True
+    docker = False
     if docker:
         print("Docker is working")
         workingPath = os.path.abspath(os.getcwd())
@@ -39,7 +39,7 @@ if __name__ == '__main__':
     config_preprocessing = dict(
         path_dataset=outputDataUBFCPath,
         nFramesVideo=nFramesVideo)
-    PreprocessingUBFCMain.preprocessing_ubfc_dataset(genPath, nFramesVideo, workingPath, docker)
+    #PreprocessingUBFCMain.preprocessing_ubfc_dataset(genPath, nFramesVideo, workingPath, docker)
 
 
     #%%
