@@ -17,7 +17,7 @@ from cnn_process import cnn_process_main, splitData
 
 if __name__ == '__main__':
     # for docker change workdir
-    docker = False
+    docker = True
     if docker:
         print("Docker is working")
         workingPath = os.path.abspath(os.getcwd())
