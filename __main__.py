@@ -39,7 +39,7 @@ if __name__ == '__main__':
     config_preprocessing = dict(
         path_dataset=outputDataUBFCPath,
         nFramesVideo=nFramesVideo)
-    #PreprocessingUBFCMain.preprocessing_ubfc_dataset(genPath, nFramesVideo, workingPath, docker)
+    PreprocessingUBFCMain.preprocessing_ubfc_dataset(genPath, nFramesVideo, workingPath, docker)
 
 
     #%%
