@@ -1,13 +1,12 @@
 
 import torch
 # internal modules
-import PhysNet
-import load_data
-import lossFunction
+from cnn_process.load import PhysNet
+from cnn_process.load import load_data
+from cnn_process.load import lossFunction
 
 def load_main(config):
     # Load the data
-    config.pa
     train_loader, validation_loader, test_loader = load_data.load_data(config)
 
     # Load the model

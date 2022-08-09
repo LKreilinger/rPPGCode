@@ -17,7 +17,7 @@ from cnn_process import cnn_process_main, splitData
 
 if __name__ == '__main__':
     # for docker change workdir
-    docker = True
+    docker = False
     if docker:
         print("Docker is working")
         workingPath = os.path.abspath(os.getcwd())
@@ -44,16 +44,8 @@ if __name__ == '__main__':
     #       Preprocessing UBFC Dataset
     config_preprocessing = dict(
         path_dataset=outputDataUBFCPath,
-        train_split=60,
-        validation_split=15,
-        test_split=25,
-        nFramesVideo=nFramesVideo,
-        epochs=5,
-        batch_size=32,
-        learning_rate=0.001,
-        dataset="UBFC",
-        architecture="CNN")
-    PreprocessingUBFCMain.preprocessing_ubfc_dataset(genPath, nFramesVideo, workingPath, docker)
+        nFramesVideo=nFramesVideo)
+    #PreprocessingUBFCMain.preprocessing_ubfc_dataset(genPath, nFramesVideo, workingPath, docker)
 
 
     #%%
@@ -88,26 +80,7 @@ if __name__ == '__main__':
 
     cnn_process_main.cnn_process_main(config_cnn)
 
-    #%%
-    #       Split and load data
-    # UBFC
-    splitData.split_data(outputDataUBFCPath, nFramesVideo)
-    training_loader, validation_loader, test_loader = loadData.load_data(outputDataUBFCSplitPath, nFramesVideo)
-    
+
     # WCD
     # splitData.split_data(outputDataWCDPath, nFramesVideo)
     # training_loader, validation_loader, test_loader = loadData.load_data(outputDataWCDSplitPath, nFramesVideo)
-
-
-    #%%
-    #       Train and validate with PhysNet Model
-    Plot_results = True
-    test_loader = trainMain.train_and_validate_model(outputDataUBFCPath, Plot_results, training_loader,
-                                                     validation_loader, test_loader)
-
-
-    #%%
-    #       Test PhysNet Model
-    Plot_results = True
-
-    Testmain.test_model(model_path, test_loader, Plot_results)

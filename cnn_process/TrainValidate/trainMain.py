@@ -12,8 +12,6 @@ import matplotlib.pyplot as plt
 import wandb
 # local Packages
 from cnn_process.TrainValidate import trainOneEpoch, get_pulse
-from cnn_process.load import lossFunction
-from cnn_process.load.load_main import PhysNet
 
 
 def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, optimizer, config):
