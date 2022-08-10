@@ -21,21 +21,21 @@ import time
 fps = 30
 videoLength = 180  # in seconds
 maxFrames = fps*videoLength
-destinationPath = 'C:/Users/Chaputa/Documents/Trier/Master/Masterarbeit/Realsense/Data/test/all/'
+destination_path = 'C:/Users/Chaputa/Documents/Trier/Master/Masterarbeit/Realsense/Data/test/all/'
 
 # Configure  color streams
 pipeline = rs.pipeline()
 config = rs.config()
 config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
 
-print("Press s on keyboard to start saving frames")
-print("Press c on keyboard to stop playing audios and stop the live stream")
+print("Press 1 or 2 on keyboard to start saving frames")
+print("Press c on keyboard to stop saving frames or stop the livestream")
 # Start streaming
 pipeline.start(config)
 try:
     while True:
         # detect keypress (s)
-        if keyboard.is_pressed("s"):
+        if keyboard.is_pressed("1") or keyboard.is_pressed("2"):
             print("Start saving frames")
             for iteratingFrames in range(maxFrames):
 
@@ -46,7 +46,7 @@ try:
 
                 # save image wth name in milliseconds
                 imageName = str(int(round(time.time() * 1000))) + '.jpg'
-                cv2.imwrite(destinationPath + imageName, color_image)
+                cv2.imwrite(destination_path + imageName, color_image)
                 if keyboard.is_pressed("c"):
                     break
             cv2.destroyAllWindows()

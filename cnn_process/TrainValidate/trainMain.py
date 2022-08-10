@@ -68,12 +68,12 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
             # Calculate the loss
             rPPG = (rPPG - torch.mean(rPPG)) / torch.std(rPPG)  # normalize
             BVP_label = (BVP_label - torch.mean(BVP_label.float())) / torch.std(BVP_label.float())  # normalize
-            loss_ecg = loss_Inst(rPPG, BVP_label)
-            loss_ecg.backward()
+            validation_loss_ecg = loss_Inst(rPPG, BVP_label)
+            validation_loss_ecg.backward()
             example_ct += len(vinputs)
             if batch_validation_ct % 10 == 9:
-                wandb.log({"epoch": epoch, "loss": loss_ecg}, step=example_ct)
-                print(f"Loss after " + str(example_ct).zfill(5) + f" examples: {loss_ecg:.3f}")
+                wandb.log({"epoch": epoch, "loss": validation_loss_ecg}, step=example_ct)
+                print(f"Validation loss after " + str(example_ct).zfill(5) + f" examples: {validation_loss_ecg:.3f}")
 
 
 
