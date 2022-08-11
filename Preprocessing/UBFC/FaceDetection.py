@@ -37,7 +37,7 @@ def viola_jonas_face_detector(currentPath: str, destinationPath: str, tempPath: 
     clip = VideoFileClip(currentPath)
     fpsOriginal = clip.fps
     # %%
-    #clip = clip.subclip(0, 5)  # !!!!! only first 12 seconds!!!!
+    #clip = clip.subclip(0, 1)  # !!!!! only first 12 seconds!!!!
     # %%
     if fpsOriginal != NewSamplingRate:
         clip.write_videofile(tempPath, fps=NewSamplingRate, codec="libx264")
@@ -56,15 +56,9 @@ def viola_jonas_face_detector(currentPath: str, destinationPath: str, tempPath: 
     length = int(video_capture.get(cv2.CAP_PROP_FRAME_COUNT))
     noFaceList = np.zeros(length)  # 0=face detectet; 1=no face detected
     base_string = "img"
-    # videoLength=2 # new "Face video" length in seconds
-    # maxFrames=int(length/128)
     maxFrames = length
     firstRectagle = 0  # selecting first rectangele size for all, in one video
     iteratImagIndex = 0
-
-    print("tempPath", tempPath)
-    print("currentPath", currentPath)
-    print("destinationPath", destinationPath)
 
     for iteratingFrames in range(maxFrames):
         ret, frame = video_capture.read()
@@ -112,9 +106,9 @@ def viola_jonas_face_detector(currentPath: str, destinationPath: str, tempPath: 
 
             noFaceList[iteratingFrames] = 1
 
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-    video_capture.release()
-    clip.close()
+        #if cv2.waitKey(1) & 0xFF == ord('q'):
+        #    break
+    #video_capture.release()
+    #clip.close()
 
     return noFaceList

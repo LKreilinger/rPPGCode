@@ -105,8 +105,8 @@ def preprocessing_ubfc_dataset(gen_path: str, nFramesVideo, workingPath, docker)
                 nameNoExten = os.path.splitext(name)[0]
                 tempvidFile = nameNoExten.replace("bvp", "vid")
                 correspondingVidName = np.array([tempvidFile])
-                correspondingVidNameType = correspondingVidName + ".avi"
-                if correspondingVidNameType in delete_videos:
+                correspondingVidNameType = tempvidFile + ".avi"
+                if not(correspondingVidNameType in delete_videos):
                     index = noFaceListAllVideos.index(correspondingVidName)
                     noFaceList = noFaceListAllVideos[index + 1]
                     pulsePreprocessing.pulse_prepro(currentPath, tempPath, SAMPLING_RATE_PULSE, NEW_SAMPLING_RATE,
