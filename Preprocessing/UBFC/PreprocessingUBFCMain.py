@@ -29,14 +29,15 @@ def preprocessing_ubfc_dataset(gen_path: str, nFramesVideo, workingPath, docker)
     NEW_SAMPLING_RATE: int = 30  # for pulse data and video
     NEW_SIZE_IMAGE = (128, 128)  # of the face
     noFaceListAllVideos = []
+    delete_videos = []
     patternVideo = "*.avi"
     patternPuls = "*.csv"
 
     # %%  Delete dataset folder (inside of output folder)
 
     datasetpath = os.path.join(gen_path, "output", "UBFCDataset")
-    #gen_path_data = os.path.join(gen_path, "data", "UBFC_Phys")
-    gen_path_data = os.path.join(gen_path, "data")
+    gen_path_data = os.path.join(gen_path, "data", "UBFC_Phys")
+    #gen_path_data = os.path.join(gen_path, "data")
     if os.path.exists(datasetpath) and os.path.isdir(datasetpath):
         shutil.rmtree(datasetpath)
     os.mkdir(datasetpath)
@@ -73,6 +74,7 @@ def preprocessing_ubfc_dataset(gen_path: str, nFramesVideo, workingPath, docker)
                     noFaceListAllVideos.append(noFaceList)
                 else:
                     shutil.rmtree(destinationPath)
+                    delete_videos.append(name)
     #%%
     # save noFaceListAllVideos
     list_name = "noFaceListAllVideos.pkl"
@@ -91,7 +93,6 @@ def preprocessing_ubfc_dataset(gen_path: str, nFramesVideo, workingPath, docker)
     open_file.close()
 
     # %% 4: Change sampling rate of pulse data to 30Hz and delet BVP values if no face detected
-    [list_all_folders[0] for list_all_folders in os.walk(datasetpath)]
 
     if os.path.exists(tempPathNofile) and os.path.isdir(tempPathNofile):
         shutil.rmtree(tempPathNofile)
@@ -104,9 +105,11 @@ def preprocessing_ubfc_dataset(gen_path: str, nFramesVideo, workingPath, docker)
                 nameNoExten = os.path.splitext(name)[0]
                 tempvidFile = nameNoExten.replace("bvp", "vid")
                 correspondingVidName = np.array([tempvidFile])
-                index = noFaceListAllVideos.index(correspondingVidName)
-                noFaceList = noFaceListAllVideos[index + 1]
-                pulsePreprocessing.pulse_prepro(currentPath, tempPath, SAMPLING_RATE_PULSE, NEW_SAMPLING_RATE,
+                correspondingVidNameType = correspondingVidName + ".avi"
+                if correspondingVidNameType in delete_videos:
+                    index = noFaceListAllVideos.index(correspondingVidName)
+                    noFaceList = noFaceListAllVideos[index + 1]
+                    pulsePreprocessing.pulse_prepro(currentPath, tempPath, SAMPLING_RATE_PULSE, NEW_SAMPLING_RATE,
                                                 noFaceList)
 
     # %% Generate annotations.txt in dataset
