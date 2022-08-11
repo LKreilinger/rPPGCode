@@ -106,7 +106,7 @@ def viola_jonas_face_detector(currentPath: str, destinationPath: str, tempPath: 
 
             noFaceList[iteratingFrames] = 1
 
-        #if cv2.waitKey(1) & 0xFF == ord('q'):
+        # if cv2.waitKey(1) & 0xFF == ord('q'):
         #    break
     #video_capture.release()
     #clip.close()
