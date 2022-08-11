@@ -35,7 +35,8 @@ def preprocessing_ubfc_dataset(gen_path: str, nFramesVideo, workingPath, docker)
     # %%  Delete dataset folder (inside of output folder)
 
     datasetpath = os.path.join(gen_path, "output", "UBFCDataset")
-    gen_path_data = os.path.join(gen_path, "data", "UBFC_Phys")
+    #gen_path_data = os.path.join(gen_path, "data", "UBFC_Phys")
+    gen_path_data = os.path.join(gen_path, "data")
     if os.path.exists(datasetpath) and os.path.isdir(datasetpath):
         shutil.rmtree(datasetpath)
     os.mkdir(datasetpath)
