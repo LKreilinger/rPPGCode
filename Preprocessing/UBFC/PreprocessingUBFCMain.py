@@ -76,7 +76,7 @@ def preprocessing_ubfc_dataset(gen_path: str, nFramesVideo, workingPath, docker)
                     shutil.rmtree(destinationPath)
                     delete_videos.append(name)
     #%%
-    # save noFaceListAllVideos
+    # save noFaceListAllVideos and delete_videos
     list_name = "noFaceListAllVideos.pkl"
     list_path = os.path.join(gen_path, "output", "noFaceList")
     if os.path.exists(list_path) and os.path.isdir(list_path):
@@ -85,6 +85,12 @@ def preprocessing_ubfc_dataset(gen_path: str, nFramesVideo, workingPath, docker)
     file_path_name = os.path.join(list_path, list_name)
     open_file = open(file_path_name, "wb")
     pickle.dump(noFaceListAllVideos, open_file)
+    open_file.close()
+
+    list_name = "delete_videos.pkl"
+    file_path_name = os.path.join(list_path, list_name)
+    open_file = open(file_path_name, "wb")
+    pickle.dump(delete_videos, open_file)
     open_file.close()
 
     # open noFaceListAllVideos
