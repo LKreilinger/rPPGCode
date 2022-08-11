@@ -35,7 +35,7 @@ def preprocessing_ubfc_dataset(gen_path: str, nFramesVideo, workingPath, docker)
     # %%  Delete dataset folder (inside of output folder)
 
     datasetpath = os.path.join(gen_path, "output", "UBFCDataset")
-    gen_path_data = os.path.join(gen_path, "data")
+    gen_path_data = os.path.join(gen_path, "data", "UBFC_Phys")
     if os.path.exists(datasetpath) and os.path.isdir(datasetpath):
         shutil.rmtree(datasetpath)
     os.mkdir(datasetpath)
@@ -48,6 +48,10 @@ def preprocessing_ubfc_dataset(gen_path: str, nFramesVideo, workingPath, docker)
     if os.path.exists(tempPathNofile) and os.path.isdir(tempPathNofile):
         shutil.rmtree(tempPathNofile)
     os.mkdir(tempPathNofile)
+    for path, subdirs, files in os.walk(gen_path_data):
+        for name in files:
+            if fnmatch(name, patternVideo):
+                print(name)
     #%% Face detection and save images in folder of video name
     for path, subdirs, files in os.walk(gen_path_data):
         for name in files:
@@ -59,10 +63,15 @@ def preprocessing_ubfc_dataset(gen_path: str, nFramesVideo, workingPath, docker)
                 os.makedirs(tempPathNofile, exist_ok=True)
                 noFaceList = FaceDetection.viola_jonas_face_detector(currentPath, destinationPath, tempPath,
                                                                      NEW_SAMPLING_RATE, NEW_SIZE_IMAGE)
+                n_zeros = np.count_nonzero(noFaceList == 0)
+                n_ones = np.count_nonzero(noFaceList == 1)
                 shutil.rmtree(tempPathNofile)
-                nameNoExten = os.path.splitext(name)[0]
-                noFaceListAllVideos.append(nameNoExten)
-                noFaceListAllVideos.append(noFaceList)
+                if n_zeros > n_ones:
+                    nameNoExten = os.path.splitext(name)[0]
+                    noFaceListAllVideos.append(nameNoExten)
+                    noFaceListAllVideos.append(noFaceList)
+                else:
+                    shutil.rmtree(destinationPath)
     #%%
     # save noFaceListAllVideos
     list_name = "noFaceListAllVideos.pkl"
@@ -81,6 +90,8 @@ def preprocessing_ubfc_dataset(gen_path: str, nFramesVideo, workingPath, docker)
     open_file.close()
 
     # %% 4: Change sampling rate of pulse data to 30Hz and delet BVP values if no face detected
+    [list_all_folders[0] for list_all_folders in os.walk(datasetpath)]
+
     if os.path.exists(tempPathNofile) and os.path.isdir(tempPathNofile):
         shutil.rmtree(tempPathNofile)
     os.mkdir(tempPathNofile)
