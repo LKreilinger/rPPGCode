@@ -38,7 +38,7 @@ if __name__ == '__main__':
     config_preprocessing = dict(
         path_dataset=outputDataUBFCPath,
         nFramesVideo=nFramesVideo)
-    PreprocessingUBFCMain.preprocessing_ubfc_dataset(genPath, nFramesVideo, workingPath, docker)
+    #PreprocessingUBFCMain.preprocessing_ubfc_dataset(genPath, nFramesVideo, workingPath, docker)
 
     #%%
     # Preprocessing WCD Dataset
@@ -65,12 +65,12 @@ if __name__ == '__main__':
         nFramesVideo=nFramesVideo,
         device=device,
         epochs=5,
-        batch_size=32,
-        learning_rate=0.001,
+        batch_size=64,
+        learning_rate=0.0001,
         dataset="UBFC",
         architecture="CNN")
 
-    #cnn_process_main.cnn_process_main(config_cnn)
+    cnn_process_main.cnn_process_main(config_cnn)
 
 
     # WCD
