@@ -9,7 +9,7 @@ import numpy as np
 import cv2
 import keyboard
 import time
-
+import os
 ##############
 # ## Convert milisecons to time
 # import datetime
@@ -21,7 +21,7 @@ import time
 fps = 30
 videoLength = 180  # in seconds
 maxFrames = fps*videoLength
-destination_path = 'C:/Users/Chaputa/Documents/Trier/Master/Masterarbeit/Realsense/Data/test/all/'
+destination_path = r"C:\Users\Chaputa\Documents\Trier\Master\Masterarbeit\data\WCD\data_Realsense\s1\T1"
 
 # Configure  color streams
 pipeline = rs.pipeline()
@@ -46,7 +46,8 @@ try:
 
                 # save image wth name in milliseconds
                 imageName = str(int(round(time.time() * 1000))) + '.jpg'
-                cv2.imwrite(destination_path + imageName, color_image)
+                path_name = os.path.join(destination_path, imageName)
+                cv2.imwrite(path_name, color_image)
                 if keyboard.is_pressed("c"):
                     break
             cv2.destroyAllWindows()
