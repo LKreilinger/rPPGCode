@@ -64,7 +64,7 @@ if __name__ == '__main__':
         test_split=25,
         nFramesVideo=nFramesVideo,
         device=device,
-        epochs=5,
+        epochs=2,
         batch_size=64,
         learning_rate=0.0001,
         dataset="UBFC",

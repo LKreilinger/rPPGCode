@@ -21,12 +21,14 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
 
 
 
-    Plot_results = True
+    Plot_results = False
     wandb.watch(model, loss_Inst, log="all", log_freq=10)
 
     #%% train and validate model
     best_vloss = 1_000_000.
     epoch_number = 0
+    example_ct = 0  # number of examples seen
+    example_ct_validation = 0
     for epoch in range(config.epochs):  # loop over the dataset multiple times
 
         print('EPOCH {}:'.format(epoch_number + 1))
@@ -34,7 +36,7 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
         # gradient tracking is on, and do a pass over the data
         model.train(True)
         ########################
-        example_ct = 0  # number of examples seen
+
         for batch_ct, data in enumerate(train_loader):
             # Every data instance is an input + label pair
             inputs, BVP_label = data
@@ -43,7 +45,7 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
 
             # Gather data and report
             example_ct += len(inputs)
-            if batch_ct % 10 == 9:
+            if batch_ct % 100 == 99:
                 wandb.log({"epoch": epoch, "loss": loss_ecg}, step=example_ct)
                 print(f"Loss after " + str(example_ct).zfill(5) + f" examples: {loss_ecg:.3f}")
 
@@ -70,10 +72,10 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
             BVP_label = (BVP_label - torch.mean(BVP_label.float())) / torch.std(BVP_label.float())  # normalize
             validation_loss_ecg = loss_Inst(rPPG, BVP_label)
             validation_loss_ecg.backward()
-            example_ct += len(vinputs)
-            if batch_validation_ct % 10 == 9:
-                wandb.log({"epoch": epoch, "loss": validation_loss_ecg}, step=example_ct)
-                print(f"Validation loss after " + str(example_ct).zfill(5) + f" examples: {validation_loss_ecg:.3f}")
+            example_ct_validation += len(vinputs)
+            if batch_validation_ct % 100 == 99:
+                wandb.log({"epoch": epoch, "loss": validation_loss_ecg}, step=example_ct_validation)
+                print(f"Validation loss after " + str(example_ct_validation).zfill(5) + f" examples: {validation_loss_ecg:.3f}")
 
 
 
