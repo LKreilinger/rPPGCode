@@ -19,3 +19,4 @@ def cnn_process_main(config):
 
     # Build, train and analyze the model with the pipeline
     model = model_pipeline.model_pipeline(config)
+    return model

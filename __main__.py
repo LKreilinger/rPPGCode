@@ -33,18 +33,18 @@ if __name__ == '__main__':
     outputDataUBFCSplitPath = os.path.join(outputData, "UBFCDatasetSplit")
     outputDataWCDSplitPath = os.path.join(outputData, "WCDDatasetSplit")
     nFramesVideo = 128  # number of Frames used fpr training Model
-    #%%
+    # %%
     #       Preprocessing UBFC Dataset
     config_preprocessing = dict(
         path_dataset=outputDataUBFCPath,
         nFramesVideo=nFramesVideo)
-    #PreprocessingUBFCMain.preprocessing_ubfc_dataset(genPath, nFramesVideo, workingPath, docker)
+    # PreprocessingUBFCMain.preprocessing_ubfc_dataset(genPath, nFramesVideo, workingPath, docker)
 
-    #%%
+    # %%
     # Preprocessing WCD Dataset
-    #PreprocessingWCDMain.preprocessing_wcd_dataset(genPath, nFramesVideo)
+    # PreprocessingWCDMain.preprocessing_wcd_dataset(genPath, nFramesVideo)
 
-    #%%
+    # %%
     # Complete deep neuronal network process including
     #   - split data
     #   - load data
@@ -70,9 +70,7 @@ if __name__ == '__main__':
         dataset="UBFC",
         architecture="CNN")
 
-
-    cnn_process_main.cnn_process_main(config_cnn)
-
+    model = cnn_process_main.cnn_process_main(config_cnn)
 
     # WCD
     # splitData.split_data(outputDataWCDPath, nFramesVideo)
