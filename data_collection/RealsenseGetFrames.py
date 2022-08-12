@@ -21,7 +21,7 @@ import os
 fps = 30
 videoLength = 180  # in seconds
 maxFrames = fps*videoLength
-destination_path = r"C:\Users\Chaputa\Documents\Trier\Master\Masterarbeit\data\WCD\data_Realsense\s1\T1"
+destination_path = r"C:\Users\Chaputa\Documents\Trier\Master\Masterarbeit\data\WCD\data_Realsense\s2\T3"
 
 # Configure  color streams
 pipeline = rs.pipeline()
