@@ -40,7 +40,6 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
         for batch_ct, data in enumerate(train_loader):
             # Every data instance is an input + label pair
             inputs, BVP_label = data
-
             loss_ecg = trainOneEpoch.train_batch(inputs, BVP_label, optimizer, model, loss_Inst)
 
             # Gather data and report
