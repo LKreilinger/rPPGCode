@@ -23,41 +23,42 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
     wandb.watch(model, loss_Inst, log="all", log_freq=10)
 
     # %% train and validate model
-    epoch_number = 0
-    example_ct = 0  # number of examples seen
+    epoch_number = 0.
+    example_ct = 0.  # number of examples seen
     example_ct_validation = 0
     for epoch in range(config.epochs):
         print('EPOCH {}:'.format(epoch_number + 1))
-
-        model.train()
-        total_loss = 0
+        running_loss = 0.
+        last_loss = 0.
+        model.train(True)
         for batch_ct, data in enumerate(train_loader):
             # Every data instance is an input + label pair
             inputs, BVP_label = data
-            loss_ecg = train_batch.train_batch(inputs, BVP_label, optimizer, model, loss_Inst)
-            total_loss += loss_ecg
+            loss = train_batch.train_batch(inputs, BVP_label, optimizer, model, loss_Inst)
+            running_loss += loss.item()
 
             # Gather data and report
             example_ct += len(inputs)
             if batch_ct % 100 == 99:
-                wandb.log({"epoch": epoch, "loss": total_loss}, step=example_ct)
-                print(f"Loss after " + str(example_ct).zfill(5) + f" examples: {total_loss:.3f}")
+                last_loss = running_loss / 100
+                wandb.log({"epoch": epoch, "loss": last_loss})
+                print('  batch {} loss: {}'.format(batch_ct + 1, last_loss))
+                running_loss = 0.
 
         ##################################
         # Validate model
-        model.eval()
-        total_validation_loss = 0
+        model.train(False)
+        running_vloss = 0.0
         for batch_validation_ct, validation_data in enumerate(validation_loader):
             validation_inputs, BVP_validation_label = validation_data
             validation_loss_ecg, rPPG = validate_batch.val_batch(validation_inputs, BVP_validation_label, model,
                                                                  loss_Inst)
-            total_validation_loss += validation_loss_ecg
+            avg_vloss = running_vloss / (batch_validation_ct + 1)
             example_ct_validation += len(validation_inputs)
 
-            if batch_validation_ct % 100 == 99:
-                wandb.log({"epoch": epoch, "loss": total_validation_loss}, step=example_ct_validation)
-                print(f"Validation loss after " + str(example_ct_validation).zfill(
-                    5) + f" examples: {total_validation_loss:.3f}")
+
+            wandb.log({"epoch": epoch, "loss": avg_vloss})
+            print('LOSS train {} valid {}'.format(last_loss, avg_vloss))
 
         # Plot
         if Plot_results:

@@ -38,7 +38,7 @@ def load_data(config):
         test_mode=False
 
     )
-    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=1, num_workers=0, shuffle=False,
+    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=64, num_workers=0, shuffle=False,
                                                pin_memory=GPU)
 
     # load validation data
@@ -54,7 +54,7 @@ def load_data(config):
         random_shift=False,
         test_mode=False
     )
-    validation_loader = torch.utils.data.DataLoader(val_dataset, batch_size=1, num_workers=0, shuffle=False,
+    validation_loader = torch.utils.data.DataLoader(val_dataset, batch_size=64, num_workers=0, shuffle=False,
                                                     pin_memory=GPU)
 
     # load test data
@@ -71,7 +71,7 @@ def load_data(config):
         test_mode=True
     )
 
-    test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=1, num_workers=0, shuffle=False,
+    test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=64, num_workers=0, shuffle=False,
                                               pin_memory=GPU)
 
     return train_loader, validation_loader, test_loader

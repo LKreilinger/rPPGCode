@@ -20,10 +20,10 @@ def train_batch(inputs, BVP_label, optimizer, model, loss_Inst):
     BVP_label = (BVP_label - torch.mean(BVP_label.float())) / torch.std(BVP_label.float())  # normalize
 
     # Calculate the loss
-    loss_ecg = loss_Inst(rPPG, BVP_label)
-    loss_ecg.backward()
+    loss = loss_Inst(rPPG, BVP_label)
+    loss.backward()
 
     # Adjust learning weights
     optimizer.step()
 
-    return loss_ecg
+    return loss
