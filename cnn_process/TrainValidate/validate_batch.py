@@ -3,11 +3,12 @@ import torch
 
 def val_batch(inputs, BVP_label, model, loss_Inst):
     # prepare data
-    inputs = inputs.permute(0, 2, 1, 3, 4).contiguous()  # [batch,channel,length,width,height] = x.shape
     # print(inputs.shape)
     BVP_label = torch.stack(BVP_label)
     if torch.cuda.is_available():
         inputs = inputs.cuda()
+        inputs = inputs.permute(0, 2, 1, 3,
+                                4).contiguous()  # [batch,channel,length,width,height] = x.shape .contiguous() memory
     rPPG, x_visual, x_visual3232, x_visual1616 = model(inputs)
     if torch.cuda.is_available():
         rPPG = rPPG.cpu()
