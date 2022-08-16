@@ -11,7 +11,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import wandb
 # local Packages
-from cnn_process.TrainValidate import trainOneEpoch, get_pulse
+from cnn_process.TrainValidate import train_batch, get_pulse, validate_batch
 
 
 def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, optimizer, config):
@@ -19,64 +19,45 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
 
     """
 
-
-
     Plot_results = False
     wandb.watch(model, loss_Inst, log="all", log_freq=10)
 
-    #%% train and validate model
-    best_vloss = 1_000_000.
+    # %% train and validate model
     epoch_number = 0
     example_ct = 0  # number of examples seen
     example_ct_validation = 0
-    for epoch in range(config.epochs):  # loop over the dataset multiple times
-
+    for epoch in range(config.epochs):
         print('EPOCH {}:'.format(epoch_number + 1))
 
-        # gradient tracking is on, and do a pass over the data
-        model.train(True)
-        ########################
-
+        model.train()
+        total_loss = 0
         for batch_ct, data in enumerate(train_loader):
             # Every data instance is an input + label pair
             inputs, BVP_label = data
-            loss_ecg = trainOneEpoch.train_batch(inputs, BVP_label, optimizer, model, loss_Inst)
+            loss_ecg = train_batch.train_batch(inputs, BVP_label, optimizer, model, loss_Inst)
+            total_loss += loss_ecg
 
             # Gather data and report
             example_ct += len(inputs)
             if batch_ct % 100 == 99:
-                wandb.log({"epoch": epoch, "loss": loss_ecg}, step=example_ct)
-                print(f"Loss after " + str(example_ct).zfill(5) + f" examples: {loss_ecg:.3f}")
+                wandb.log({"epoch": epoch, "loss": total_loss}, step=example_ct)
+                print(f"Loss after " + str(example_ct).zfill(5) + f" examples: {total_loss:.3f}")
 
         ##################################
-        # gradient tracking of
-        model.train(False)
+        # Validate model
+        model.eval()
+        total_validation_loss = 0
+        for batch_validation_ct, validation_data in enumerate(validation_loader):
+            validation_inputs, BVP_validation_label = validation_data
+            validation_loss_ecg, rPPG = validate_batch.val_batch(validation_inputs, BVP_validation_label, model,
+                                                                 loss_Inst)
+            total_validation_loss += validation_loss_ecg
+            example_ct_validation += len(validation_inputs)
 
-        # Check model with validation data
-        example_validation_ct = 0  # number of examples seen
-        running_vloss = 0.0
-        for batch_validation_ct, vdata in enumerate(validation_loader):
-            vinputs, BVP_vlabel = vdata
-            # prepare data
-            vinputs = vinputs.permute(0, 2, 1, 3, 4)  # [batch,channel,length,width,height] = x.shape
-            # print(inputs.shape)
-            BVP_label = torch.stack(BVP_vlabel)
-            if torch.cuda.is_available():
-                vinputs = vinputs.cuda()
-            rPPG, x_visual, x_visual3232, x_visual1616 = model(vinputs)
-            if torch.cuda.is_available():
-                rPPG = rPPG.cpu()
-            # Calculate the loss
-            rPPG = (rPPG - torch.mean(rPPG)) / torch.std(rPPG)  # normalize
-            BVP_label = (BVP_label - torch.mean(BVP_label.float())) / torch.std(BVP_label.float())  # normalize
-            validation_loss_ecg = loss_Inst(rPPG, BVP_label)
-            validation_loss_ecg.backward()
-            example_ct_validation += len(vinputs)
             if batch_validation_ct % 100 == 99:
-                wandb.log({"epoch": epoch, "loss": validation_loss_ecg}, step=example_ct_validation)
-                print(f"Validation loss after " + str(example_ct_validation).zfill(5) + f" examples: {validation_loss_ecg:.3f}")
-
-
+                wandb.log({"epoch": epoch, "loss": total_validation_loss}, step=example_ct_validation)
+                print(f"Validation loss after " + str(example_ct_validation).zfill(
+                    5) + f" examples: {total_validation_loss:.3f}")
 
         # Plot
         if Plot_results:
@@ -97,7 +78,6 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
             plt.legend()
             plt.show()
             print('Label Puls {} Valid result {}'.format(pulse_BVP_labelNP, pulse_PPGNP))
-
 
         epoch_number += 1
 

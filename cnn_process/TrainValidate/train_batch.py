@@ -5,7 +5,6 @@ def train_batch(inputs, BVP_label, optimizer, model, loss_Inst):
     # Zero your gradients for every batch!
     optimizer.zero_grad()
 
-    # Make predictions for this batch
     inputs = inputs.permute(0, 2, 1, 3, 4)  # [batch,channel,length,width,height] = x.shape
     # print(inputs.shape)
     BVP_label = torch.stack(BVP_label)
