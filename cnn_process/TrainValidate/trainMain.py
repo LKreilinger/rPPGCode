@@ -40,7 +40,7 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
             # Gather data and report
             example_ct += len(inputs)
             if batch_ct % 10 == 9:
-                last_loss = running_loss / 100
+                last_loss = running_loss / 10
                 wandb.log({"epoch": epoch, "loss": last_loss})
                 print('  batch {} loss: {}'.format(batch_ct + 1, last_loss))
                 running_loss = 0.
