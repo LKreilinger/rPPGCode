@@ -65,7 +65,7 @@ if __name__ == '__main__':
         nFramesVideo=nFramesVideo,
         device=device,
         epochs=2,
-        batch_size=64,
+        batch_size=32,
         learning_rate=0.0001,
         dataset="UBFC",
         architecture="CNN")
