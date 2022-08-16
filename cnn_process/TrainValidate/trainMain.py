@@ -39,7 +39,7 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
 
             # Gather data and report
             example_ct += len(inputs)
-            if batch_ct % 100 == 99:
+            if batch_ct % 10 == 9:
                 last_loss = running_loss / 100
                 wandb.log({"epoch": epoch, "loss": last_loss})
                 print('  batch {} loss: {}'.format(batch_ct + 1, last_loss))
@@ -51,8 +51,9 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
         running_vloss = 0.0
         for batch_validation_ct, validation_data in enumerate(validation_loader):
             validation_inputs, BVP_validation_label = validation_data
-            validation_loss_ecg, rPPG = validate_batch.val_batch(validation_inputs, BVP_validation_label, model,
+            vloss, rPPG = validate_batch.val_batch(validation_inputs, BVP_validation_label, model,
                                                                  loss_Inst)
+            running_vloss += vloss
             avg_vloss = running_vloss / (batch_validation_ct + 1)
             example_ct_validation += len(validation_inputs)
 
