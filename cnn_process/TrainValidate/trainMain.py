@@ -56,9 +56,8 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
             avg_vloss = running_vloss / (batch_validation_ct + 1)
             example_ct_validation += len(validation_inputs)
 
-
-            wandb.log({"epoch": epoch, "loss": avg_vloss})
-            print('LOSS train {} valid {}'.format(last_loss, avg_vloss))
+        wandb.log({"epoch": epoch, "loss": avg_vloss})
+        print('LOSS train {} valid {}'.format(last_loss, avg_vloss))
 
         # Plot
         if Plot_results:

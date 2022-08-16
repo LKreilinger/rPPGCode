@@ -21,7 +21,7 @@ def load_data(config):
         GPU = True
     else:
         GPU = False
-    print("GPU available: ",GPU)
+    print("GPU available: ", GPU)
 
 
     # load train data
