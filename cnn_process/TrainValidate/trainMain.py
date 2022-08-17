@@ -51,7 +51,7 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
         del inputs
         del BVP_label
         del loss
-        ##################################
+
         # Validate model
         model.train(False)
         model.eval()
