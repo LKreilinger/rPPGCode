@@ -48,7 +48,9 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
                 wandb.log({"epoch": epoch, "loss": last_loss})
                 print('  batch {} loss: {}'.format(batch_ct + 1, last_loss))
                 running_loss = 0.
-
+        del inputs
+        del BVP_label
+        del loss
         ##################################
         # Validate model
         model.train(False)
