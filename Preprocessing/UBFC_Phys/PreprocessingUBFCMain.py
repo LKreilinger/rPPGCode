@@ -10,13 +10,12 @@ from fnmatch import fnmatch
 import numpy as np
 import pickle
 # internal modules
-from Preprocessing.UBFC import FaceDetection
-from Preprocessing import makeTxt, pulsePreprocessing
+from Preprocessing import makeTxt, pulse_adjust_fps_no_face, FaceDetection
 
 
 def preprocessing_ubfc_dataset(gen_path: str, nFramesVideo, workingPath, docker) -> None:
     """
-    Main Funktion for preprocessing the UBFC Dataset
+    Main Funktion for preprocessing the UBFC_Phys Dataset
     :rtype: None
     :param gen_path:
     """
@@ -117,7 +116,7 @@ def preprocessing_ubfc_dataset(gen_path: str, nFramesVideo, workingPath, docker)
                 if not(correspondingVidNameType in delete_videos):
                     index = noFaceListAllVideos.index(correspondingVidName)
                     noFaceList = noFaceListAllVideos[index + 1]
-                    pulsePreprocessing.pulse_prepro(currentPath, tempPath, SAMPLING_RATE_PULSE, NEW_SAMPLING_RATE,
+                    pulse_data_change_format.pulse_prepro(currentPath, tempPath, SAMPLING_RATE_PULSE, NEW_SAMPLING_RATE,
                                                 noFaceList)
 
     # %% Generate annotations.txt in dataset

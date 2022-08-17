@@ -10,32 +10,33 @@ pip uninstall
 import os
 import torch
 # internal modules
-from Preprocessing.UBFC import PreprocessingUBFCMain
+from Preprocessing.UBFC_Phys import PreprocessingUBFCMain
 from cnn_process import cnn_process_main
 from Preprocessing.WCD import PreprocessingWCDMain
-from Preprocessing import video_preprocessing
+from Preprocessing.UBFC_rPPG import preprocessing_ubfc_rppg_main
 
 if __name__ == '__main__':
     # for docker change workdir
-    docker = True
+    docker = False
     if docker:
         print("Docker is working")
         workingPath = os.path.abspath(os.getcwd())
         genPath = workingPath
+        tempPathNofile = os.path.join(workingPath, "output", "temp")
     else:
+        print("Docker is NOT working")
         workingPath = os.path.abspath(os.getcwd())
         genPath = os.path.dirname(workingPath)
+        tempPathNofile = os.path.join(workingPath, "temp")
 
-    outputData = os.path.join(genPath, "output", )
-    outputDataUBFCPath = os.path.join(outputData, "UBFCDataset")
-    path_model = os.path.join(outputData, "Model")
-    outputDataWCDPath = os.path.join(outputData, "WCDDataset")
-    outputDataUBFCSplitPath = os.path.join(outputData, "UBFCDatasetSplit")
-    outputDataWCDSplitPath = os.path.join(outputData, "WCDDatasetSplit")
+    outputDataWCDPath = os.path.join(genPath, "output", "WCDDataset")
+    outputDataWCDSplitPath = os.path.join(genPath, "output", "WCDDatasetSplit")
     n_FRAMES_VIDEO = 128  # number of Frames used fpr training Model
     # %%
     #       Preprocessing UBFC_Phys Dataset
-
+    # scaleFactor = 1.1,
+    # minNeighbors = 6,
+    # minSize = (90, 90),
     #PreprocessingUBFCMain.preprocessing_ubfc_dataset(genPath, n_FRAMES_VIDEO, workingPath, docker)
 
     # %%
@@ -45,15 +46,24 @@ if __name__ == '__main__':
     # %%
     # Preprocessing UBFC_rPPG dataset
     config_pre_UBFC_rPPG = dict(
-        path_dataset=outputDataUBFCPath,
         SAMPLING_RATE_PULSE=64,
         NEW_SAMPLING_RATE_PULSE=30,
+        NEW_FPS_VIDEO=30,
         NEW_SIZE_IMAGE=(128, 128),
         pattern_video="*.avi",
         patternPuls="*.csv",
+        dataset_path=os.path.join(genPath, "output", "UBFC_rPPG_Dataset"),
+        gen_path_data=os.path.join(genPath, "data", "UBFC_rPPG"),
+        varibles_path=os.path.join(genPath, "output", "noFaceList"),
+        tempPathNofile=tempPathNofile,
+        working_path=workingPath,
+        docker=docker,
+        scaleFactor=1.1,
+        minNeighbors=6,
+        minSize=(90, 90),
         nFramesVideo=n_FRAMES_VIDEO)
-    #video_preprocessing.video_pre_ubfc(config_pre_UBFC_rPPG)
 
+    preprocessing_ubfc_rppg_main.pre_ubfc_rppg(config_pre_UBFC_rPPG)
 
 
 
@@ -68,9 +78,9 @@ if __name__ == '__main__':
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     config_cnn = dict(
-        path_dataset=outputDataUBFCPath,
-        path_dataset_split=outputDataUBFCSplitPath,
-        path_model=path_model,
+        path_dataset=os.path.join(genPath, "output", "UBFCDataset"),
+        path_dataset_split=os.path.join(genPath, "output", "UBFCDatasetSplit"),
+        path_model=os.path.join(genPath, "output", "Model"),
         train_split=60,
         validation_split=15,
         test_split=25,
@@ -79,8 +89,8 @@ if __name__ == '__main__':
         epochs=20,
         batch_size=32,
         learning_rate=0.0001,
-        dataset="UBFC",
-        architecture="CNN")
+        dataset="UBFC_Phys",
+        architecture="PhysNet")
 
     model = cnn_process_main.cnn_process_main(config_cnn)
 

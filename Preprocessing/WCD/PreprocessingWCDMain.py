@@ -11,12 +11,12 @@ import numpy as np
 
 # internal modules
 from Preprocessing.WCD import convertPolarData, faceDetectionImg
-from Preprocessing import makeTxt, pulsePreprocessing
+from Preprocessing import makeTxt, pulse_adjust_fps_no_face
 
 
 def preprocessing_wcd_dataset(gen_path: str, nFramesVideo) -> None:
     """
-    Main Funktion for preprocessing the UBFC Dataset
+    Main Funktion for preprocessing the UBFC_Phys Dataset
     :rtype: None
     :param gen_path:
     """
@@ -91,7 +91,7 @@ def preprocessing_wcd_dataset(gen_path: str, nFramesVideo) -> None:
             noFaceList = noFaceListAllVideos[index + 1]
             convertPolarData.convert_polar_data(currentPath, tempPathName, camera_data_path, SAMPLING_RATE_PULSE, NEW_SAMPLING_RATE,
                                                 noFaceList)
-            pulsePreprocessing.pulse_prepro(tempPathName, tempPathName, SAMPLING_RATE_PULSE, NEW_SAMPLING_RATE,
+            pulse_adjust_fps_no_face.pulse_prepro(tempPathName, tempPathName, SAMPLING_RATE_PULSE, NEW_SAMPLING_RATE,
                                             noFaceList)
             a=1
 

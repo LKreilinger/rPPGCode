@@ -11,7 +11,7 @@ import shutil
 import warnings
 
 def viola_jonas_face_detector(currentPath: str, destinationPath: str, tempPath: str, NewSamplingRate: int,
-                              newsizeImage: tuple) -> np.ndarray:
+                              newsizeImage: tuple, config) -> np.ndarray:
     """
     Face detection with Viola Jonas Algorythm.
     Saving every resized (Face)Frame separately
@@ -29,26 +29,24 @@ def viola_jonas_face_detector(currentPath: str, destinationPath: str, tempPath: 
     :param newsizeImage:
     """
     # load trained modul for face detection
-    #cascPathface = os.path.join(os.path.dirname(cv2.__file__), "data", "haarcascade_frontalface_alt2.xml")
-    #faceCascade = cv2.CascadeClassifier("haarcascade_frontalface_alt2.xml")
     faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_alt2.xml")
 
     # Change fps to NewSamplingRate
     clip = VideoFileClip(currentPath)
     fpsOriginal = clip.fps
     # %%
-    #clip = clip.subclip(0, 1)  # !!!!! only first 12 seconds!!!!
+    clip = clip.subclip(0, 5)  # !!!!! only first 12 seconds!!!!
     # %%
     if fpsOriginal != NewSamplingRate:
         clip.write_videofile(tempPath, fps=NewSamplingRate, codec="libx264")
     else:
         # !!!!! only first 12 seconds!!!!
-        #clip = VideoFileClip(currentPath)
-        #clip = clip.subclip(0, 5)
-        #clip.write_videofile(tempPath, fps=NewSamplingRate, codec="libx264")
+        clip = VideoFileClip(currentPath)
+        clip = clip.subclip(0, 5)
+        clip.write_videofile(tempPath, fps=NewSamplingRate, codec="libx264")
 
         # copy file to tempPath
-        shutil.copyfile(currentPath, tempPath)
+        #shutil.copyfile(currentPath, tempPath)
 
     video_capture = cv2.VideoCapture(tempPath)
     # fps frames per second from original video
@@ -64,9 +62,9 @@ def viola_jonas_face_detector(currentPath: str, destinationPath: str, tempPath: 
         ret, frame = video_capture.read()
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         faces = faceCascade.detectMultiScale(gray,
-                                             scaleFactor=1.1,
-                                             minNeighbors=6,
-                                             minSize=(90, 90),
+                                             scaleFactor=config['scaleFactor'],
+                                             minNeighbors=config['minNeighbors'],
+                                             minSize=config['minSize'],
                                              flags=cv2.CASCADE_SCALE_IMAGE)
 
         # define size of new video
