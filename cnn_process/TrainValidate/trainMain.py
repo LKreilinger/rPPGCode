@@ -27,6 +27,9 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
     epoch_number = 0.
     example_ct = 0.  # number of examples seen
     example_ct_validation = 0
+    # saving memory
+    torch.backends.cudnn.benchmark = True
+    torch.backends.cudnn.enabled = True
     torch.cuda.empty_cache()
     for epoch in range(config.epochs):
         print('EPOCH {}:'.format(epoch_number + 1))
@@ -49,7 +52,6 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
                 print('  batch {} loss: {}'.format(batch_ct + 1, last_loss))
                 running_loss = 0.
 
-
         # Validate model
         model.train(False)
         model.eval()
@@ -58,7 +60,7 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
         for batch_validation_ct, validation_data in enumerate(validation_loader):
             validation_inputs, BVP_validation_label = validation_data
             vloss, rPPG = validate_batch.val_batch(validation_inputs, BVP_validation_label, model,
-                                                                 loss_Inst)
+                                                   loss_Inst)
             running_vloss += vloss.item()
             avg_vloss = running_vloss / (batch_validation_ct + 1)
             example_ct_validation += len(validation_inputs)
