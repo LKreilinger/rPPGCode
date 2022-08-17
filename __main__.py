@@ -13,6 +13,7 @@ import torch
 from Preprocessing.UBFC import PreprocessingUBFCMain
 from cnn_process import cnn_process_main
 from Preprocessing.WCD import PreprocessingWCDMain
+from Preprocessing import video_preprocessing
 
 if __name__ == '__main__':
     # for docker change workdir
@@ -31,21 +32,31 @@ if __name__ == '__main__':
     outputDataWCDPath = os.path.join(outputData, "WCDDataset")
     outputDataUBFCSplitPath = os.path.join(outputData, "UBFCDatasetSplit")
     outputDataWCDSplitPath = os.path.join(outputData, "WCDDatasetSplit")
-    nFramesVideo = 128  # number of Frames used fpr training Model
+    n_FRAMES_VIDEO = 128  # number of Frames used fpr training Model
     # %%
     #       Preprocessing UBFC_Phys Dataset
 
-    #PreprocessingUBFCMain.preprocessing_ubfc_dataset(genPath, nFramesVideo, workingPath, docker)
+    #PreprocessingUBFCMain.preprocessing_ubfc_dataset(genPath, n_FRAMES_VIDEO, workingPath, docker)
 
     # %%
     # Preprocessing WCD Dataset
-    # PreprocessingWCDMain.preprocessing_wcd_dataset(genPath, nFramesVideo)
+    # PreprocessingWCDMain.preprocessing_wcd_dataset(genPath, n_FRAMES_VIDEO)
 
     # %%
     # Preprocessing UBFC_rPPG dataset
-    config_preprocessing_UBFC_rPPG = dict(
+    config_pre_UBFC_rPPG = dict(
         path_dataset=outputDataUBFCPath,
-        nFramesVideo=nFramesVideo)
+        SAMPLING_RATE_PULSE=64,
+        NEW_SAMPLING_RATE_PULSE=30,
+        NEW_SIZE_IMAGE=(128, 128),
+        pattern_video="*.avi",
+        patternPuls="*.csv",
+        nFramesVideo=n_FRAMES_VIDEO)
+    #video_preprocessing.video_pre_ubfc(config_pre_UBFC_rPPG)
+
+
+
+
     # %%
     # Complete deep neuronal network process including
     #   - split data
@@ -63,10 +74,10 @@ if __name__ == '__main__':
         train_split=60,
         validation_split=15,
         test_split=25,
-        nFramesVideo=nFramesVideo,
+        nFramesVideo=n_FRAMES_VIDEO,
         device=device,
         epochs=20,
-        batch_size=64,
+        batch_size=32,
         learning_rate=0.0001,
         dataset="UBFC",
         architecture="CNN")
@@ -74,5 +85,5 @@ if __name__ == '__main__':
     model = cnn_process_main.cnn_process_main(config_cnn)
 
     # WCD
-    # splitData.split_data(outputDataWCDPath, nFramesVideo)
-    # training_loader, validation_loader, test_loader = loadData.load_data(outputDataWCDSplitPath, nFramesVideo)
+    # splitData.split_data(outputDataWCDPath, n_FRAMES_VIDEO)
+    # training_loader, validation_loader, test_loader = loadData.load_data(outputDataWCDSplitPath, n_FRAMES_VIDEO)
