@@ -21,6 +21,7 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
 
     Plot_results = False
     wandb.watch(model, loss_Inst, log="all", log_freq=10)
+    print(torch.distributed.get_world_size())
     print("cuda memory befor training")
     print(torch.cuda.memory_summary(device=config.device, abbreviated=False))
     # %% train and validate model
@@ -39,8 +40,6 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
             loss = train_batch.train_batch(inputs, BVP_label, optimizer, model, loss_Inst)
             running_loss += loss.item()
 
-            print("cuda memory after batch {}".format(batch_ct))
-
             # Gather data and report
             example_ct += len(inputs)
             if batch_ct % 10 == 9:
@@ -56,6 +55,7 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
         ##################################
         # Validate model
         model.train(False)
+        model.eval()
         running_vloss = 0.0
         torch.cuda.empty_cache()
         for batch_validation_ct, validation_data in enumerate(validation_loader):
