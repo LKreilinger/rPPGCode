@@ -26,6 +26,7 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
     epoch_number = 0.
     example_ct = 0.  # number of examples seen
     example_ct_validation = 0
+    torch.cuda.empty_cache()
     for epoch in range(config.epochs):
         print('EPOCH {}:'.format(epoch_number + 1))
         running_loss = 0.
@@ -49,6 +50,7 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
         # Validate model
         model.train(False)
         running_vloss = 0.0
+        torch.cuda.empty_cache()
         for batch_validation_ct, validation_data in enumerate(validation_loader):
             validation_inputs, BVP_validation_label = validation_data
             vloss, rPPG = validate_batch.val_batch(validation_inputs, BVP_validation_label, model,
@@ -57,6 +59,7 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
             avg_vloss = running_vloss / (batch_validation_ct + 1)
             example_ct_validation += len(validation_inputs)
 
+        torch.cuda.empty_cache()
         wandb.log({"epoch": epoch, "loss": avg_vloss})
         print('LOSS train {} valid {}'.format(last_loss, avg_vloss))
 
