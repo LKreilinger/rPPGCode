@@ -16,7 +16,7 @@ def model_pipeline(hyperparameters):
 
         # make the model, data, and optimization problem
         model, train_loader, validation_loader, test_loader, loss_Inst, optimizer = load_main.load_main(config)
-        print(model)
+        #print(model)
 
         # and use them to train the model
         trainMain.train_and_validate_model(model, train_loader, validation_loader, loss_Inst, optimizer, config)
