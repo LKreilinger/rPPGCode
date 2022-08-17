@@ -61,7 +61,7 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
             validation_inputs, BVP_validation_label = validation_data
             vloss, rPPG = validate_batch.val_batch(validation_inputs, BVP_validation_label, model,
                                                                  loss_Inst)
-            running_vloss += vloss
+            running_vloss += vloss.item()
             avg_vloss = running_vloss / (batch_validation_ct + 1)
             example_ct_validation += len(validation_inputs)
             print("cuda memory after batch {}".format(batch_ct))
