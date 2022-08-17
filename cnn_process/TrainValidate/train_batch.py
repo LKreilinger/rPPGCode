@@ -29,5 +29,7 @@ def train_batch(inputs, BVP_label, optimizer, model, loss_Inst):
 
     # Adjust learning weights
     optimizer.step()
-
+    del inputs
+    del BVP_label
+    torch.cuda.empty_cache()
     return loss

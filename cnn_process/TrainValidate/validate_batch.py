@@ -18,5 +18,7 @@ def val_batch(inputs, BVP_label, model, loss_Inst):
     rPPG = (rPPG - torch.mean(rPPG)) / torch.std(rPPG)  # normalize
     BVP_label = (BVP_label - torch.mean(BVP_label.float())) / torch.std(BVP_label.float())  # normalize
     validation_loss_ecg = loss_Inst(rPPG, BVP_label)
-
+    del inputs
+    del BVP_label
+    torch.cuda.empty_cache()
     return validation_loss_ecg, rPPG
