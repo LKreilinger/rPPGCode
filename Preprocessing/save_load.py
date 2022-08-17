@@ -6,7 +6,7 @@ def save_variable(config, noFaceListAllVideos, delete_videos):
     # save noFaceListAllVideos and delete_videos
     name_no_face = "noFaceListAllVideos.pkl"
     name_deleted_videos = "delete_videos.pkl"
-    list_path = config['varibles_path']
+    list_path = config['variblesPath']
     path_deleted_videos = os.path.join(list_path, name_deleted_videos)
     path_no_face = os.path.join(list_path, name_no_face)
 
@@ -26,7 +26,7 @@ def load_variable(config):
     # open noFaceListAllVideos and delete_videos
     name_no_face = "noFaceListAllVideos.pkl"
     name_deleted_videos = "delete_videos.pkl"
-    list_path = config['varibles_path']
+    list_path = config['variblesPath']
     path_deleted_videos = os.path.join(list_path, name_deleted_videos)
     path_no_face = os.path.join(list_path, name_no_face)
 

@@ -11,7 +11,7 @@ def pulse_pre_ubfc(config, noFaceListAllVideos, delete_videos):
     if os.path.exists(config['tempPathNofile']) and os.path.isdir(config['tempPathNofile']):
         shutil.rmtree(config['tempPathNofile'])
     os.mkdir(config['tempPathNofile'])
-    for path, subdirs, files in os.walk(config['gen_path_data']):
+    for path, subdirs, files in os.walk(config['genPathData']):
         for name in files:
             currentPath = os.path.join(path, name)
             tempPath = os.path.join(config['tempPathNofile'], name)
@@ -25,5 +25,5 @@ def pulse_pre_ubfc(config, noFaceListAllVideos, delete_videos):
                     noFaceList = noFaceListAllVideos[index + 1]
                     pulse_ubfc_rppg_convert.pulse_convert(currentPath, tempPath)
                     pulse_adjust_fps_no_face.pulse_prepro(tempPath, tempPath,
-                                                          config['SAMPLING_RATE_PULSE'], config['NEW_SAMPLING_RATE'],
+                                                          config['samplingRatePulse'], config['newSamplingRatePulse'],
                                                           noFaceList)
