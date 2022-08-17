@@ -10,10 +10,9 @@ pip uninstall
 import os
 import torch
 # internal modules
-from cnn_process.TestModel import Testmain
-from cnn_process.TrainValidate import trainMain
 from Preprocessing.UBFC import PreprocessingUBFCMain
-from cnn_process import cnn_process_main, splitData
+from cnn_process import cnn_process_main
+from Preprocessing.WCD import PreprocessingWCDMain
 
 if __name__ == '__main__':
     # for docker change workdir
@@ -34,16 +33,19 @@ if __name__ == '__main__':
     outputDataWCDSplitPath = os.path.join(outputData, "WCDDatasetSplit")
     nFramesVideo = 128  # number of Frames used fpr training Model
     # %%
-    #       Preprocessing UBFC Dataset
-    config_preprocessing = dict(
-        path_dataset=outputDataUBFCPath,
-        nFramesVideo=nFramesVideo)
-    # PreprocessingUBFCMain.preprocessing_ubfc_dataset(genPath, nFramesVideo, workingPath, docker)
+    #       Preprocessing UBFC_Phys Dataset
+
+    #PreprocessingUBFCMain.preprocessing_ubfc_dataset(genPath, nFramesVideo, workingPath, docker)
 
     # %%
     # Preprocessing WCD Dataset
     # PreprocessingWCDMain.preprocessing_wcd_dataset(genPath, nFramesVideo)
 
+    # %%
+    # Preprocessing UBFC_rPPG dataset
+    config_preprocessing_UBFC_rPPG = dict(
+        path_dataset=outputDataUBFCPath,
+        nFramesVideo=nFramesVideo)
     # %%
     # Complete deep neuronal network process including
     #   - split data
@@ -53,7 +55,6 @@ if __name__ == '__main__':
     #   - train and validate model
     #   - evaluate model
 
-    # Device configuration
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     config_cnn = dict(
         path_dataset=outputDataUBFCPath,
@@ -64,8 +65,8 @@ if __name__ == '__main__':
         test_split=25,
         nFramesVideo=nFramesVideo,
         device=device,
-        epochs=50,
-        batch_size=32,
+        epochs=20,
+        batch_size=64,
         learning_rate=0.0001,
         dataset="UBFC",
         architecture="CNN")

@@ -46,12 +46,11 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
             if batch_ct % 10 == 9:
                 print(torch.cuda.memory_summary(device=config.device, abbreviated=False))
                 last_loss = running_loss / 10
-                wandb.log({"epoch": epoch, "loss": last_loss})
+                wandb.log({"epoch": epoch, "train_loss": last_loss})
                 print(f"Loss after " + str(batch_ct + 1).zfill(4) + f" batches: {last_loss:.3f}")
                 running_loss = 0.
 
         # Validate model
-        model.train(False)
         model.eval()
         running_vloss = 0.0
         torch.cuda.empty_cache()
@@ -64,10 +63,11 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
                 avg_vloss = running_vloss / (batch_validation_ct + 1)
                 example_ct_validation += len(validation_inputs)
                 torch.cuda.empty_cache()
+                if batch_validation_ct % 10 == 9:
+                    wandb.log({"epoch": epoch, "val_loss": avg_vloss})
 
         torch.cuda.memory_summary(device=None, abbreviated=False)
-        wandb.log({"epoch": epoch, "loss": avg_vloss})
-        print(f" Loss train: {last_loss:.3f}" + f" Loss validation: {avg_vloss:.3f}")
+        print(f"Loss train: {last_loss:.3f}" + f" Loss validation: {avg_vloss:.3f}")
 
         # Plot
         if Plot_results:
