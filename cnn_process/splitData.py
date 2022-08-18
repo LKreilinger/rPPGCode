@@ -132,4 +132,4 @@ def split_data(config):
             iteratImagName = f'img_{frame:05}.jpg'
             src_path_frame = os.path.join(src_path, iteratImagName)
             dst_path_frame = os.path.join(dst_path, iteratImagName)
-            shutil.move(src_path_frame, dst_path_frame)
+            shutil.copy(src_path_frame, dst_path_frame)
