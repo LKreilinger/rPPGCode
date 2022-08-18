@@ -25,9 +25,12 @@ def pulse_pre_ubfc(config, noFaceListAllVideos, delete_videos):
                     noFaceList = noFaceListAllVideos[index + 1]
                     if os.path.splitext(name)[-1] == ".txt":
                         tempPath = os.path.join(config['tempPathNofile'], nameNoExten + ".csv")
-
-
-                    pulse_ubfc_rppg_convert.pulse_convert(currentPath, tempPath)
-                    pulse_adjust_fps_no_face.pulse_prepro(tempPath, tempPath,
-                                                          config['samplingRatePulse'], config['newSamplingRatePulse'],
-                                                          noFaceList)
+                        pulse_ubfc_rppg_convert.pulse_convert(currentPath, tempPath)
+                        pulse_adjust_fps_no_face.pulse_prepro(tempPath, tempPath,
+                                                              config['samplingRatePulse'],
+                                                              config['newSamplingRatePulse'],
+                                                              noFaceList)
+                    else:
+                        pulse_adjust_fps_no_face.pulse_prepro(currentPath, tempPath,
+                                                              config['samplingRatePulse'], config['newSamplingRatePulse'],
+                                                              noFaceList)

@@ -10,10 +10,8 @@ pip uninstall
 import os
 import torch
 # internal modules
-from Preprocessing.UBFC_Phys import PreprocessingUBFCMain
 from cnn_process import cnn_process_main
-from Preprocessing.WCD import PreprocessingWCDMain
-from Preprocessing.UBFC_rPPG import preprocessing_ubfc_rppg_main
+from Preprocessing import preprocessing_ubfc_main
 
 if __name__ == '__main__':
     # for docker change workdir
@@ -35,10 +33,24 @@ if __name__ == '__main__':
     n_FRAMES_VIDEO = 128  # number of Frames used fpr training Model
     # %%
     #       Preprocessing UBFC_Phys Dataset
-    # scaleFactor = 1.1,
-    # minNeighbors = 6,
-    # minSize = (90, 90),
-    #PreprocessingUBFCMain.preprocessing_ubfc_dataset(genPath, n_FRAMES_VIDEO, workingPath, docker)
+    # Preprocessing UBFC_rPPG dataset
+    config_pre_UBFC_Phys = dict(
+        samplingRatePulse=64,
+        newSamplingRatePulse=30,
+        newFpsVideo=30,
+        newSizeImage=(128, 128),
+        patternVideo="*.avi",
+        patternPuls="*.csv",
+        datasetPath=os.path.join(genPath, "output", "UBFC_Phys_Dataset"),
+        genPathData=os.path.join(genPath, "data", "UBFC_Phys"),
+        variblesPath=os.path.join(genPath, "output", "noFaceList"),
+        tempPathNofile=tempPathNofile,
+        workingPath=workingPath,
+        scaleFactor=1.1,
+        minNeighbors=6,
+        minSize=(90, 90),
+        nFramesVideo=n_FRAMES_VIDEO)
+    preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_Phys)
 
     # %%
     # Preprocessing WCD Dataset
@@ -58,18 +70,17 @@ if __name__ == '__main__':
         variblesPath=os.path.join(genPath, "output", "noFaceList"),
         tempPathNofile=tempPathNofile,
         workingPath=workingPath,
-        docker=docker,
         scaleFactor=1.1,
         minNeighbors=6,
         minSize=(90, 90),
         nFramesVideo=n_FRAMES_VIDEO)
 
-    preprocessing_ubfc_rppg_main.pre_ubfc_rppg(config_pre_UBFC_rPPG)
+    preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_rPPG)
 
 
 
     # %% UBFC_Phys
-    # Complete deep neuronal network process including
+    # Complete rPPG process
     #   - split data
     #   - load data
     #   - define training environment
@@ -93,10 +104,10 @@ if __name__ == '__main__':
         dataset="UBFC_Phys",
         architecture="PhysNet")
 
-    # model = cnn_process_main.cnn_process_main(config_cnn)
+    #model = cnn_process_main.cnn_process_main(config_cnn)
 
     # %% UBFC_rppg
-    # Complete deep neuronal network process including
+    # Complete rPPG process
     #   - split data
     #   - load data
     #   - define training environment
@@ -120,4 +131,4 @@ if __name__ == '__main__':
         dataset="UBFC_rPPG",
         architecture="PhysNet")
 
-    model = cnn_process_main.cnn_process_main(config_cnn)
+    #model = cnn_process_main.cnn_process_main(config_cnn)
