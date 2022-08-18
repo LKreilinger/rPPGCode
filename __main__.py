@@ -104,7 +104,7 @@ if __name__ == '__main__':
         dataset="UBFC_Phys",
         architecture="PhysNet")
 
-    model = cnn_process_main.cnn_process_main(config_cnn)
+    #model = cnn_process_main.cnn_process_main(config_cnn)
 
     # %% UBFC_rppg
     # Complete rPPG process

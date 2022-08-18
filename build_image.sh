@@ -5,7 +5,7 @@ docker build --build-arg USER=$USER \
              --build-arg UID=$UID \
              --build-arg GID=$GID \
              --build-arg PW=29653847 \
-             -t masterarbeit_kreilinger_pre_2x_ubfc:1.0 \
+             -t masterarbeit_kreilinger_pre_2x_ubfc:1.1 \
              .
 
 
