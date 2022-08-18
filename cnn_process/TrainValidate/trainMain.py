@@ -21,7 +21,7 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
 
     Plot_results = False
     wandb.watch(model, loss_Inst, log="all", log_freq=10)
-    print(torch.cuda.memory_summary(device=config.device, abbreviated=False))
+    #print(torch.cuda.memory_summary(device=config.device, abbreviated=False))
     # %% train and validate model
     epoch_number = 0.
     example_ct = 0.  # number of examples seen
@@ -44,7 +44,7 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
             # Gather data and report
             example_ct += len(inputs)
             if batch_ct % 10 == 9:
-                print(torch.cuda.memory_summary(device=config.device, abbreviated=False))
+                #print(torch.cuda.memory_summary(device=config.device, abbreviated=False))
                 last_loss = running_loss / 10
                 wandb.log({"epoch": epoch, "train_loss": last_loss})
                 print(f"Loss after " + str(batch_ct + 1).zfill(4) + f" batches: {last_loss:.3f}")

@@ -115,7 +115,7 @@ if __name__ == '__main__':
         nFramesVideo=n_FRAMES_VIDEO,
         device=device,
         epochs=50,
-        batch_size=4,
+        batch_size=8,
         learning_rate=0.0001,
         dataset="UBFC_rPPG",
         architecture="PhysNet")

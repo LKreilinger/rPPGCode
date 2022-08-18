@@ -34,7 +34,7 @@ def makeAnnotation(tempPath, Datasetpath, nFramesVideo):
                 #LabelsSplit=LabelsSplit.astype(str)
                 f.write(Name+ " " + StartFrame + " " + EndFrame + " ")    # Write inside file
                 for listitem in range(len(LabelsSplit[0])):
-                    single_label=str(LabelsSplit[0, listitem])
+                    single_label=str(int(LabelsSplit[0, listitem]))
                     f.write(single_label + " ")
                 f.write("\n") 
     f.close()
