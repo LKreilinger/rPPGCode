@@ -17,7 +17,7 @@ from Preprocessing.UBFC_rPPG import preprocessing_ubfc_rppg_main
 
 if __name__ == '__main__':
     # for docker change workdir
-    docker = False
+    docker = True
     if docker:
         print("Docker is working")
         workingPath = os.path.abspath(os.getcwd())
@@ -28,6 +28,7 @@ if __name__ == '__main__':
         workingPath = os.path.abspath(os.getcwd())
         genPath = os.path.dirname(workingPath)
         tempPathNofile = os.path.join(workingPath, "temp")
+
 
     outputDataWCDPath = os.path.join(genPath, "output", "WCDDataset")
     outputDataWCDSplitPath = os.path.join(genPath, "output", "WCDDatasetSplit")
@@ -67,7 +68,7 @@ if __name__ == '__main__':
 
 
 
-    # %%
+    # %% UBFC_Phys
     # Complete deep neuronal network process including
     #   - split data
     #   - load data
@@ -92,8 +93,31 @@ if __name__ == '__main__':
         dataset="UBFC_Phys",
         architecture="PhysNet")
 
-    model = cnn_process_main.cnn_process_main(config_cnn)
+    # model = cnn_process_main.cnn_process_main(config_cnn)
 
-    # WCD
-    # splitData.split_data(outputDataWCDPath, n_FRAMES_VIDEO)
-    # training_loader, validation_loader, test_loader = loadData.load_data(outputDataWCDSplitPath, n_FRAMES_VIDEO)
+    # %% UBFC_rppg
+    # Complete deep neuronal network process including
+    #   - split data
+    #   - load data
+    #   - define training environment
+    #   - define model
+    #   - train and validate model
+    #   - evaluate model
+
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    config_cnn = dict(
+        path_dataset=os.path.join(genPath, "output", "UBFC_rPPG_Dataset"),
+        path_dataset_split=os.path.join(genPath, "output", "UBFC_rPPG_Dataset_Split"),
+        path_model=os.path.join(genPath, "output", "Model"),
+        train_split=60,
+        validation_split=15,
+        test_split=25,
+        nFramesVideo=n_FRAMES_VIDEO,
+        device=device,
+        epochs=50,
+        batch_size=4,
+        learning_rate=0.0001,
+        dataset="UBFC_rPPG",
+        architecture="PhysNet")
+
+    model = cnn_process_main.cnn_process_main(config_cnn)

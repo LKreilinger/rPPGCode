@@ -49,7 +49,6 @@ def viola_jonas_face_detector_img(currentPath: str, destinationPath: str,
         file_path = os.path.join(currentPath, filename)
         frame = cv2.imread(file_path, cv2.IMREAD_COLOR)
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        # todo What to do if two or more faces are detected
         faces = faceCascade.detectMultiScale(gray,
                                              scaleFactor=1.03,
                                              minNeighbors=3,
