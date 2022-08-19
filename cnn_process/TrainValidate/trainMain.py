@@ -40,7 +40,6 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
             inputs, BVP_label = data
             loss = train_batch.train_batch(inputs, BVP_label, optimizer, model, loss_Inst)
             running_loss += loss.item()
-            print("loss", loss)
             # Gather data and report
             example_ct += len(inputs)
             if batch_ct % 10 == 9:
