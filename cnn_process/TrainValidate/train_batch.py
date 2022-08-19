@@ -22,8 +22,6 @@ def train_batch(inputs, BVP_label, optimizer, model, loss_Inst):
     BVP_label = (BVP_label - torch.mean(BVP_label.float())) / torch.std(BVP_label.float())  # normalize
 
     # Calculate the loss
-    print("rPPG",rPPG.shape)
-    print("BVP_label",BVP_label.shape)
     loss = loss_Inst(rPPG, BVP_label)
     loss.backward()
 
