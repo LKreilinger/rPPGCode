@@ -5,8 +5,6 @@ def train_batch(inputs, BVP_label, optimizer, model, loss_Inst):
     # Zero your gradients for every batch!
     optimizer.zero_grad()
 
-
-    # print(inputs.shape)
     BVP_label = torch.stack(BVP_label)
     if torch.cuda.is_available():
         inputs = inputs.cuda()

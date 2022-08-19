@@ -87,7 +87,7 @@ if __name__ == '__main__':
     #   - define model
     #   - train and validate model
     #   - evaluate model
-    batch_sizes = [2, 4, 8, 16, 32]
+    batch_sizes = [1, 2, 4, 8, 16, 32]
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     for size in batch_sizes:
         config_cnn = dict(
@@ -105,7 +105,7 @@ if __name__ == '__main__':
             dataset="UBFC_Phys",
             architecture="PhysNet")
 
-        model = cnn_process_main.cnn_process_main(config_cnn)
+        #model = cnn_process_main.cnn_process_main(config_cnn)
 
         # %% UBFC_rppg
         # Complete cnn process
