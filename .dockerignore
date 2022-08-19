@@ -1,3 +1,5 @@
 runs/
 venv/
 .git/
+wandb/
+data_collection/

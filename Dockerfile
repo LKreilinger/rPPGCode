@@ -41,5 +41,4 @@ COPY . ./
 # Install dependencies:
 RUN pip install --no-cache-dir -r requirements.txt --user
 RUN pip install --no-cache-dir torch==1.9.0+cu111 torchvision==0.10.0+cu111 -f https://download.pytorch.org/whl/torch_stable.html --user
-#RUN wandb login b2b87b7a47a54d74a79cf8ceb131c26efe9418a5
 CMD ["python3", "__main__.py"]

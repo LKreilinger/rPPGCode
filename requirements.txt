@@ -16,3 +16,4 @@ threaded==4.1.0
 natsort==8.1.0
 python-dateutil==2.8.2
 wandb==0.13.1
+heartpy==1.2.7

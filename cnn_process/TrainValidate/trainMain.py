@@ -92,7 +92,7 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
 
     # save last model
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-    model_name = "model_{}_{}".format(timestamp, epoch_number)
+    model_name = "model_{}".format(timestamp)
     model_path = os.path.join(config.path_model, model_name)
     torch.save(model.state_dict(), model_path)
     print('Finished Training')

@@ -1,8 +1,8 @@
 import torch
 import numpy as np
-import matplotlib.pyplot as plt
 import glob
 import os
+import heartpy as hp
 
 # local Packages
 from cnn_process.TrainValidate import get_pulse
@@ -15,10 +15,11 @@ def test_model(config, test_loader):
     model_path = os.path.join(config.path_model, "*")
     files = glob.glob(model_path)
     best_model_path = max(files, key=os.path.getctime)
-    device = torch.device('cpu')
-    saved_model.load_state_dict(torch.load(best_model_path, map_location=device))
+    saved_model.load_state_dict(torch.load(best_model_path, map_location=config.device))
     saved_model.eval()
     n = 0
+    BVP_label_all = np.empty([])
+    rPPG_all = np.empty([])
     with torch.no_grad():
         for data in test_loader:
             inputs, BVP_label = data
@@ -32,22 +33,25 @@ def test_model(config, test_loader):
             if torch.cuda.is_available():
                 rPPG = rPPG.cpu()
 
-            if True:
-                fps = 30
-                rPPGNP = rPPG.detach().numpy()
-                rPPGNP = np.transpose(rPPGNP)
-                BVP_labelNP = BVP_label.detach().numpy()
-                pulse_BVP_labelNP = get_pulse.get_rfft_pulse(BVP_labelNP, fps)  # get pulse from signal
-                pulse_PPGNP = get_pulse.get_rfft_pulse(rPPGNP, fps)  # get pulse from signal
-                max_time = rPPGNP.size / fps
-                time_steps = np.linspace(0, max_time, rPPGNP.size)
-                plt.figure(figsize=(15, 15))
-                plt.title('EPOCH {}:'.format(n + 1))
-                plt.plot(time_steps, rPPGNP, label='rPPG')
-                plt.plot(time_steps, BVP_labelNP, label='BVP_label')
-                plt.xlabel("Time [s]")
-                plt.ylabel("Amplitude")
-                plt.legend()
-                plt.show()
-                print('Label Puls {} Test result {}'.format(pulse_BVP_labelNP, pulse_PPGNP))
-                n = n + 1
+            rPPG = rPPG.permute(1, 0)  # [(nframs label), batch] = y.shape
+            rPPG = (rPPG - torch.mean(rPPG)) / torch.std(rPPG)  # normalize
+            BVP_label = (BVP_label - torch.mean(BVP_label.float())) / torch.std(BVP_label.float())  # normalize
+
+            # add BVP_label to BVP_label_all
+            rPPGNP = rPPG.detach().numpy()
+            rPPG_all = np.add(rPPG_all, rPPGNP)
+            # add rPPG to rPPG_all
+            BVP_labelNP = BVP_label.detach().numpy()
+            BVP_label_all = np.add(BVP_label_all, BVP_labelNP)
+
+        # get puls
+        pulse_label = np.zeros((1, BVP_label_all.shape[1]))
+        pulse_predic = np.zeros((1, BVP_label_all.shape[1]))
+        for col in range(BVP_label_all.shape[1]):
+            working_data_BVP_label_all, measures_BVP_label_all = hp.process(BVP_label_all[:, col], config.fps)
+            pulse_label[0, col] = measures_BVP_label_all['bpm']
+            working_data_rPPG_all, measures_rPPG_all = hp.process(rPPG_all[:, col], config.fps)
+            pulse_predic[0, col] = working_data_rPPG_all['bpm']
+
+
+

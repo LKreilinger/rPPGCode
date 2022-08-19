@@ -50,7 +50,7 @@ if __name__ == '__main__':
         minNeighbors=6,
         minSize=(90, 90),
         nFramesVideo=n_FRAMES_VIDEO)
-    #preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_Phys)
+    preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_Phys)
 
     # %%
     # Preprocessing WCD Dataset
@@ -75,7 +75,7 @@ if __name__ == '__main__':
         minSize=(90, 90),
         nFramesVideo=n_FRAMES_VIDEO)
 
-    preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_rPPG)
+    #preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_rPPG)
 
 
 
@@ -88,38 +88,43 @@ if __name__ == '__main__':
     #   - train and validate model
     #   - evaluate model
     batch_sizes = [4, 8, 16, 32]
+    learning_rates = [0.01, 0.001, 0.0001] #default 0.0001
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     for size in batch_sizes:
-        config_cnn_ubfc_phys = dict(
-            path_dataset=os.path.join(genPath, "output", "UBFC_Phys_Dataset"),
-            path_dataset_split=os.path.join(genPath, "output", "UBFC_Phys_Dataset_Split"),
-            path_model=os.path.join(genPath, "output", "Model"),
-            train_split=60,
-            validation_split=15,
-            test_split=25,
-            nFramesVideo=n_FRAMES_VIDEO,
-            device=device,
-            epochs=40,
-            batch_size=size,
-            learning_rate=0.0001,
-            dataset="UBFC_Phys",
-            architecture="PhysNet")
+        for lr in learning_rates:
 
-        config_cnn_ubfc_rppg = dict(
-            path_dataset=os.path.join(genPath, "output", "UBFC_rPPG_Dataset"),
-            path_dataset_split=os.path.join(genPath, "output", "UBFC_rPPG_Dataset_Split"),
-            path_model=os.path.join(genPath, "output", "Model"),
-            train_split=60,
-            validation_split=15,
-            test_split=25,
-            nFramesVideo=n_FRAMES_VIDEO,
-            device=device,
-            epochs=40,
-            batch_size=size,
-            learning_rate=0.0001,
-            dataset="UBFC_rPPG",
-            architecture="PhysNet")
+            config_cnn_ubfc_phys = dict(
+                path_dataset=os.path.join(genPath, "output", "UBFC_Phys_Dataset"),
+                path_dataset_split=os.path.join(genPath, "output", "UBFC_Phys_Dataset_Split"),
+                path_model=os.path.join(genPath, "output", "Model"),
+                fps=30,
+                train_split=60,
+                validation_split=15,
+                test_split=25,
+                nFramesVideo=n_FRAMES_VIDEO,
+                device=device,
+                epochs=40,
+                batch_size=size,
+                learning_rate=lr,
+                dataset="UBFC_Phys",
+                architecture="PhysNet")
+
+            config_cnn_ubfc_rppg = dict(
+                path_dataset=os.path.join(genPath, "output", "UBFC_rPPG_Dataset"),
+                path_dataset_split=os.path.join(genPath, "output", "UBFC_rPPG_Dataset_Split"),
+                path_model=os.path.join(genPath, "output", "Model"),
+                fps=30,
+                train_split=60,
+                validation_split=15,
+                test_split=25,
+                nFramesVideo=n_FRAMES_VIDEO,
+                device=device,
+                epochs=40,
+                batch_size=size,
+                learning_rate=lr,
+                dataset="UBFC_rPPG",
+                architecture="PhysNet")
 
 
-        model = cnn_process_main.cnn_process_main(config_cnn_ubfc_rppg)
-        # model = cnn_process_main.cnn_process_main(config_cnn_ubfc_phys)
+            #model = cnn_process_main.cnn_process_main(config_cnn_ubfc_rppg)
+            #model = cnn_process_main.cnn_process_main(config_cnn_ubfc_phys)

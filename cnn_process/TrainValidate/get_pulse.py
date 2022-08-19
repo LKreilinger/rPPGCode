@@ -1,6 +1,7 @@
 import numpy as np
 
 def get_rfft_pulse(signal,fps):
+
     signal_size = len(signal)
     signal = signal.flatten()
     fft_data = np.fft.rfft(signal)  # FFT
