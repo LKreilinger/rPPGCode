@@ -114,11 +114,12 @@ if __name__ == '__main__':
             test_split=25,
             nFramesVideo=n_FRAMES_VIDEO,
             device=device,
-            epochs=1,
+            epochs=40,
             batch_size=size,
             learning_rate=0.0001,
             dataset="UBFC_rPPG",
             architecture="PhysNet")
 
-        # model = cnn_process_main.cnn_process_main(config_cnn_ubfc_phys)
+
         model = cnn_process_main.cnn_process_main(config_cnn_ubfc_rppg)
+        # model = cnn_process_main.cnn_process_main(config_cnn_ubfc_phys)
