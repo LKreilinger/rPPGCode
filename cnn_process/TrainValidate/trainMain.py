@@ -40,7 +40,7 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
             inputs, BVP_label = data
             loss = train_batch.train_batch(inputs, BVP_label, optimizer, model, loss_Inst)
             running_loss += loss.item()
-
+            print("loss", loss)
             # Gather data and report
             example_ct += len(inputs)
             if batch_ct % 10 == 9:
@@ -66,7 +66,7 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
                 if batch_validation_ct % 10 == 9:
                     wandb.log({"epoch": epoch, "val_loss": avg_vloss})
 
-        torch.cuda.memory_summary(device=None, abbreviated=False)
+        # torch.cuda.memory_summary(device=None, abbreviated=False)
         print(f"Loss train: {last_loss:.3f}" + f" Loss validation: {avg_vloss:.3f}")
 
         # Plot

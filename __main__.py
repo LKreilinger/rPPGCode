@@ -87,10 +87,10 @@ if __name__ == '__main__':
     #   - define model
     #   - train and validate model
     #   - evaluate model
-    batch_sizes = [2, 4, 8, 16, 32]
+    batch_sizes = [8, 4, 8, 16, 32]
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     for size in batch_sizes:
-        config_cnn = dict(
+        config_cnn_ubfc_phys = dict(
             path_dataset=os.path.join(genPath, "output", "UBFC_Phys_Dataset"),
             path_dataset_split=os.path.join(genPath, "output", "UBFC_Phys_Dataset_Split"),
             path_model=os.path.join(genPath, "output", "Model"),
@@ -105,7 +105,7 @@ if __name__ == '__main__':
             dataset="UBFC_Phys",
             architecture="PhysNet")
 
-        #model = cnn_process_main.cnn_process_main(config_cnn)
+        #model = cnn_process_main.cnn_process_main(config_cnn_ubfc_phys)
 
         # %% UBFC_rppg
         # Complete cnn process
@@ -115,7 +115,7 @@ if __name__ == '__main__':
         #   - define model
         #   - train and validate model
         #   - evaluate model
-        config_cnn = dict(
+        config_cnn_ubfc_rppg = dict(
             path_dataset=os.path.join(genPath, "output", "UBFC_rPPG_Dataset"),
             path_dataset_split=os.path.join(genPath, "output", "UBFC_rPPG_Dataset_Split"),
             path_model=os.path.join(genPath, "output", "Model"),
@@ -130,4 +130,4 @@ if __name__ == '__main__':
             dataset="UBFC_rPPG",
             architecture="PhysNet")
 
-        model = cnn_process_main.cnn_process_main(config_cnn)
+        model = cnn_process_main.cnn_process_main(config_cnn_ubfc_rppg)
