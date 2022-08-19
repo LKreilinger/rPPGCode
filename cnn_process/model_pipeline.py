@@ -12,7 +12,8 @@ def model_pipeline(hyperparameters):
         config = wandb.config
 
         # split data
-        splitData.split_data(config)
+        if config.batch_size == 1:
+            splitData.split_data(config)
 
         # make the model, data, and optimization problem
         model, train_loader, validation_loader, test_loader, loss_Inst, optimizer = load_main.load_main(config)
