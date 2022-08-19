@@ -87,7 +87,7 @@ if __name__ == '__main__':
     #   - define model
     #   - train and validate model
     #   - evaluate model
-    batch_sizes = [8, 4, 8, 16, 32]
+    batch_sizes = [8, 4, 2, 1, 32]
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     for size in batch_sizes:
         config_cnn_ubfc_phys = dict(
