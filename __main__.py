@@ -50,7 +50,7 @@ if __name__ == '__main__':
         minNeighbors=6,
         minSize=(90, 90),
         nFramesVideo=n_FRAMES_VIDEO)
-    preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_Phys)
+    #preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_Phys)
 
     # %%
     # Preprocessing WCD Dataset
@@ -75,60 +75,62 @@ if __name__ == '__main__':
         minSize=(90, 90),
         nFramesVideo=n_FRAMES_VIDEO)
 
-    preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_rPPG)
+    #preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_rPPG)
 
 
 
     # %% UBFC_Phys
-    # Complete rPPG process
+    # Complete cnn process
     #   - split data
     #   - load data
     #   - define training environment
     #   - define model
     #   - train and validate model
     #   - evaluate model
+    batch_sizes = [1, 2, 4, 8, 16, 32]
+    for size in batch_sizes:
+        print(size)
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        config_cnn = dict(
+            path_dataset=os.path.join(genPath, "output", "UBFC_Phys_Dataset"),
+            path_dataset_split=os.path.join(genPath, "output", "UBFC_Phys_Dataset_Split"),
+            path_model=os.path.join(genPath, "output", "Model"),
+            train_split=60,
+            validation_split=15,
+            test_split=25,
+            nFramesVideo=n_FRAMES_VIDEO,
+            device=device,
+            epochs=40,
+            batch_size=size,
+            learning_rate=0.0001,
+            dataset="UBFC_Phys",
+            architecture="PhysNet")
 
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    config_cnn = dict(
-        path_dataset=os.path.join(genPath, "output", "UBFCDataset"),
-        path_dataset_split=os.path.join(genPath, "output", "UBFCDatasetSplit"),
-        path_model=os.path.join(genPath, "output", "Model"),
-        train_split=60,
-        validation_split=15,
-        test_split=25,
-        nFramesVideo=n_FRAMES_VIDEO,
-        device=device,
-        epochs=20,
-        batch_size=32,
-        learning_rate=0.0001,
-        dataset="UBFC_Phys",
-        architecture="PhysNet")
+        model = cnn_process_main.cnn_process_main(config_cnn)
 
-    #model = cnn_process_main.cnn_process_main(config_cnn)
+        # %% UBFC_rppg
+        # Complete cnn process
+        #   - split data
+        #   - load data
+        #   - define training environment
+        #   - define model
+        #   - train and validate model
+        #   - evaluate model
 
-    # %% UBFC_rppg
-    # Complete rPPG process
-    #   - split data
-    #   - load data
-    #   - define training environment
-    #   - define model
-    #   - train and validate model
-    #   - evaluate model
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        config_cnn = dict(
+            path_dataset=os.path.join(genPath, "output", "UBFC_rPPG_Dataset"),
+            path_dataset_split=os.path.join(genPath, "output", "UBFC_rPPG_Dataset_Split"),
+            path_model=os.path.join(genPath, "output", "Model"),
+            train_split=60,
+            validation_split=15,
+            test_split=25,
+            nFramesVideo=n_FRAMES_VIDEO,
+            device=device,
+            epochs=40,
+            batch_size=size,
+            learning_rate=0.0001,
+            dataset="UBFC_rPPG",
+            architecture="PhysNet")
 
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    config_cnn = dict(
-        path_dataset=os.path.join(genPath, "output", "UBFC_rPPG_Dataset"),
-        path_dataset_split=os.path.join(genPath, "output", "UBFC_rPPG_Dataset_Split"),
-        path_model=os.path.join(genPath, "output", "Model"),
-        train_split=60,
-        validation_split=15,
-        test_split=25,
-        nFramesVideo=n_FRAMES_VIDEO,
-        device=device,
-        epochs=50,
-        batch_size=8,
-        learning_rate=0.0001,
-        dataset="UBFC_rPPG",
-        architecture="PhysNet")
-
-    #model = cnn_process_main.cnn_process_main(config_cnn)
+        model = cnn_process_main.cnn_process_main(config_cnn)
