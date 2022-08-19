@@ -87,10 +87,9 @@ if __name__ == '__main__':
     #   - define model
     #   - train and validate model
     #   - evaluate model
-    batch_sizes = [1, 2, 4, 8, 16, 32]
+    batch_sizes = [2, 4, 8, 16, 32]
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     for size in batch_sizes:
-        print(size)
-        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         config_cnn = dict(
             path_dataset=os.path.join(genPath, "output", "UBFC_Phys_Dataset"),
             path_dataset_split=os.path.join(genPath, "output", "UBFC_Phys_Dataset_Split"),
@@ -116,8 +115,6 @@ if __name__ == '__main__':
         #   - define model
         #   - train and validate model
         #   - evaluate model
-
-        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         config_cnn = dict(
             path_dataset=os.path.join(genPath, "output", "UBFC_rPPG_Dataset"),
             path_dataset_split=os.path.join(genPath, "output", "UBFC_rPPG_Dataset_Split"),
