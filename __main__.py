@@ -15,7 +15,7 @@ from Preprocessing import preprocessing_ubfc_main
 
 if __name__ == '__main__':
     # for docker change workdir
-    docker = True
+    docker = False
     if docker:
         print("Docker is working")
         workingPath = os.path.abspath(os.getcwd())
@@ -81,7 +81,7 @@ if __name__ == '__main__':
         minSize=(90, 90),
         nFramesVideo=n_FRAMES_VIDEO)
 
-    #preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_rPPG)
+    preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_rPPG)
 
 
 
