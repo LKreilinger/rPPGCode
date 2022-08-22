@@ -15,7 +15,7 @@ from Preprocessing import preprocessing_ubfc_main
 
 if __name__ == '__main__':
     # for docker change workdir
-    docker = False
+    docker = True
     if docker:
         print("Docker is working")
         workingPath = os.path.abspath(os.getcwd())
