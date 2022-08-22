@@ -26,7 +26,7 @@ def load_data(config):
 
     # load train data
     train_Data_path = os.path.join(config.path_dataset, "train")
-    train_annotation_file = os.path.join(train_Data_path, "annotation.txt")
+    train_annotation_file = os.path.join(train_Data_path, "annotations.txt")
     train_dataset = VideoFrameDataset(
         root_path=train_Data_path,
         annotationfile_path=train_annotation_file,
@@ -43,7 +43,7 @@ def load_data(config):
 
     # load validation data
     val_Data_path = os.path.join(config.path_dataset, "validation")
-    val_annotation_file = os.path.join(val_Data_path, "annotation.txt")
+    val_annotation_file = os.path.join(val_Data_path, "annotations.txt")
     val_dataset = VideoFrameDataset(
         root_path=val_Data_path,
         annotationfile_path=val_annotation_file,
@@ -59,7 +59,7 @@ def load_data(config):
 
     # load test data
     test_Data_path = os.path.join(config.path_dataset, "test")
-    test_annotation_file = os.path.join(test_Data_path, "annotation.txt")
+    test_annotation_file = os.path.join(test_Data_path, "annotations.txt")
     test_dataset = VideoFrameDataset(
         root_path=test_Data_path,
         annotationfile_path=test_annotation_file,

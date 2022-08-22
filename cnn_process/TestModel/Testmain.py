@@ -39,10 +39,10 @@ def test_model(config, test_loader):
 
             # add BVP_label to BVP_label_all
             rPPGNP = rPPG.detach().numpy()
-            rPPG_all = np.add(rPPG_all, rPPGNP)
+            rPPG_all = np.concatenate((rPPG_all, rPPGNP), axis=1)
             # add rPPG to rPPG_all
             BVP_labelNP = BVP_label.detach().numpy()
-            BVP_label_all = np.add(BVP_label_all, BVP_labelNP)
+            BVP_label_all = np.concatenate((BVP_label_all, BVP_labelNP), axis=1)
 
         # get puls
         pulse_label = np.zeros((1, BVP_label_all.shape[1]))
