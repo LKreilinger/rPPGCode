@@ -7,11 +7,12 @@ from Preprocessing import pulse_adjust_fps_no_face
 from Preprocessing.UBFC_rPPG import pulse_ubfc_rppg_convert
 
 
-def pulse_pre_ubfc(config, noFaceListAllVideos, delete_videos):
+def pulse_pre_ubfc(config, noFaceListAllVideos, delete_videos, data_split):
     if os.path.exists(config['tempPathNofile']) and os.path.isdir(config['tempPathNofile']):
         shutil.rmtree(config['tempPathNofile'])
     os.mkdir(config['tempPathNofile'])
-    for path, subdirs, files in os.walk(config['genPathData']):
+    path_raw_data_split = os.path.join(config['genPathData'], data_split)
+    for path, subdirs, files in os.walk(path_raw_data_split):
         for name in files:
             currentPath = os.path.join(path, name)
             tempPath = os.path.join(config['tempPathNofile'], name)

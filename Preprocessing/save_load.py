@@ -2,10 +2,10 @@ import os
 import shutil
 import pickle
 
-def save_variable(config, noFaceListAllVideos, delete_videos):
+def save_variable(config, noFaceListAllVideos, delete_videos, data_split):
     # save noFaceListAllVideos and delete_videos
-    name_no_face = "noFaceListAllVideos.pkl"
-    name_deleted_videos = "delete_videos.pkl"
+    name_no_face = "noFaceListAllVideos_" + data_split + ".pkl"
+    name_deleted_videos = "delete_videos_" + data_split + ".pkl"
     list_path = config['variblesPath']
     path_deleted_videos = os.path.join(list_path, name_deleted_videos)
     path_no_face = os.path.join(list_path, name_no_face)
@@ -22,10 +22,10 @@ def save_variable(config, noFaceListAllVideos, delete_videos):
     pickle.dump(delete_videos, open_file)
     open_file.close()
 
-def load_variable(config):
+def load_variable(config, data_split):
     # open noFaceListAllVideos and delete_videos
-    name_no_face = "noFaceListAllVideos.pkl"
-    name_deleted_videos = "delete_videos.pkl"
+    name_no_face = "noFaceListAllVideos_" + data_split + ".pkl"
+    name_deleted_videos = "delete_videos_" + data_split + ".pkl"
     list_path = config['variblesPath']
     path_deleted_videos = os.path.join(list_path, name_deleted_videos)
     path_no_face = os.path.join(list_path, name_no_face)

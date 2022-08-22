@@ -7,12 +7,14 @@ from Preprocessing import FaceDetection
 
 
 # %%  Delete dataset folder (inside of output folder)
-def video_pre_ubfc(config):
+def video_pre_ubfc(config, data_split):
+    path_dataset_split = os.path.join(config['datasetPath'], data_split)
+    path_raw_data_split = os.path.join(config['genPathData'], data_split)
     noFaceListAllVideos = []
     delete_videos = []
-    if os.path.exists(config['datasetPath']) and os.path.isdir(config['datasetPath']):
-        shutil.rmtree(config['datasetPath'])
-    os.mkdir(config['datasetPath'])
+    if os.path.exists(path_dataset_split) and os.path.isdir(path_dataset_split):
+        shutil.rmtree(path_dataset_split)
+    os.mkdir(path_dataset_split)
 
 
     if os.path.exists(config['tempPathNofile']) and os.path.isdir(config['tempPathNofile']):
@@ -20,10 +22,10 @@ def video_pre_ubfc(config):
     os.mkdir(config['tempPathNofile'])
 
     # %% Face detection and save images in folder of video name
-    for path, subdirs, files in os.walk(config['genPathData']):
+    for path, subdirs, files in os.walk(path_raw_data_split):
         for name in files:
             currentPath = os.path.join(path, name)
-            destinationPath = os.path.join(config['datasetPath'], name)
+            destinationPath = os.path.join(path_dataset_split, name)
             tempPath = os.path.join(config['tempPathNofile'], name)
             if fnmatch(name, config['patternVideo']):
                 os.mkdir(destinationPath)  # make as many folders as videos excist, Foldername is equal the videoname

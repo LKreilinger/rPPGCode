@@ -25,7 +25,7 @@ def load_data(config):
 
 
     # load train data
-    train_Data_path = os.path.join(config.path_dataset_split, "train")
+    train_Data_path = os.path.join(config.path_dataset, "train")
     train_annotation_file = os.path.join(train_Data_path, "train_annotation.txt")
     train_dataset = VideoFrameDataset(
         root_path=train_Data_path,
@@ -42,7 +42,7 @@ def load_data(config):
                                                pin_memory=GPU)
 
     # load validation data
-    val_Data_path = os.path.join(config.path_dataset_split, "validation")
+    val_Data_path = os.path.join(config.path_dataset, "validation")
     val_annotation_file = os.path.join(val_Data_path, "val_annotation.txt")
     val_dataset = VideoFrameDataset(
         root_path=val_Data_path,
@@ -58,7 +58,7 @@ def load_data(config):
                                                     pin_memory=GPU)
 
     # load test data
-    test_Data_path = os.path.join(config.path_dataset_split, "test")
+    test_Data_path = os.path.join(config.path_dataset, "test")
     test_annotation_file = os.path.join(test_Data_path, "test_annotation.txt")
     test_dataset = VideoFrameDataset(
         root_path=test_Data_path,

@@ -11,10 +11,6 @@ def model_pipeline(hyperparameters):
         # access all HPs through wandb.config, so logging matches execution!
         config = wandb.config
 
-        # split data
-        if config.batch_size == 4:
-            splitData.split_data(config)
-
         # make the model, data, and optimization problem
         model, train_loader, validation_loader, test_loader, loss_Inst, optimizer = load_main.load_main(config)
         #print(model)

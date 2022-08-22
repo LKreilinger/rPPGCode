@@ -10,6 +10,7 @@ def split_data(config):
     # check if already solit
     if "test" in list_subdir:
         undo_split.undo_split(config)
+    list_subdir = os.listdir(config['genPathData'])
 
     train_path = os.path.join(config['genPathData'], "train")
     val_path = os.path.join(config['genPathData'], "validation")
@@ -45,4 +46,3 @@ def split_data(config):
     move_s.move_s(ran_train_list, config, list_subdir, train_path)
     move_s.move_s(ran_val_list, config, list_subdir, val_path)
     move_s.move_s(ran_test_list, config, list_subdir, test_path)
-    a=1

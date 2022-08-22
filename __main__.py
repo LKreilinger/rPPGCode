@@ -101,7 +101,6 @@ if __name__ == '__main__':
 
             config_cnn_ubfc_phys = dict(
                 path_dataset=os.path.join(genPath, "output", "UBFC_Phys_Dataset"),
-                path_dataset_split=os.path.join(genPath, "output", "UBFC_Phys_Dataset_Split"),
                 path_model=os.path.join(genPath, "output", "Model"),
                 fps=30,
                 nFramesVideo=n_FRAMES_VIDEO,
@@ -114,7 +113,6 @@ if __name__ == '__main__':
 
             config_cnn_ubfc_rppg = dict(
                 path_dataset=os.path.join(genPath, "output", "UBFC_rPPG_Dataset"),
-                path_dataset_split=os.path.join(genPath, "output", "UBFC_rPPG_Dataset_Split"),
                 path_model=os.path.join(genPath, "output", "Model"),
                 fps=30,
                 nFramesVideo=n_FRAMES_VIDEO,
