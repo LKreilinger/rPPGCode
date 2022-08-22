@@ -15,7 +15,7 @@ from Preprocessing import preprocessing_ubfc_main
 
 if __name__ == '__main__':
     # for docker change workdir
-    docker = True
+    docker = False
     if docker:
         print("Docker is working")
         workingPath = os.path.abspath(os.getcwd())
@@ -35,6 +35,9 @@ if __name__ == '__main__':
     #       Preprocessing UBFC_Phys Dataset
     # Preprocessing UBFC_rPPG dataset
     config_pre_UBFC_Phys = dict(
+        train_split=60,
+        validation_split=15,
+        test_split=25,
         samplingRatePulse=64,
         newSamplingRatePulse=30,
         newFpsVideo=30,
@@ -50,7 +53,7 @@ if __name__ == '__main__':
         minNeighbors=6,
         minSize=(90, 90),
         nFramesVideo=n_FRAMES_VIDEO)
-    preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_Phys)
+    #preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_Phys)
 
     # %%
     # Preprocessing WCD Dataset
@@ -59,6 +62,9 @@ if __name__ == '__main__':
     # %%
     # Preprocessing UBFC_rPPG dataset
     config_pre_UBFC_rPPG = dict(
+        train_split=60,
+        validation_split=15,
+        test_split=25,
         samplingRatePulse=30,
         newSamplingRatePulse=30,
         newFpsVideo=30,
@@ -75,7 +81,7 @@ if __name__ == '__main__':
         minSize=(90, 90),
         nFramesVideo=n_FRAMES_VIDEO)
 
-    #preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_rPPG)
+    preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_rPPG)
 
 
 
@@ -98,9 +104,6 @@ if __name__ == '__main__':
                 path_dataset_split=os.path.join(genPath, "output", "UBFC_Phys_Dataset_Split"),
                 path_model=os.path.join(genPath, "output", "Model"),
                 fps=30,
-                train_split=60,
-                validation_split=15,
-                test_split=25,
                 nFramesVideo=n_FRAMES_VIDEO,
                 device=device,
                 epochs=40,
@@ -114,9 +117,6 @@ if __name__ == '__main__':
                 path_dataset_split=os.path.join(genPath, "output", "UBFC_rPPG_Dataset_Split"),
                 path_model=os.path.join(genPath, "output", "Model"),
                 fps=30,
-                train_split=60,
-                validation_split=15,
-                test_split=25,
                 nFramesVideo=n_FRAMES_VIDEO,
                 device=device,
                 epochs=40,
@@ -126,5 +126,5 @@ if __name__ == '__main__':
                 architecture="PhysNet")
 
 
-            #model = cnn_process_main.cnn_process_main(config_cnn_ubfc_rppg)
+            model = cnn_process_main.cnn_process_main(config_cnn_ubfc_rppg)
             #model = cnn_process_main.cnn_process_main(config_cnn_ubfc_phys)
