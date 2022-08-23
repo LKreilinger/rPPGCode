@@ -73,7 +73,6 @@ if __name__ == '__main__':
     os.environ["CUDA_VISIBLE_DEVICES"] = "1"
     print(torch.cuda.current_device())
     print(torch.cuda.device(1))
-    print(torch.cuda.get_device_name(1))
 
     for seed in seeds:
         config_pre_UBFC_rPPG = dict(
