@@ -54,7 +54,7 @@ def test_model(config, test_loader):
             working_data_BVP_label_all, measures_BVP_label_all = hp.process(BVP_label_all[:, col], config.fps)
             pulse_label[0, col] = measures_BVP_label_all['bpm']
             working_data_rPPG_all, measures_rPPG_all = hp.process(rPPG_all[:, col], config.fps)
-            pulse_predic[0, col] = working_data_rPPG_all['bpm']
+            pulse_predic[0, col] = measures_rPPG_all['bpm']
 
 
 

@@ -5,9 +5,9 @@ import shutil
 from Preprocessing import move_s, undo_split
 
 def split_data(config):
-    random.seed(1)
+    random.seed(config['randomSeed'])
     list_subdir = os.listdir(config['genPathData'])
-    # check if already solit
+    # check if data already split
     if "test" in list_subdir:
         undo_split.undo_split(config)
     list_subdir = os.listdir(config['genPathData'])
