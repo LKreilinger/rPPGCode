@@ -16,11 +16,6 @@ from cnn_process.TestModel import append_matrix, performance_metrics
 
 
 def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, optimizer, config):
-    """
-
-    """
-
-    Plot_results = False
     wandb.watch(model, loss_Inst, log="all", log_freq=10)
     # print(torch.cuda.memory_summary(device=config.device, abbreviated=False))
     # %% train and validate model

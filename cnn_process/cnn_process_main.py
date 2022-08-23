@@ -10,10 +10,8 @@ def cnn_process_main(config):
     torch.manual_seed(1)
     torch.cuda.manual_seed_all(1)
 
-
     # Weights & Biases login
     wandb.login()
-
 
     # Build, train and analyze the model with the pipeline
     model = model_pipeline.model_pipeline(config)
