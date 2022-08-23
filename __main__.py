@@ -21,6 +21,8 @@ if __name__ == '__main__':
         workingPath = os.path.abspath(os.getcwd())
         genPath = workingPath
         tempPathNofile = os.path.join(workingPath, "output", "temp")
+        os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"  # see issue #152
+        os.environ["CUDA_VISIBLE_DEVICES"] = "0"
     else:
         print("Docker is NOT working")
         workingPath = os.path.abspath(os.getcwd())
@@ -61,19 +63,7 @@ if __name__ == '__main__':
 
     # %%
     # Preprocessing UBFC_rPPG dataset
-    seeds = [2, 3, 4]
-    os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"  # see issue #152
-    os.environ["CUDA_VISIBLE_DEVICES"] = "0"
-    print(torch.cuda.is_available())
-    print(torch.cuda.device_count())
-    print(torch.cuda.current_device())
-    print(torch.cuda.device(0))
-    print(torch.cuda.get_device_name(0))
-    os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"  # see issue #152
-    os.environ["CUDA_VISIBLE_DEVICES"] = "1"
-    print(torch.cuda.current_device())
-    print(torch.cuda.device(1))
-
+    seeds = [3, 4]
     for seed in seeds:
         config_pre_UBFC_rPPG = dict(
             train_split=60,
@@ -92,11 +82,11 @@ if __name__ == '__main__':
             tempPathNofile=tempPathNofile,
             workingPath=workingPath,
             scaleFactor=1.1,
-            minNeighbors=6,
+            minNeighbors=8,
             minSize=(90, 90),
             nFramesVideo=n_FRAMES_VIDEO)
 
-        preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_rPPG)
+        #preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_rPPG)
 
 
 
@@ -119,6 +109,7 @@ if __name__ == '__main__':
         config_cnn_ubfc_phys = dict(
             path_dataset=os.path.join(genPath, "output", "UBFC_Phys_Dataset"),
             path_model=os.path.join(genPath, "output", "Model"),
+            test_split=25,
             fps=30,
             nFramesVideo=n_FRAMES_VIDEO,
             device=device,
@@ -131,6 +122,7 @@ if __name__ == '__main__':
         config_cnn_ubfc_rppg = dict(
             path_dataset=os.path.join(genPath, "output", "UBFC_rPPG_Dataset"),
             path_model=os.path.join(genPath, "output", "Model"),
+            test_split=25,
             fps=30,
             nFramesVideo=n_FRAMES_VIDEO,
             device=device,

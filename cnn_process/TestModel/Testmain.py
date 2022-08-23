@@ -2,10 +2,8 @@ import torch
 import numpy as np
 import glob
 import os
-import heartpy as hp
-
 # local Packages
-from cnn_process.TrainValidate import get_pulse
+from cnn_process.TestModel import performance_metrics, append_matrix
 from cnn_process.load.load_main import PhysNet
 
 
@@ -37,24 +35,13 @@ def test_model(config, test_loader):
             rPPG = (rPPG - torch.mean(rPPG)) / torch.std(rPPG)  # normalize
             BVP_label = (BVP_label - torch.mean(BVP_label.float())) / torch.std(BVP_label.float())  # normalize
 
-            rPPGNP = rPPG.detach().numpy()
-            BVP_labelNP = BVP_label.detach().numpy()
-            if n == 0:
-                rPPG_all = np.add(rPPG_all, rPPGNP)
-                BVP_label_all = np.add(BVP_label_all, BVP_labelNP)
-                n = 1
-            else:
-                rPPG_all = np.concatenate((rPPG_all, rPPGNP), axis=1)
-                BVP_label_all = np.concatenate((BVP_label_all, BVP_labelNP), axis=1)
+            predicted_label_all, ground_truth_all, first_run = append_matrix.append_truth_prediction_label(
+                BVP_label, rPPG, first_run, rPPG_all, BVP_label_all)
 
-        # get puls
-        pulse_label = np.zeros((1, BVP_label_all.shape[1]))
-        pulse_predic = np.zeros((1, BVP_label_all.shape[1]))
-        for col in range(BVP_label_all.shape[1]):
-            working_data_BVP_label_all, measures_BVP_label_all = hp.process(BVP_label_all[:, col], config.fps)
-            pulse_label[0, col] = measures_BVP_label_all['bpm']
-            working_data_rPPG_all, measures_rPPG_all = hp.process(rPPG_all[:, col], config.fps)
-            pulse_predic[0, col] = measures_rPPG_all['bpm']
+        # Calculate performace of model with test data
+        MAE, MSE = performance_metrics.eval_model(BVP_label_all, rPPG_all, config)
+        print(f"Test MAE: {MAE:.3f}" + f" Test MSE: {MSE:.3f}")
+
 
 
 

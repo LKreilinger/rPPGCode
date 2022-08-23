@@ -21,4 +21,4 @@ def val_batch(inputs, BVP_label, model, loss_Inst):
     del inputs
     del BVP_label
     torch.cuda.empty_cache()
-    return validation_loss_ecg, rPPG
+    return validation_loss_ecg, rPPG, BVP_label

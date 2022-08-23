@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 import wandb
 # local Packages
 from cnn_process.TrainValidate import train_batch, get_pulse, validate_batch
+from cnn_process.TestModel import append_matrix, performance_metrics
 
 
 def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, optimizer, config):
@@ -21,7 +22,7 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
 
     Plot_results = False
     wandb.watch(model, loss_Inst, log="all", log_freq=10)
-    #print(torch.cuda.memory_summary(device=config.device, abbreviated=False))
+    # print(torch.cuda.memory_summary(device=config.device, abbreviated=False))
     # %% train and validate model
     epoch_number = 0.
     example_ct = 0.  # number of examples seen
@@ -43,7 +44,7 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
             # Gather data and report
             example_ct += len(inputs)
             if batch_ct % 10 == 9:
-                #print(torch.cuda.memory_summary(device=config.device, abbreviated=False))
+                # print(torch.cuda.memory_summary(device=config.device, abbreviated=False))
                 last_loss = running_loss / 10
                 wandb.log({"epoch": epoch, "train_loss": last_loss})
                 print(f"Loss after " + str(batch_ct + 1).zfill(4) + f" batches: {last_loss:.3f}")
@@ -53,40 +54,28 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
         model.eval()
         running_vloss = 0.0
         torch.cuda.empty_cache()
+        first_run = 0
+        BVP_label_all = np.empty([])
+        rPPG_all = np.empty([])
         with torch.no_grad():
             for batch_validation_ct, validation_data in enumerate(validation_loader):
                 validation_inputs, BVP_validation_label = validation_data
-                vloss, rPPG = validate_batch.val_batch(validation_inputs, BVP_validation_label, model,
-                                                       loss_Inst)
+                vloss, rPPG, BVP_label = validate_batch.val_batch(validation_inputs, BVP_validation_label, model,
+                                                                  loss_Inst)
                 running_vloss += vloss.item()
                 avg_vloss = running_vloss / (batch_validation_ct + 1)
                 example_ct_validation += len(validation_inputs)
                 torch.cuda.empty_cache()
+
+                predicted_label_all, ground_truth_all, first_run = append_matrix.append_truth_prediction_label(
+                    BVP_label, rPPG, first_run, rPPG_all, BVP_label_all)
                 if batch_validation_ct % 10 == 9:
                     wandb.log({"epoch": epoch, "val_loss": avg_vloss})
 
-        # torch.cuda.memory_summary(device=None, abbreviated=False)
+        # Calculate performace of model with test data
+        MAE, MSE = performance_metrics.eval_model(BVP_label_all, rPPG_all, config)
         print(f"Loss train: {last_loss:.3f}" + f" Loss validation: {avg_vloss:.3f}")
-
-        # Plot
-        if Plot_results:
-            fps = 30
-            rPPGNP = rPPG.detach().numpy()
-            rPPGNP = np.transpose(rPPGNP)
-            BVP_labelNP = BVP_label.detach().numpy()
-            pulse_BVP_labelNP = get_pulse.get_rfft_pulse(BVP_labelNP, fps)  # get pulse from signal
-            pulse_PPGNP = get_pulse.get_rfft_pulse(rPPGNP, fps)  # get pulse from signal
-            max_time = rPPGNP.size / fps
-            time_steps = np.linspace(0, max_time, rPPGNP.size)
-            plt.figure(figsize=(15, 15))
-            plt.title('EPOCH {}:'.format(epoch_number + 1))
-            plt.plot(time_steps, rPPGNP, label='rPPG')
-            plt.plot(time_steps, BVP_labelNP, label='BVP_label')
-            plt.xlabel("Time [s]")
-            plt.ylabel("Amplitude")
-            plt.legend()
-            plt.show()
-            print('Label Puls {} Valid result {}'.format(pulse_BVP_labelNP, pulse_PPGNP))
+        print(f"Validation MAE: {MAE:.3f}" + f" Validation MSE: {MSE:.3f}")
 
         epoch_number += 1
 

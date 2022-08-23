@@ -17,4 +17,4 @@ def load_main(config):
     loss_Inst = lossFunction.Neg_Pearson()
 
 
-    return model, train_loader, test_loader, validation_loader, loss_Inst, optimizer
+    return model, train_loader, validation_loader, test_loader, loss_Inst, optimizer
