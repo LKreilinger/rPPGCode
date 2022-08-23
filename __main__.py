@@ -62,6 +62,11 @@ if __name__ == '__main__':
     # %%
     # Preprocessing UBFC_rPPG dataset
     seeds = [2, 3, 4]
+    torch.cuda.is_available()
+    torch.cuda.device_count()
+    torch.cuda.current_device()
+    torch.cuda.device(0)
+    torch.cuda.get_device_name(0)
     for seed in seeds:
         config_pre_UBFC_rPPG = dict(
             train_split=60,
