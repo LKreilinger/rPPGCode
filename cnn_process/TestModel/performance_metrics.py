@@ -26,4 +26,11 @@ def eval_model(ground_truth, predicted_label, config):
 
     MAE = sum / ground_truth.shape[1]
 
-    return MAE, MSE
+    #  standard deviation (SD)
+    diff_vector = np.zeros(ground_truth.shape[1])
+    for i in range(ground_truth.shape[1]):
+        diff_vector[i] = abs(pulse_label[0, i] - pulse_predic[0, i])
+    STD = np.std(diff_vector)
+
+
+    return MAE, MSE, STD

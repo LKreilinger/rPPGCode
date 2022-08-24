@@ -16,9 +16,9 @@ def test_model(config, test_loader):
     saved_model.load_state_dict(torch.load(best_model_path, map_location=config.device))
     saved_model.eval()
     saved_model.to(config.device)
-    n = 0
     BVP_label_all = np.empty([])
     rPPG_all = np.empty([])
+    first_run = 0
     with torch.no_grad():
         for data in test_loader:
             inputs, BVP_label = data
@@ -39,7 +39,7 @@ def test_model(config, test_loader):
                 BVP_label, rPPG, first_run, rPPG_all, BVP_label_all)
 
         # Calculate performace of model with test data
-        MAE, MSE = performance_metrics.eval_model(BVP_label_all, rPPG_all, config)
+        MAE, MSE, STD = performance_metrics.eval_model(BVP_label_all, rPPG_all, config)
         print(f"Test MAE: {MAE:.3f}" + f" Test MSE: {MSE:.3f}")
 
 
