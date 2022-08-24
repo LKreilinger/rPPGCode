@@ -85,7 +85,7 @@ if __name__ == '__main__':
         minSize=(90, 90),
         nFramesVideo=n_FRAMES_VIDEO)
 
-    preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_rPPG)
+    #preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_rPPG)
 
     # %% UBFC_Phys
     # Complete cnn process

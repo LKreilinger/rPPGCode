@@ -66,12 +66,14 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
                 if batch_validation_ct % 10 == 9:
                     wandb.log({"epoch": epoch, "val_loss": avg_vloss})
 
-
-        # Calculate performace of model with test data
-        MAE, MSE = performance_metrics.eval_model(BVP_label_all, rPPG_all, config)
-        wandb.log({"MAE": MAE, "MSE": MSE})
         print(f"Loss train: {last_loss:.3f}" + f" Loss validation: {avg_vloss:.3f}")
-        print(f"Validation MAE: {MAE:.3f}" + f" Validation MSE: {MSE:.3f}")
+        # Calculate performace of model with test data
+        try:
+            MAE, MSE = performance_metrics.eval_model(BVP_label_all, rPPG_all, config)
+            wandb.log({"MAE": MAE, "MSE": MSE})
+            print(f"Validation MAE: {MAE:.3f}" + f" Validation MSE: {MSE:.3f}")
+        except Exception:
+            print("Could not determine pulse for given signal")
 
         epoch_number += 1
 
