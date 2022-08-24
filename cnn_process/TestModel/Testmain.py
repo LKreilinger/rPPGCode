@@ -15,18 +15,18 @@ def test_model(config, test_loader):
     best_model_path = max(files, key=os.path.getctime)
     saved_model.load_state_dict(torch.load(best_model_path, map_location=config.device))
     saved_model.eval()
+    saved_model.to(config.device)
     n = 0
     BVP_label_all = np.empty([])
     rPPG_all = np.empty([])
     with torch.no_grad():
         for data in test_loader:
             inputs, BVP_label = data
-            # prepare data
-            inputs = inputs.permute(0, 2, 1, 3, 4)  # [batch,channel,length,width,height] = x.shape
             # print(inputs.shape)
             BVP_label = torch.stack(BVP_label)
             if torch.cuda.is_available():
                 inputs = inputs.cuda()
+            inputs = inputs.permute(0, 2, 1, 3, 4)  # [batch,channel,length,width,height] = x.shape
             rPPG, x_visual, x_visual3232, x_visual1616 = saved_model(inputs)
             if torch.cuda.is_available():
                 rPPG = rPPG.cpu()
