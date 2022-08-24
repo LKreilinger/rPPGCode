@@ -73,7 +73,7 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
             wandb.log({"MAE": MAE, "MSE": MSE})
             print(f"Validation MAE: {MAE:.3f}" + f" Validation MSE: {MSE:.3f}")
         except Exception:
-            print("Could not determine pulse for given signal")
+            print("Could not determine pulse for given signal.")
 
         epoch_number += 1
 
