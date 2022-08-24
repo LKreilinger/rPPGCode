@@ -29,7 +29,6 @@ if __name__ == '__main__':
         genPath = os.path.dirname(workingPath)
         tempPathNofile = os.path.join(workingPath, "temp")
 
-
     outputDataWCDPath = os.path.join(genPath, "output", "WCDDataset")
     outputDataWCDSplitPath = os.path.join(genPath, "output", "WCDDatasetSplit")
     n_FRAMES_VIDEO = 128  # number of Frames used fpr training Model
@@ -55,7 +54,7 @@ if __name__ == '__main__':
         minNeighbors=6,
         minSize=(90, 90),
         nFramesVideo=n_FRAMES_VIDEO)
-    #preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_Phys)
+    # preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_Phys)
 
     # %%
     # Preprocessing WCD Dataset
@@ -86,9 +85,7 @@ if __name__ == '__main__':
             minSize=(90, 90),
             nFramesVideo=n_FRAMES_VIDEO)
 
-        #preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_rPPG)
-
-
+        # preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_rPPG)
 
         # %% UBFC_Phys
         # Complete cnn process
@@ -98,12 +95,12 @@ if __name__ == '__main__':
         #   - define model
         #   - train and validate model
         #   - evaluate model
-        #batch_sizes = [4, 8, 16, 32]
-        #learning_rates = [0.01, 0.001, 0.0001] #default 0.0001
+        # batch_sizes = [4, 8, 16, 32]
+        # learning_rates = [0.01, 0.001, 0.0001] #default 0.0001
         size = 8
         lr = 0.0001
         device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        #for size in batch_sizes:
+        # for size in batch_sizes:
         #    for lr in learning_rates:
 
         config_cnn_ubfc_phys = dict(
@@ -132,6 +129,5 @@ if __name__ == '__main__':
             dataset="UBFC_rPPG",
             architecture="PhysNet")
 
-
         model = cnn_process_main.cnn_process_main(config_cnn_ubfc_rppg)
-        #model = cnn_process_main.cnn_process_main(config_cnn_ubfc_phys)
+        # model = cnn_process_main.cnn_process_main(config_cnn_ubfc_phys)

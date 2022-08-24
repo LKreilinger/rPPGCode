@@ -35,7 +35,7 @@ def test_model(config, test_loader):
             rPPG = (rPPG - torch.mean(rPPG)) / torch.std(rPPG)  # normalize
             BVP_label = (BVP_label - torch.mean(BVP_label.float())) / torch.std(BVP_label.float())  # normalize
 
-            predicted_label_all, ground_truth_all, first_run = append_matrix.append_truth_prediction_label(
+            rPPG_all, BVP_label_all, first_run = append_matrix.append_truth_prediction_label(
                 BVP_label, rPPG, first_run, rPPG_all, BVP_label_all)
 
         # Calculate performace of model with test data

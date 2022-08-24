@@ -8,7 +8,6 @@ import os
 import torch
 from datetime import datetime
 import numpy as np
-import matplotlib.pyplot as plt
 import wandb
 # local Packages
 from cnn_process.TrainValidate import train_batch, get_pulse, validate_batch
@@ -62,13 +61,14 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
                 example_ct_validation += len(validation_inputs)
                 torch.cuda.empty_cache()
 
-                predicted_label_all, ground_truth_all, first_run = append_matrix.append_truth_prediction_label(
+                rPPG_all, BVP_label_all, first_run = append_matrix.append_truth_prediction_label(
                     BVP_label, rPPG, first_run, rPPG_all, BVP_label_all)
                 if batch_validation_ct % 10 == 9:
                     wandb.log({"epoch": epoch, "val_loss": avg_vloss})
 
         # Calculate performace of model with test data
         MAE, MSE = performance_metrics.eval_model(BVP_label_all, rPPG_all, config)
+        wandb.log({"MAE": MAE, "MSE": MSE})
         print(f"Loss train: {last_loss:.3f}" + f" Loss validation: {avg_vloss:.3f}")
         print(f"Validation MAE: {MAE:.3f}" + f" Validation MSE: {MSE:.3f}")
 

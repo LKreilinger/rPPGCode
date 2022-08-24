@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 if True:
     fps = 30
     rPPGNP = rPPG.detach().numpy()
