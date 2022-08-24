@@ -12,4 +12,5 @@ def append_truth_prediction_label(ground_truth, predicted_label, first_run, pred
         predicted_label_all = np.concatenate((predicted_label_all, predicted_label_np), axis=1)
         ground_truth_all = np.concatenate((ground_truth_all, ground_truth_np), axis=1)
 
+
     return predicted_label_all, ground_truth_all, first_run

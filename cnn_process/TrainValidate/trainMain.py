@@ -66,6 +66,7 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
                 if batch_validation_ct % 10 == 9:
                     wandb.log({"epoch": epoch, "val_loss": avg_vloss})
 
+
         # Calculate performace of model with test data
         MAE, MSE = performance_metrics.eval_model(BVP_label_all, rPPG_all, config)
         wandb.log({"MAE": MAE, "MSE": MSE})

@@ -11,6 +11,7 @@ def eval_model(ground_truth, predicted_label, config):
         working_data_predicted_label, measures_predicted_label = hp.process(predicted_label[:, col], config.fps)
         pulse_predic[0, col] = measures_predicted_label['bpm']
 
+
     # mean square error (MSE)
     sum = 0
     for i in range(ground_truth.shape[1]):
