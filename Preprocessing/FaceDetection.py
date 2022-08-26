@@ -37,7 +37,7 @@ def viola_jonas_face_detector(currentPath: str, destinationPath: str, tempPath: 
     # %%
     #clip = clip.subclip(0, 5)  # !!!!! only first 12 seconds!!!!
     # %%
-    if NewSamplingRate - 1 < fpsOriginal < NewSamplingRate + 1:
+    if fpsOriginal < NewSamplingRate + 1:
         # !!!!! only first 12 seconds!!!!
         #clip = VideoFileClip(currentPath)
         #clip = clip.subclip(0, 5)

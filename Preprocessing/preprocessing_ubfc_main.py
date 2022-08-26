@@ -23,7 +23,7 @@ def pre_ubfc(config):
 
         # Save and load list with information about detected faces
         save_load.save_variable(config, noFaceListAllVideos, delete_videos, data_split)
-        save_load.load_variable(config, data_split)
+        noFaceListAllVideos, delete_videos = save_load.load_variable(config, data_split)
 
         # Pulse preprocessing and fit to frames
         pulse_preprocessing_main.pulse_pre_ubfc(config, noFaceListAllVideos, delete_videos, data_split)

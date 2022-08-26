@@ -37,3 +37,4 @@ def load_variable(config, data_split):
     open_file = open(path_deleted_videos, "rb")
     delete_videos = pickle.load(open_file)
     open_file.close()
+    return noFaceListAllVideos, delete_videos
