@@ -12,12 +12,12 @@ import torch
 # internal modules
 from cnn_process import cnn_process_main
 from Preprocessing import preprocessing_ubfc_main
+from Preprocessing.WCD import PreprocessingWCDMain
 
 if __name__ == '__main__':
     # for docker change workdir
-    docker = True
+    docker = False
     if docker:
-
         print("Docker is working")
         workingPath = os.path.abspath(os.getcwd())
         genPath = workingPath
@@ -59,7 +59,24 @@ if __name__ == '__main__':
 
     # %%
     # Preprocessing WCD Dataset
-    #PreprocessingWCDMain.preprocessing_wcd_dataset(genPath, n_FRAMES_VIDEO)
+    config_pre_WCD = dict(
+        samplingRatePulse=55,
+        newSamplingRatePulse=30,
+        newFpsVideo=30,
+        newSizeImage=(128, 128),
+        patternVideo="*.avi",
+        patternPuls="*.csv",
+        datasetPath=os.path.join(genPath, "output", "WCD_Dataset"),
+        dataImages=os.path.join(genPath, "data", "WCD", "data_Realsense"),
+        dataPulse=os.path.join(genPath, "data", "WCD", "data_Polar"),
+        variblesPath=os.path.join(genPath, "output", "noFaceList"),
+        tempPathNofile=tempPathNofile,
+        workingPath=workingPath,
+        scaleFactor=1.1,
+        minNeighbors=6,
+        minSize=(90, 90),
+        nFramesVideo=n_FRAMES_VIDEO)
+    #PreprocessingWCDMain.preprocessing_wcd_dataset(config_pre_WCD)
 
     # %%
     # Preprocessing UBFC_rPPG dataset
