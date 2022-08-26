@@ -49,24 +49,26 @@ def viola_jonas_face_detector(currentPath: str, destinationPath: str, tempPath: 
         clip.write_videofile(tempPath, fps=NewSamplingRate, codec="libx264")
 
     video_capture = cv2.VideoCapture(tempPath)
-    # fps frames per second from original video
-    fps = int(video_capture.get(cv2.CAP_PROP_FPS))
-    length = int(video_capture.get(cv2.CAP_PROP_FRAME_COUNT))
-    noFaceList = np.zeros(length)  # 0=face detectet; 1=no face detected
+    FRAME_COUNT = int(video_capture.get(cv2.CAP_PROP_FRAME_COUNT))
+    noFaceList = np.zeros(FRAME_COUNT)  # 0=face detectet; 1=no face detected
     base_string = "img"
-    maxFrames = length
     firstRectagle = 0  # selecting first rectangele size for all, in one video
     iteratImagIndex = 0
 
-    for iteratingFrames in range(maxFrames):
+    for iteratingFrames in range(FRAME_COUNT):
         ret, frame = video_capture.read()
+        # # only to show single faceROI
+        # from matplotlib import pyplot as plt
+        # plt.imshow(frame, interpolation='nearest')
+        # plt.show()
+
+
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         faces = faceCascade.detectMultiScale(gray,
                                              scaleFactor=config['scaleFactor'],
                                              minNeighbors=config['minNeighbors'],
                                              minSize=config['minSize'],
                                              flags=cv2.CASCADE_SCALE_IMAGE)
-
         # define size of new video
         if firstRectagle == 0 and len(faces) != 0:
             (xF, yF, wF, hF) = faces.T
@@ -77,7 +79,6 @@ def viola_jonas_face_detector(currentPath: str, destinationPath: str, tempPath: 
             else:
                 warnings.warn('Warning Message: Face detection detected more than one face')
                 noFaceList[iteratingFrames] = 1
-
 
         # write video frame by frame
         if len(faces) != 0:
@@ -90,7 +91,6 @@ def viola_jonas_face_detector(currentPath: str, destinationPath: str, tempPath: 
                 # from matplotlib import pyplot as plt
                 # plt.imshow(faceROI, interpolation='nearest')
                 # plt.show()
-
                 faceROIResized = cv2.resize(faceROI, newsizeImage, interpolation=cv2.INTER_AREA)
                 # save the resulting frame as png
                 iteratImagIndex = iteratImagIndex + 1
@@ -101,12 +101,5 @@ def viola_jonas_face_detector(currentPath: str, destinationPath: str, tempPath: 
                 warnings.warn('Warning Message: Face detection detected more than one face')
                 noFaceList[iteratingFrames] = 1
         else:
-
             noFaceList[iteratingFrames] = 1
-
-        # if cv2.waitKey(1) & 0xFF == ord('q'):
-        #    break
-    #video_capture.release()
-    #clip.close()
-
     return noFaceList

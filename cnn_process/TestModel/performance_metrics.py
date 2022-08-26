@@ -12,12 +12,12 @@ def eval_model(ground_truth, predicted_label, config):
         pulse_predic[0, col] = measures_predicted_label['bpm']
 
 
-    # mean square error (MSE)
+    # mean square error (RMSE)
     sum = 0
     for i in range(ground_truth.shape[1]):
         sum += abs(pulse_label[0, i] - pulse_predic[0, i]) ** 2
 
-    MSE = sum / ground_truth.shape[1]
+    RMSE = np.sqrt(sum / ground_truth.shape[1])
     # mean absolute error (MAE)
     sum = 0
     for i in range(ground_truth.shape[1]):
@@ -32,4 +32,4 @@ def eval_model(ground_truth, predicted_label, config):
     STD = np.std(diff_vector)
 
 
-    return MAE, MSE, STD
+    return MAE, RMSE, STD

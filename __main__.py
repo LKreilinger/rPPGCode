@@ -16,7 +16,7 @@ from Preprocessing.WCD import PreprocessingWCDMain
 
 if __name__ == '__main__':
     # for docker change workdir
-    docker = True
+    docker = False
     if docker:
         print("Docker is working")
         workingPath = os.path.abspath(os.getcwd())
@@ -72,11 +72,11 @@ if __name__ == '__main__':
         variblesPath=os.path.join(genPath, "output", "noFaceList"),
         tempPathNofile=tempPathNofile,
         workingPath=workingPath,
-        scaleFactor=1.1,
-        minNeighbors=6,
-        minSize=(90, 90),
+        scaleFactor=1.03,#1.03
+        minNeighbors=3,#3
+        minSize=(85, 85),#(85, 85)
         nFramesVideo=n_FRAMES_VIDEO)
-    #PreprocessingWCDMain.preprocessing_wcd_dataset(config_pre_WCD)
+    PreprocessingWCDMain.preprocessing_wcd_dataset(config_pre_WCD)
 
     # %%
     # Preprocessing UBFC_rPPG dataset

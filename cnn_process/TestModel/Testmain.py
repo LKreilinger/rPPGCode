@@ -39,8 +39,8 @@ def test_model(config, test_loader):
                 BVP_label, rPPG, first_run, rPPG_all, BVP_label_all)
 
         # Calculate performace of model with test data
-        MAE, MSE, STD = performance_metrics.eval_model(BVP_label_all, rPPG_all, config)
-        print(f"Test MAE: {MAE:.3f}" + f" Test MSE: {MSE:.3f}")
+        MAE, RMSE, STD = performance_metrics.eval_model(BVP_label_all, rPPG_all, config)
+        print(f"Test MAE: {MAE:.3f}" + f" Test RMSE: {RMSE:.3f}")
 
 
 

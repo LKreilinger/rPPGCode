@@ -15,8 +15,7 @@ import os
 # internal modules
 
 
-def convert_polar_data(path: object, tempPath: object, camera_data_path: str, SamplingRate: object, NewSamplingRate: object,
-                noFaceList: object) -> object:
+def convert_polar_data(path: object, tempPath: object, camera_data_path: str) -> object:
     #%% open file and save each column
     f = open(path, 'r')
     lines = f.readlines()

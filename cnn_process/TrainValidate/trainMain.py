@@ -69,9 +69,9 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
         print(f"Loss train: {last_loss:.3f}" + f" Loss validation: {avg_vloss:.3f}")
         # Calculate performace of model with test data
         try:
-            MAE, MSE, STD = performance_metrics.eval_model(BVP_label_all, rPPG_all, config)
+            MAE, RMSE, STD = performance_metrics.eval_model(BVP_label_all, rPPG_all, config)
             wandb.log({"MAE": MAE, "MSE": MSE})
-            print(f"Validation MAE: {MAE:.3f}" + f" Validation MSE: {MSE:.3f}")
+            print(f"Validation MAE: {MAE:.3f}" + f" Validation RMSE: {RMSE:.3f}")
         except Exception:
             print("Could not determine pulse for given signal.")
 

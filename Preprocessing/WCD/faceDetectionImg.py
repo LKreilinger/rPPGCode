@@ -11,7 +11,7 @@ import shutil
 import warnings
 
 def viola_jonas_face_detector_img(currentPath: str, destinationPath: str,
-                                  newsizeImage: tuple) -> np.ndarray:
+                                  newsizeImage: tuple, config) -> np.ndarray:
     """
     Face detection with Viola Jonas Algorythm.
     Saving every resized (Face)Frame separately
@@ -29,8 +29,7 @@ def viola_jonas_face_detector_img(currentPath: str, destinationPath: str,
     :param newsizeImage:
     """
     # load trained modul for face detection
-    #cascPathface = os.path.join(os.path.dirname(cv2.__file__), "data", "haarcascade_frontalface_alt2.xml")
-    faceCascade = cv2.CascadeClassifier("haarcascade_frontalface_alt2.xml")
+    faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_alt2.xml")
     file_count = 0
     for path in os.listdir(currentPath):
         # check if current path is a file
@@ -50,17 +49,21 @@ def viola_jonas_face_detector_img(currentPath: str, destinationPath: str,
         frame = cv2.imread(file_path, cv2.IMREAD_COLOR)
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         faces = faceCascade.detectMultiScale(gray,
-                                             scaleFactor=1.03,
-                                             minNeighbors=3,
-                                             minSize=(85, 85),
+                                             scaleFactor=config['scaleFactor'],
+                                             minNeighbors=config['minNeighbors'],
+                                             minSize=config['minSize'],
                                              flags=cv2.CASCADE_SCALE_IMAGE)
 
-        # define size of new image
+        # define size of new video
         if firstRectagle == 0 and len(faces) != 0:
-            firstRectagle = 1
             (xF, yF, wF, hF) = faces.T
-            wF = int(wF)
-            hF = int(hF)
+            if wF.__len__() == 1:
+                firstRectagle = 1
+                wF = int(wF)
+                hF = int(hF)
+            else:
+                warnings.warn('Warning Message: Face detection detected more than one face')
+                noFaceList[iterating] = 1
 
         # write frame by frame
         if len(faces) != 0:
@@ -78,7 +81,6 @@ def viola_jonas_face_detector_img(currentPath: str, destinationPath: str,
                 # save the resulting frame as png
                 iteratImagIndex = iteratImagIndex + 1
                 iteratImagName = f'{base_string}_{iteratImagIndex:05}.jpg'
-                cv2.imwrite(destinationPath + iteratImagName, faceROIResized)
                 destinationPathFile = os.path.join(destinationPath, iteratImagName)
                 cv2.imwrite(destinationPathFile, faceROIResized)
             else:

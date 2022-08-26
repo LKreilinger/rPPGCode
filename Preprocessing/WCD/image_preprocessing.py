@@ -17,13 +17,12 @@ def image_pre_WCD(config):
             if not (os.path.exists(destinationPath) and os.path.isdir(destinationPath)):
                 os.mkdir(destinationPath)
             noFaceList = faceDetectionImg.viola_jonas_face_detector_img(path, destinationPath,
-                                                                        NEW_SIZE_IMAGE)
+                                                                        config["newSizeImage"], config)
             nameNoExten = os.path.splitext(name)[0]
             noFaceListAllVideos.append(nameNoExten)
             noFaceListAllVideos.append(noFaceList)
             n_zeros = np.count_nonzero(noFaceList == 0)
             n_ones = np.count_nonzero(noFaceList == 1)
-            shutil.rmtree(config['tempPathNofile'])
             if n_zeros > n_ones:
                 nameNoExten = os.path.splitext(name)[0]
                 noFaceListAllVideos.append(nameNoExten)
