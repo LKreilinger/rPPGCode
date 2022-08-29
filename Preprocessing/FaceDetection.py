@@ -102,4 +102,6 @@ def viola_jonas_face_detector(currentPath: str, destinationPath: str, tempPath: 
                 noFaceList[iteratingFrames] = 1
         else:
             noFaceList[iteratingFrames] = 1
+
+
     return noFaceList

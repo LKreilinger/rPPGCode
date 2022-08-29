@@ -63,6 +63,7 @@ def viola_jonas_face_detector_img(currentPath: str, destinationPath: str,
                 hF = int(hF)
             else:
                 warnings.warn('Warning Message: Face detection detected more than one face')
+
                 noFaceList[iterating] = 1
 
         # write frame by frame
@@ -74,6 +75,8 @@ def viola_jonas_face_detector_img(currentPath: str, destinationPath: str,
                 faceROI = frame[y:y + hF, x:x + wF]
                 # # only to show single faceROI
                 # from matplotlib import pyplot as plt
+                # #faceROI = frame[y[0]:y[0] + hF, x[0]:x[0] + wF]
+                # faceROI = frame[y:y + hF, x:x + wF]
                 # plt.imshow(faceROI, interpolation='nearest')
                 # plt.show()
 
@@ -91,7 +94,5 @@ def viola_jonas_face_detector_img(currentPath: str, destinationPath: str,
 
             noFaceList[iterating] = 1
         iterating = iterating + 1
-        if iterating == 1000:
-            break
 
     return noFaceList

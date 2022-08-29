@@ -39,8 +39,14 @@ def test_model(config, test_loader):
                 BVP_label, rPPG, first_run, rPPG_all, BVP_label_all)
 
         # Calculate performace of model with test data
-        MAE, RMSE, STD = performance_metrics.eval_model(BVP_label_all, rPPG_all, config)
-        print(f"Test MAE: {MAE:.3f}" + f" Test RMSE: {RMSE:.3f}")
+        try:
+            MAE, RMSE, STD = performance_metrics.eval_model(BVP_label_all, rPPG_all, config)
+            print(f"Validation MAE: {MAE:.3f}" + f" Validation RMSE: {RMSE:.3f}")
+        except Exception:
+            print("Could not determine pulse for given signal.")
+        return BVP_label_all, rPPG_all
+
+
 
 
 

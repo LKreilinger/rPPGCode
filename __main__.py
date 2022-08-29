@@ -13,10 +13,11 @@ import torch
 from cnn_process import cnn_process_main
 from Preprocessing import preprocessing_ubfc_main
 from Preprocessing.WCD import PreprocessingWCDMain
+from cnn_process.TestModel import test_wcd
 
 if __name__ == '__main__':
     # for docker change workdir
-    docker = False
+    docker = True
     if docker:
         print("Docker is working")
         workingPath = os.path.abspath(os.getcwd())
@@ -72,9 +73,9 @@ if __name__ == '__main__':
         variblesPath=os.path.join(genPath, "output", "noFaceList"),
         tempPathNofile=tempPathNofile,
         workingPath=workingPath,
-        scaleFactor=1.03,#1.03
-        minNeighbors=3,#3
-        minSize=(85, 85),#(85, 85)
+        scaleFactor=1.01,#1.03
+        minNeighbors=1,#3
+        minSize=(180, 180),#(85, 85)
         nFramesVideo=n_FRAMES_VIDEO)
     PreprocessingWCDMain.preprocessing_wcd_dataset(config_pre_WCD)
 
@@ -98,7 +99,7 @@ if __name__ == '__main__':
         tempPathNofile=tempPathNofile,
         workingPath=workingPath,
         scaleFactor=1.1,
-        minNeighbors=8,
+        minNeighbors=6,
         minSize=(90, 90),
         nFramesVideo=n_FRAMES_VIDEO)
 
@@ -115,7 +116,7 @@ if __name__ == '__main__':
     # batch_sizes = [4, 8, 16, 32]
     # learning_rates = [0.01, 0.001, 0.0001] #default 0.0001
     size = 8
-    lr = 0.0001
+    lr = 0.001
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     # for size in batch_sizes:
     #    for lr in learning_rates:
@@ -140,7 +141,7 @@ if __name__ == '__main__':
         fps=30,
         nFramesVideo=n_FRAMES_VIDEO,
         device=device,
-        epochs=40,
+        epochs=30,
         batch_size=size,
         learning_rate=lr,
         dataset="UBFC_rPPG",
@@ -148,3 +149,17 @@ if __name__ == '__main__':
 
     model = cnn_process_main.cnn_process_main(config_cnn_ubfc_rppg)
     # model = cnn_process_main.cnn_process_main(config_cnn_ubfc_phys)
+    # %% Test model with WCD data
+    config_cnn_wcd = dict(
+        path_dataset=os.path.join(genPath, "output", "WCD_Dataset"),
+        path_model=os.path.join(genPath, "output", "Model"),
+        variblesPath=os.path.join(genPath, "output", "noFaceList"),
+        nFramesVideo=n_FRAMES_VIDEO,
+        fps=30,
+        device=device,
+        batch_size=size,
+        subject=2,
+        dataset="WCD",
+        architecture="PhysNet")
+
+    test_wcd.test_model(config_cnn_wcd)

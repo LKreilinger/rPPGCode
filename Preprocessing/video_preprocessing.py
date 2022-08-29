@@ -30,7 +30,6 @@ def video_pre_ubfc(config, data_split):
             if fnmatch(name, config['patternVideo']):
                 os.mkdir(destinationPath)  # make as many folders as videos excist, Foldername is equal the videoname
                 os.makedirs(config['tempPathNofile'], exist_ok=True)
-                #currentPath= r"'C:\\Users\\Chaputa\\Documents\\Trier\\Master\\Masterarbeit\\data\\UBFC_rPPG\\train\\s37\\vid_s37.avi'"
                 noFaceList = FaceDetection.viola_jonas_face_detector(currentPath, destinationPath, tempPath,
                                                                      config['newFpsVideo'], config['newSizeImage'],
                                                                      config)

@@ -34,7 +34,7 @@ def preprocessing_wcd_dataset(config) -> None:
     data_split = "test_WCD"
     # Save and load list with information about detected faces
     save_load.save_variable(config, noFaceListAllVideos, delete_videos, data_split)
-    save_load.load_variable(config, data_split)
+    noFaceListAllVideos, delete_videos = save_load.load_variable(config, data_split)
 
     # Pulse preprocessing and fit to frames
     pulse_pre_wcd_main.pulse_wcd(config, noFaceListAllVideos, delete_videos)
