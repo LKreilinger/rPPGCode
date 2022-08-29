@@ -31,9 +31,9 @@ def test_model(parameters):
         open_file.close()
 
         name_rPPG_all = "rPPG_all.pkl"
-        path_rPPG_all = os.path.join(list_path, name_BVP_label_all)
+        path_rPPG_all = os.path.join(list_path, name_rPPG_all)
         open_file = open(path_rPPG_all, "wb")
-        pickle.dump(BVP_label_all, open_file)
+        pickle.dump(rPPG_all, open_file)
         open_file.close()
 
 
