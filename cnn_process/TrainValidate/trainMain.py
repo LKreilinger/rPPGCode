@@ -9,6 +9,7 @@ import torch
 from datetime import datetime
 import numpy as np
 import wandb
+import math
 # local Packages
 from cnn_process.TrainValidate import train_batch, get_pulse, validate_batch
 from cnn_process.TestModel import append_matrix, performance_metrics
@@ -22,8 +23,8 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
     example_ct = 0.  # number of examples seen
     example_ct_validation = 0
     # saving memory
-    torch.backends.cudnn.benchmark = True
-    torch.backends.cudnn.enabled = True
+    #torch.backends.cudnn.benchmark = True
+    #torch.backends.cudnn.enabled = True
     torch.cuda.empty_cache()
     for epoch in range(config.epochs):
         print('EPOCH {}:'.format(epoch_number + 1))
@@ -35,6 +36,11 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
             inputs, BVP_label = data
             loss = train_batch.train_batch(inputs, BVP_label, optimizer, model, loss_Inst)
             running_loss += loss.item()
+            if math.isnan(loss):
+                print("loss = NaN")
+                break
+
+
             # Gather data and report
             example_ct += len(inputs)
             if batch_ct % 10 == 9:
@@ -43,7 +49,9 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
                 wandb.log({"epoch": epoch, "train_loss": last_loss})
                 print(f"Loss after " + str(batch_ct + 1).zfill(4) + f" batches: {last_loss:.3f}")
                 running_loss = 0.
-
+        if math.isnan(loss):
+            print("loss = NaN")
+            break
         # Validate model
         model.eval()
         running_vloss = 0.0
@@ -70,7 +78,7 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
         # Calculate performace of model with test data
         try:
             MAE, RMSE, STD = performance_metrics.eval_model(BVP_label_all, rPPG_all, config)
-            wandb.log({"MAE": MAE, "MSE": MSE})
+            wandb.log({"MAE": MAE, "MSE": RMSE})
             print(f"Validation MAE: {MAE:.3f}" + f" Validation RMSE: {RMSE:.3f}")
         except Exception:
             print("Could not determine pulse for given signal.")

@@ -3,7 +3,8 @@ from kale.prepdata.video_transform import ImglistToTensor
 import os
 from torchvision import transforms
 import torch
-
+torch.manual_seed(1)
+torch.cuda.manual_seed_all(1)
 
 
 def load_data(config):
