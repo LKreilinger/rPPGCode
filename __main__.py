@@ -17,7 +17,7 @@ from cnn_process.TestModel import test_wcd
 
 if __name__ == '__main__':
     # for docker change workdir
-    docker = True
+    docker = False
     if docker:
         print("Docker is working")
         workingPath = os.path.abspath(os.getcwd())

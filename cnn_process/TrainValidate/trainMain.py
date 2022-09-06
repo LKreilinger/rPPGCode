@@ -36,11 +36,9 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
             inputs, BVP_label = data
             loss = train_batch.train_batch(inputs, BVP_label, optimizer, model, loss_Inst)
 
-            try:
-                val = int(loss)
-            except ValueError:
-                loss = 1.
-                print("Error calculating the Loss!")
+            if math.isnan(loss):
+                print("loss = NaN")
+                break
 
             running_loss += loss.item()
 
