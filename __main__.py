@@ -86,7 +86,7 @@ if __name__ == '__main__':
         train_split=60,
         validation_split=15,
         test_split=25,
-        randomSeed=2,
+        randomSeed=3,
         samplingRatePulse=30,
         newSamplingRatePulse=30,
         newFpsVideo=30,
