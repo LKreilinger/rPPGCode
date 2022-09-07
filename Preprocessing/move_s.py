@@ -1,10 +1,10 @@
 import os
 import shutil
 
-def move_s(ran_list, config, list_subdir, split_path):
+def move_s(ran_list, config, split_path):
     for s in ran_list:
-        src_path = os.path.join(config['genPathData'], list_subdir[s])
-        dst_path = os.path.join(split_path, list_subdir[s])
+        src_path = os.path.join(config['genPathData'], s)
+        dst_path = os.path.join(split_path, s)
         file_names = os.listdir(src_path)
         os.mkdir(dst_path)
         for file_name in file_names:

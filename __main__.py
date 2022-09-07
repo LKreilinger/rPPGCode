@@ -83,9 +83,9 @@ if __name__ == '__main__':
     # Preprocessing UBFC_rPPG dataset
 
     config_pre_UBFC_rPPG = dict(
-        train_split=60,
-        validation_split=15,
-        test_split=25,
+        train=90,
+        validation=10,
+        test=0,
         randomSeed=3,
         samplingRatePulse=30,
         newSamplingRatePulse=30,
@@ -103,7 +103,7 @@ if __name__ == '__main__':
         minSize=(90, 90),
         nFramesVideo=n_FRAMES_VIDEO)
 
-    #preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_rPPG)
+    preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_rPPG)
 
     # %% UBFC_Phys
     # Complete cnn process

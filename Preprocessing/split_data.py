@@ -1,48 +1,39 @@
 import os
 import random
-import shutil
+import numpy as np
 # internal modules
 from Preprocessing import move_s, undo_split
+
 
 def split_data(config):
     random.seed(config['randomSeed'])
     list_subdir = os.listdir(config['genPathData'])
     # check if data already split
-    if "test" in list_subdir:
+    if "train" in list_subdir or "test" in list_subdir or "validation" in list_subdir:
         undo_split.undo_split(config)
     list_subdir = os.listdir(config['genPathData'])
-
-    train_path = os.path.join(config['genPathData'], "train")
-    val_path = os.path.join(config['genPathData'], "validation")
-    test_path = os.path.join(config['genPathData'], "test")
-    os.mkdir(train_path)
-    os.mkdir(val_path)
-    os.mkdir(test_path)
-    # Split in %
-    train_split = config['train_split']
-    validation_split = config['validation_split']
-    test_split = config['test_split']
-
-
     number_s = len(list_subdir)
-    number_s_train = int(round(train_split / 100 * number_s, 0))
-    number_s_val = int(round(validation_split / 100 * number_s, 0))
-    number_s_test = int(round(test_split / 100 * number_s, 0))
+    round_error = np.zeros(3)
+    number_s_splits = np.zeros(3)
 
-    # compensate for rounding errors todo compensate with the closest split and not by default train
-    if number_s < (number_s_train + number_s_val + number_s_test):
-        number_s_train = number_s_train - 1
-    if number_s > (number_s_train + number_s_val + number_s_test):
-        number_s_train = number_s_train + 1
+    for idx, key in enumerate(config):
+        if config[key] is not 0:
+            split_path = os.path.join(config['genPathData'], key)
+            os.mkdir(split_path)
+            number_s_splits[idx] = config[key] / 100 * number_s
+            round_error[idx] = number_s_splits[idx] % 1
+        if idx == 2:
+            break
+    number_s_splits = number_s_splits.astype(int)
+    idx_max = round_error.argmax(axis=0)
+    number_s_splits[idx_max] += 1
 
-
-    list_number_s = list(range(number_s))
-    random.shuffle(list_number_s)
-    ran_train_list = list_number_s[:number_s_train]
-    ran_val_list = list_number_s[number_s_train: (number_s_train + number_s_val)]
-    ran_test_list = list_number_s[(number_s_train + number_s_val):]
-
-
-    move_s.move_s(ran_train_list, config, list_subdir, train_path)
-    move_s.move_s(ran_val_list, config, list_subdir, val_path)
-    move_s.move_s(ran_test_list, config, list_subdir, test_path)
+    random.shuffle(list_subdir)
+    for idx, key in enumerate(config):
+        if config[key] is not 0:
+            ran_split_list = list_subdir[:number_s_splits[idx]]
+            list_subdir = list_subdir[number_s_splits[idx]:]
+            split_path = os.path.join(config['genPathData'], key)
+            move_s.move_s(ran_split_list, config, split_path)
+        if idx == 2:
+            break

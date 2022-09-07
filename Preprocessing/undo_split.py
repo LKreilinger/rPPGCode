@@ -7,7 +7,6 @@ def undo_split(config):
         path_subdir = os.path.join(config['genPathData'], folder)
         list_subsubdir = os.listdir(path_subdir)
         for subsub_folder in list_subsubdir:
-
             src_path = os.path.join(path_subdir, subsub_folder)
             dst_path = os.path.join(config['genPathData'],subsub_folder)
             file_names = os.listdir(src_path)
