@@ -11,7 +11,7 @@ def preprocessing_wcd_dataset(config):
     os.mkdir(config['datasetPath'])
 
     for idx, split in enumerate(config):
-        if config[split] is not 0:
+        if config[split] != 0:
             # Video Preprocessing saving frames with detected face
             noFaceListAllVideos, delete_videos = image_preprocessing.image_pre_WCD(config, split)
             # Save and load list with information about detected faces

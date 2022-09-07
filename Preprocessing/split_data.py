@@ -17,7 +17,7 @@ def split_data(config):
     number_s_splits = np.zeros(3)
 
     for idx, key in enumerate(config):
-        if config[key] is not 0:
+        if config[key] != 0:
             split_path = os.path.join(config['genPathData'], key)
             os.mkdir(split_path)
             number_s_splits[idx] = config[key] / 100 * number_s
@@ -27,7 +27,7 @@ def split_data(config):
     # compensate rounding error
     number_s_splits = number_s_splits.astype(int)
     n_zeros = np.count_nonzero(round_error == 0)
-    if n_zeros is not 2:
+    if n_zeros != 2:
         idx_max = round_error.argmax(axis=0)
         number_s_splits[idx_max] += 1
 
