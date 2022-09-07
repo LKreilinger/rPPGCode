@@ -24,9 +24,12 @@ def split_data(config):
             round_error[idx] = number_s_splits[idx] % 1
         if idx == 2:
             break
+    # compensate rounding error
     number_s_splits = number_s_splits.astype(int)
-    idx_max = round_error.argmax(axis=0)
-    number_s_splits[idx_max] += 1
+    n_zeros = np.count_nonzero(round_error == 0)
+    if n_zeros is not 2:
+        idx_max = round_error.argmax(axis=0)
+        number_s_splits[idx_max] += 1
 
     random.shuffle(list_subdir)
     for idx, key in enumerate(config):

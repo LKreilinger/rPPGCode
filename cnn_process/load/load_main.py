@@ -7,7 +7,7 @@ from cnn_process.load import lossFunction
 
 def load_main(config):
     # Load the data
-    train_loader, validation_loader, test_loader = load_data.load_data(config)
+    train_loader, validation_loader = load_data.load_data(config)
 
     # Load the model
     model = PhysNet.PhysNet_padding_Encoder_Decoder_MAX(frames=128).to(config.device)
@@ -17,4 +17,4 @@ def load_main(config):
     loss_Inst = lossFunction.Neg_Pearson()
 
 
-    return model, train_loader, validation_loader, test_loader, loss_Inst, optimizer
+    return model, train_loader, validation_loader, loss_Inst, optimizer

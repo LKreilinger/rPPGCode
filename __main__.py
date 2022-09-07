@@ -11,99 +11,25 @@ import os
 import torch
 # internal modules
 from cnn_process import cnn_process_main
-from Preprocessing import preprocessing_ubfc_main
+from Preprocessing import preprocessing_ubfc_main, pre_config, config_dataset
 from Preprocessing.WCD import PreprocessingWCDMain
 from cnn_process.TestModel import test_wcd
 
 if __name__ == '__main__':
     # for docker change workdir
-    docker = False
-    if docker:
-        print("Docker is working")
-        workingPath = os.path.abspath(os.getcwd())
-        genPath = workingPath
-        tempPathNofile = os.path.join(workingPath, "output", "temp")
-        os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"  # see issue #152
-        os.environ["CUDA_VISIBLE_DEVICES"] = "0"
-    else:
-        print("Docker is NOT working")
-        workingPath = os.path.abspath(os.getcwd())
-        genPath = os.path.dirname(workingPath)
-        tempPathNofile = os.path.join(workingPath, "temp")
-
-    outputDataWCDPath = os.path.join(genPath, "output", "WCDDataset")
-    outputDataWCDSplitPath = os.path.join(genPath, "output", "WCDDatasetSplit")
+    docker = True
     n_FRAMES_VIDEO = 128  # number of Frames used fpr training Model
-    # %%
-    #       Preprocessing UBFC_Phys Dataset
-    # Preprocessing UBFC_rPPG dataset
-    config_pre_UBFC_Phys = dict(
-        train_split=60,
-        validation_split=15,
-        test_split=25,
-        samplingRatePulse=64,
-        newSamplingRatePulse=30,
-        newFpsVideo=30,
-        newSizeImage=(128, 128),
-        patternVideo="*.avi",
-        patternPuls="*.csv",
-        datasetPath=os.path.join(genPath, "output", "UBFC_Phys_Dataset"),
-        genPathData=os.path.join(genPath, "data", "UBFC_Phys"),
-        variblesPath=os.path.join(genPath, "output", "noFaceList"),
-        tempPathNofile=tempPathNofile,
-        workingPath=workingPath,
-        scaleFactor=1.1,
-        minNeighbors=6,
-        minSize=(90, 90),
-        nFramesVideo=n_FRAMES_VIDEO)
-    # preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_Phys)
+    tempPathNofile, genPath, workingPath = pre_config.pre_config(docker)
+    config_pre_UBFC_Phys, config_pre_WCD, config_pre_UBFC_rPPG = config_dataset.config_datasets(genPath, tempPathNofile, workingPath, n_FRAMES_VIDEO)
 
-    # %%
+    # Preprocessing UBFC_Phys dataset
+    #preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_Phys)
+
     # Preprocessing WCD Dataset
-    config_pre_WCD = dict(
-        samplingRatePulse=55,
-        newSamplingRatePulse=30,
-        newFpsVideo=30,
-        newSizeImage=(128, 128),
-        patternVideo="*.avi",
-        patternPuls="*.csv",
-        datasetPath=os.path.join(genPath, "output", "WCD_Dataset"),
-        dataImages=os.path.join(genPath, "data", "WCD", "data_Realsense"),
-        dataPulse=os.path.join(genPath, "data", "WCD", "data_Polar"),
-        variblesPath=os.path.join(genPath, "output", "noFaceList"),
-        tempPathNofile=tempPathNofile,
-        workingPath=workingPath,
-        scaleFactor=1.01,#1.03
-        minNeighbors=1,#3
-        minSize=(180, 180),#(85, 85)
-        nFramesVideo=n_FRAMES_VIDEO)
     #PreprocessingWCDMain.preprocessing_wcd_dataset(config_pre_WCD)
 
-    # %%
     # Preprocessing UBFC_rPPG dataset
-
-    config_pre_UBFC_rPPG = dict(
-        train=90,
-        validation=10,
-        test=0,
-        randomSeed=3,
-        samplingRatePulse=30,
-        newSamplingRatePulse=30,
-        newFpsVideo=30,
-        newSizeImage=(128, 128),
-        patternVideo="*.avi",
-        patternPuls="*.txt",
-        datasetPath=os.path.join(genPath, "output", "UBFC_rPPG_Dataset"),
-        genPathData=os.path.join(genPath, "data", "UBFC_rPPG"),
-        variblesPath=os.path.join(genPath, "output", "noFaceList"),
-        tempPathNofile=tempPathNofile,
-        workingPath=workingPath,
-        scaleFactor=1.1,
-        minNeighbors=6,
-        minSize=(90, 90),
-        nFramesVideo=n_FRAMES_VIDEO)
-
-    preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_rPPG)
+    #preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_rPPG)
 
     # %% UBFC_Phys
     # Complete cnn process
@@ -163,4 +89,4 @@ if __name__ == '__main__':
             dataset="WCD",
             architecture="PhysNet")
 
-        test_wcd.test_model(config_cnn_wcd)
+        #test_wcd.test_model(config_cnn_wcd)

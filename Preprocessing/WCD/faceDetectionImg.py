@@ -43,7 +43,9 @@ def viola_jonas_face_detector_img(currentPath: str, destinationPath: str,
     iterating = 0
     directory = sorted(os.listdir(currentPath))
     for filename in directory:
-
+        ## only first n frames
+        # if iterating == 129:
+        #     break
         # read image and convert to ndarray (h,w,d) d->rgb
         file_path = os.path.join(currentPath, filename)
         frame = cv2.imread(file_path, cv2.IMREAD_COLOR)
@@ -91,7 +93,6 @@ def viola_jonas_face_detector_img(currentPath: str, destinationPath: str,
                 noFaceList[iterating] = 1
 
         else:
-
             noFaceList[iterating] = 1
         iterating = iterating + 1
 

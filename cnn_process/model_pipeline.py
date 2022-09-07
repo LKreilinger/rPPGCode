@@ -12,13 +12,13 @@ def model_pipeline(hyperparameters):
         config = wandb.config
 
         # make the model, data, and optimization problem
-        model, train_loader, validation_loader, test_loader, loss_Inst, optimizer = load_main.load_main(config)
+        model, train_loader, validation_loader, loss_Inst, optimizer = load_main.load_main(config)
         #print(model)
 
         # and use them to train the model
         trainMain.train_and_validate_model(model, train_loader, validation_loader, loss_Inst, optimizer, config)
 
         # and test its final performance
-        Testmain.test_model(config, test_loader)
+        #Testmain.test_model(config, test_loader)
 
     return model

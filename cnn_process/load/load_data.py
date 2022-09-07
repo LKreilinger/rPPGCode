@@ -58,21 +58,21 @@ def load_data(config):
     validation_loader = torch.utils.data.DataLoader(val_dataset, batch_size=config.batch_size, num_workers=0, shuffle=True,
                                                     pin_memory=GPU)
 
-    # load test data
-    test_Data_path = os.path.join(config.path_dataset, "test")
-    test_annotation_file = os.path.join(test_Data_path, "annotations.txt")
-    test_dataset = VideoFrameDataset(
-        root_path=test_Data_path,
-        annotationfile_path=test_annotation_file,
-        num_segments=1,
-        frames_per_segment=config.nFramesVideo,
-        imagefile_template="img_{:05d}.jpg",
-        transform=trans,
-        random_shift=False,
-        test_mode=True
-    )
-
-    test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=config.batch_size, num_workers=0, shuffle=False,
-                                              pin_memory=GPU)
-
-    return train_loader, validation_loader, test_loader
+    # # load test data
+    # test_Data_path = os.path.join(config.path_dataset, "test")
+    # test_annotation_file = os.path.join(test_Data_path, "annotations.txt")
+    # test_dataset = VideoFrameDataset(
+    #     root_path=test_Data_path,
+    #     annotationfile_path=test_annotation_file,
+    #     num_segments=1,
+    #     frames_per_segment=config.nFramesVideo,
+    #     imagefile_template="img_{:05d}.jpg",
+    #     transform=trans,
+    #     random_shift=False,
+    #     test_mode=True
+    # )
+    #
+    # test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=config.batch_size, num_workers=0, shuffle=False,
+    #                                           pin_memory=GPU)
+    #
+    return train_loader, validation_loader
