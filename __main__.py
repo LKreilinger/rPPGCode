@@ -26,10 +26,10 @@ if __name__ == '__main__':
     #preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_Phys)
 
     # Preprocessing WCD Dataset
-    #PreprocessingWCDMain.preprocessing_wcd_dataset(config_pre_WCD)
+    PreprocessingWCDMain.preprocessing_wcd_dataset(config_pre_WCD)
 
     # Preprocessing UBFC_rPPG dataset
-    #preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_rPPG)
+    preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_rPPG)
 
     # %% UBFC_Phys
     # Complete cnn process
@@ -89,4 +89,4 @@ if __name__ == '__main__':
             dataset="WCD",
             architecture="PhysNet")
 
-        #test_wcd.test_model(config_cnn_wcd)
+        test_wcd.test_model(config_cnn_wcd)
