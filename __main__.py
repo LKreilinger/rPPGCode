@@ -89,4 +89,5 @@ if __name__ == '__main__':
             dataset="WCD",
             architecture="PhysNet")
 
+
         test_wcd.test_model(config_cnn_wcd)
