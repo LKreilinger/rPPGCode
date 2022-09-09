@@ -19,7 +19,7 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
     wandb.watch(model, loss_Inst, log="all", log_freq=10)
     # print(torch.cuda.memory_summary(device=config.device, abbreviated=False))
     # %% train and validate model
-    epoch_number = 0.
+    epoch_number = 0
     example_ct = 0.  # number of examples seen
     example_ct_validation = 0
     # saving memory

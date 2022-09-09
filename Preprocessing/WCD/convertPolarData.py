@@ -56,7 +56,6 @@ def convert_polar_data(path: object, tempPath: object, camera_data_path: str) ->
             only_once = 1
             if abs(date_polar - first_frame_time) > abs(date_polar_temp - first_frame_time):
                 delete_until = counter + 1  # date_polar_temp closer
-
             else:
                 delete_until = counter  # date_polar closer
         # get a ploar timestamp which is the closest to last frame timestamp

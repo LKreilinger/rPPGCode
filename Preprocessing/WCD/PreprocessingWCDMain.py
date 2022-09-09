@@ -6,16 +6,16 @@ from Preprocessing import makeTxt, save_load, split_data
 
 
 def preprocessing_wcd_dataset(config):
-    if os.path.exists(config['datasetPath']) and os.path.isdir(config['datasetPath']):
-        shutil.rmtree(config['datasetPath'])
-    os.mkdir(config['datasetPath'])
+    # if os.path.exists(config['datasetPath']) and os.path.isdir(config['datasetPath']):
+    #     shutil.rmtree(config['datasetPath'])
+    # os.mkdir(config['datasetPath'])
 
     for idx, split in enumerate(config):
         if config[split] != 0:
             # Video Preprocessing saving frames with detected face
-            noFaceListAllVideos, delete_videos = image_preprocessing.image_pre_WCD(config, split)
+            # noFaceListAllVideos, delete_videos = image_preprocessing.image_pre_WCD(config, split)
             # Save and load list with information about detected faces
-            save_load.save_variable(config, noFaceListAllVideos, delete_videos, split)
+            # save_load.save_variable(config, noFaceListAllVideos, delete_videos, split)
             noFaceListAllVideos, delete_videos = save_load.load_variable(config, split)
 
             # Pulse preprocessing and fit to frames

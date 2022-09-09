@@ -2,12 +2,14 @@ import torch
 import numpy as np
 import glob
 import os
+import time
 # local Packages
 from cnn_process.TestModel import performance_metrics, append_matrix
 from cnn_process.load.load_main import PhysNet
 
 
 def test_model(config, test_loader):
+    start_time1 = time.time()
     # load best (newest) model
     saved_model = PhysNet.PhysNet_padding_Encoder_Decoder_MAX()
     model_path = os.path.join(config.path_model, "*")
@@ -37,13 +39,19 @@ def test_model(config, test_loader):
 
             rPPG_all, BVP_label_all, first_run = append_matrix.append_truth_prediction_label(
                 BVP_label, rPPG, first_run, rPPG_all, BVP_label_all)
-
+        print("--- %s seconds ---" % (time.time() - start_time1))
         # Calculate performace of model with test data
-        try:
-            MAE, RMSE, STD = performance_metrics.eval_model(BVP_label_all, rPPG_all, config)
-            print(f"Validation MAE: {MAE:.3f}" + f" Validation RMSE: {RMSE:.3f}")
-        except Exception:
-            print("Could not determine pulse for given signal.")
+        data_elements = np.shape(BVP_label_all)[1]
+        number_videos = config.subjects * 3
+        elements_video = data_elements / number_videos
+        for sx_tx in range(number_videos):
+            BVP_label_sx_tx = BVP_label_all[:, int(sx_tx * elements_video): int(elements_video * (sx_tx + 1))]
+            rPPG_all_sx_tx = rPPG_all[:, int(sx_tx * elements_video): int(elements_video * (sx_tx + 1))]
+            try:
+                MAE, RMSE, STD = performance_metrics.eval_model(BVP_label_sx_tx, rPPG_all_sx_tx, config)
+                print(f"Validation MAE: {MAE:.3f}" + f" Validation RMSE: {RMSE:.3f}")
+            except Exception:
+                print("Could not determine pulse for given signal.")
         return BVP_label_all, rPPG_all
 
 
