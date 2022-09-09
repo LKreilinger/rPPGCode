@@ -22,18 +22,12 @@ if __name__ == '__main__':
     tempPathNofile, genPath, workingPath = pre_config.pre_config(docker)
     config_pre_UBFC_Phys, config_pre_WCD, config_pre_UBFC_rPPG = config_dataset.config_datasets(genPath, tempPathNofile, workingPath, n_FRAMES_VIDEO)
 
-    # Preprocessing UBFC_Phys dataset
+    # Preprocessing
     #preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_Phys)
-
-    # Preprocessing WCD Dataset
+    #preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_rPPG)
     PreprocessingWCDMain.preprocessing_wcd_dataset(config_pre_WCD)
 
-    # Preprocessing UBFC_rPPG dataset
-    preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_rPPG)
-
-    # %% UBFC_Phys
-    # Complete cnn process
-    #   - split data
+    # %% Complete cnn process
     #   - load data
     #   - define training environment
     #   - define model
@@ -68,7 +62,7 @@ if __name__ == '__main__':
             fps=30,
             nFramesVideo=n_FRAMES_VIDEO,
             device=device,
-            epochs=30,
+            epochs=12,
             batch_size=size,
             learning_rate=lr,
             dataset="UBFC_rPPG",
@@ -78,7 +72,7 @@ if __name__ == '__main__':
         # model = cnn_process_main.cnn_process_main(config_cnn_ubfc_phys)
         # %% Test model with WCD data
         config_cnn_wcd = dict(
-            path_dataset=os.path.join(genPath, "output", "WCD_Dataset"),
+            path_dataset=os.path.join(genPath, "output", "WCD_Dataset", "test"),
             path_model=os.path.join(genPath, "output", "Model"),
             variblesPath=os.path.join(genPath, "output", "noFaceList"),
             nFramesVideo=n_FRAMES_VIDEO,
@@ -88,6 +82,5 @@ if __name__ == '__main__':
             subject=2,
             dataset="WCD",
             architecture="PhysNet")
-
 
         test_wcd.test_model(config_cnn_wcd)
