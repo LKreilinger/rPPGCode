@@ -23,7 +23,7 @@ def pulse_pure(config, noFaceListAllVideos, delete_videos, data_split):
             for file in files:
                 folder_tx_images = file[-7:-5]
                 Tx = "T" + folder_tx_images
-                Sx = os.path.basename(path)[-2:]
+                Sx = os.path.basename(path)
                 name = "bvp_" + Sx + "_" + Tx + ".csv"
                 currentPath = os.path.join(path, file)
                 tempPathName = os.path.join(config['tempPathNofile'], name)

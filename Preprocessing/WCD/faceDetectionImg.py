@@ -89,7 +89,7 @@ def viola_jonas_face_detector_img(currentPath: str, destinationPath: str,
                 destinationPathFile = os.path.join(destinationPath, iteratImagName)
                 cv2.imwrite(destinationPathFile, faceROIResized)
             else:
-                print('Warning Message: Face detection detected more than one face')
+                #print('Warning Message: Face detection detected more than one face')
                 noFaceList[iterating] = 1
 
         else:
