@@ -72,8 +72,8 @@ def config_datasets(genPath, tempPathNofile, workingPath, n_FRAMES_VIDEO):
 
     # Preprocessing PURE dataset
     config_pre_PURE = dict(
-        train=50,
-        validation=50,
+        train=90,
+        validation=10,
         test=0,
         randomSeed=randomSeed,
         samplingRatePulse=60,
@@ -81,14 +81,14 @@ def config_datasets(genPath, tempPathNofile, workingPath, n_FRAMES_VIDEO):
         newFpsVideo=30,
         newSizeImage=(128, 128),
         patternVideo="*.avi",
-        patternPuls="*.json",
+        patternPuls=".json",
         datasetPath=os.path.join(genPath, "output", "PURE_Dataset"),
         genPathData=os.path.join(genPath, "data", "PURE"),
         variblesPath=os.path.join(genPath, "output", "noFaceList"),
         tempPathNofile=tempPathNofile,
         workingPath=workingPath,
         scaleFactor=1.1,
-        minNeighbors=6,
-        minSize=(90, 90),
+        minNeighbors=7,
+        minSize=(100, 100),
         nFramesVideo=n_FRAMES_VIDEO)
     return config_pre_UBFC_Phys, config_pre_WCD, config_pre_UBFC_rPPG, config_pre_PURE
