@@ -27,7 +27,7 @@ def split_data(config):
     # compensate rounding error
     number_s_splits = number_s_splits.astype(int)
     n_zeros = np.count_nonzero(round_error == 0)
-    if n_zeros != 2:
+    if n_zeros < 2:
         idx_max = round_error.argmax(axis=0)
         number_s_splits[idx_max] += 1
 

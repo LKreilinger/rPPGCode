@@ -2,6 +2,7 @@ import os
 
 
 def pre_config(docker):
+    # for docker change workdir
     if docker:
         print("Docker is working")
         workingPath = os.path.abspath(os.getcwd())

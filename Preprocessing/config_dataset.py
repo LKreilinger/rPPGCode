@@ -69,4 +69,26 @@ def config_datasets(genPath, tempPathNofile, workingPath, n_FRAMES_VIDEO):
         minNeighbors=6,
         minSize=(90, 90),
         nFramesVideo=n_FRAMES_VIDEO)
-    return config_pre_UBFC_Phys, config_pre_WCD, config_pre_UBFC_rPPG
+
+    # Preprocessing PURE dataset
+    config_pre_PURE = dict(
+        train=50,
+        validation=50,
+        test=0,
+        randomSeed=randomSeed,
+        samplingRatePulse=60,
+        newSamplingRatePulse=30,
+        newFpsVideo=30,
+        newSizeImage=(128, 128),
+        patternVideo="*.avi",
+        patternPuls="*.json",
+        datasetPath=os.path.join(genPath, "output", "PURE_Dataset"),
+        genPathData=os.path.join(genPath, "data", "PURE"),
+        variblesPath=os.path.join(genPath, "output", "noFaceList"),
+        tempPathNofile=tempPathNofile,
+        workingPath=workingPath,
+        scaleFactor=1.1,
+        minNeighbors=6,
+        minSize=(90, 90),
+        nFramesVideo=n_FRAMES_VIDEO)
+    return config_pre_UBFC_Phys, config_pre_WCD, config_pre_UBFC_rPPG, config_pre_PURE

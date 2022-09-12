@@ -95,7 +95,6 @@ def convert_polar_data(path: object, tempPath: object, camera_data_path: str) ->
     PPG = (Channel0 + Channel1 + Channel2 - (3 * Ambient))/3
     PPG = np.round(PPG, decimals=0)
 
-
     #%% save PPG as *.csv
     newDF = pandas.DataFrame(PPG)
     newDF.to_csv(tempPath, index=False, header=False)

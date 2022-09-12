@@ -14,18 +14,19 @@ from cnn_process import cnn_process_main
 from Preprocessing import preprocessing_ubfc_main, pre_config, config_dataset
 from Preprocessing.WCD import PreprocessingWCDMain
 from cnn_process.TestModel import test_wcd
+from Preprocessing.PURE import preprocessing_pure_main
 
 if __name__ == '__main__':
-    # for docker change workdir
     docker = True
     n_FRAMES_VIDEO = 128  # number of Frames used fpr training Model
     tempPathNofile, genPath, workingPath = pre_config.pre_config(docker)
-    config_pre_UBFC_Phys, config_pre_WCD, config_pre_UBFC_rPPG = config_dataset.config_datasets(genPath, tempPathNofile, workingPath, n_FRAMES_VIDEO)
+    config_pre_UBFC_Phys, config_pre_WCD, config_pre_UBFC_rPPG, config_pre_PURE = config_dataset.config_datasets(genPath, tempPathNofile, workingPath, n_FRAMES_VIDEO)
 
-    # Preprocessing
+    # Preprocessing datasets
     #preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_Phys)
     #preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_rPPG)
     #PreprocessingWCDMain.preprocessing_wcd_dataset(config_pre_WCD)
+    preprocessing_pure_main.pre_pure(config_pre_PURE)
 
     # %% Complete cnn process
     #   - load data
@@ -45,7 +46,6 @@ if __name__ == '__main__':
     config_cnn_ubfc_phys = dict(
         path_dataset=os.path.join(genPath, "output", "UBFC_Phys_Dataset"),
         path_model=os.path.join(genPath, "output", "Model"),
-        test_split=25,
         fps=30,
         nFramesVideo=n_FRAMES_VIDEO,
         device=device,
@@ -58,7 +58,6 @@ if __name__ == '__main__':
     config_cnn_ubfc_rppg = dict(
         path_dataset=os.path.join(genPath, "output", "UBFC_rPPG_Dataset"),
         path_model=os.path.join(genPath, "output", "Model"),
-        test_split=25,
         fps=30,
         nFramesVideo=n_FRAMES_VIDEO,
         device=device,
@@ -68,8 +67,21 @@ if __name__ == '__main__':
         dataset="UBFC_rPPG",
         architecture="PhysNet")
 
-    model = cnn_process_main.cnn_process_main(config_cnn_ubfc_rppg)
+    config_cnn_pure = dict(
+        path_dataset=os.path.join(genPath, "output", "PURE_Dataset"),
+        path_model=os.path.join(genPath, "output", "Model"),
+        fps=30,
+        nFramesVideo=n_FRAMES_VIDEO,
+        device=device,
+        epochs=15,
+        batch_size=size,
+        learning_rate=lr,
+        dataset="UBFC_rPPG",
+        architecture="PhysNet")
+
+    # model = cnn_process_main.cnn_process_main(config_cnn_ubfc_rppg)
     # model = cnn_process_main.cnn_process_main(config_cnn_ubfc_phys)
+    model = cnn_process_main.cnn_process_main(config_cnn_pure)
     # %% Test model with WCD data
     config_cnn_wcd = dict(
         path_dataset=os.path.join(genPath, "output", "WCD_Dataset", "test"),
