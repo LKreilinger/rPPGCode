@@ -110,8 +110,6 @@ if __name__ == '__main__':
         dataset="UBFC_rPPG_and_PURE",
         architecture="PhysNet")
 
-    # model = cnn_process_main.cnn_process_main(config_cnn_ubfc_rppg)
-    # model = cnn_process_main.cnn_process_main(config_cnn_ubfc_phys)
     model = cnn_process_main.cnn_process_main(config_cnn_pure_and_UBFC_rPPG)
     # %% Test model with WCD data
     config_cnn_wcd = dict(
