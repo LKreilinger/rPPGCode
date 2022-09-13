@@ -98,7 +98,7 @@ if __name__ == '__main__':
     #test_wcd.test_model(config_cnn_wcd)
 
     #%% combined rPPG and PURE
-    batch_sizes = [32, 16, 8, 4]
+    batch_sizes = [32, 16, 8, 4, 2]
     learning_rates = [0.01, 0.001, 0.0001] #default 0.0001
     for size in batch_sizes:
         for lr in learning_rates:
@@ -108,7 +108,7 @@ if __name__ == '__main__':
                 fps=30,
                 nFramesVideo=n_FRAMES_VIDEO,
                 device=device,
-                epochs=10,
+                epochs=30,
                 batch_size=size,
                 learning_rate=lr,
                 dataset="UBFC_rPPG_and_PURE",
