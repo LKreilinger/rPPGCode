@@ -108,7 +108,7 @@ if __name__ == '__main__':
                 fps=30,
                 nFramesVideo=n_FRAMES_VIDEO,
                 device=device,
-                epochs=20,
+                epochs=10,
                 batch_size=size,
                 learning_rate=lr,
                 dataset="UBFC_rPPG_and_PURE",
