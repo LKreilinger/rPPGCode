@@ -26,7 +26,7 @@ if __name__ == '__main__':
     #preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_Phys)
     #preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_rPPG)
     #PreprocessingWCDMain.preprocessing_wcd_dataset(config_pre_WCD)
-    preprocessing_pure_main.pre_pure(config_pre_PURE)
+    #preprocessing_pure_main.pre_pure(config_pre_PURE)
 
     # %% Complete cnn process
     #   - load data
