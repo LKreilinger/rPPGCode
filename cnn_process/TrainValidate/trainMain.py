@@ -23,8 +23,10 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
     example_ct = 0.  # number of examples seen
     example_ct_validation = 0
     # saving memory
-    #torch.backends.cudnn.benchmark = True
-    #torch.backends.cudnn.enabled = True
+    torch.manual_seed(1)
+    torch.cuda.manual_seed_all(1)
+    if torch.cuda.is_available():
+        torch.backends.cudnn.benchmark = False
     torch.cuda.empty_cache()
     for epoch in range(config.epochs):
         print('EPOCH {}:'.format(epoch_number + 1))
