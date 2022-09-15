@@ -15,7 +15,7 @@ import time
 # st = time.strptime("01.01.2012", "%d.%m.%Y")
 # epoch = time.asctime(st)
 # print("epoch is:", epoch)
-dt = datetime.datetime.fromtimestamp(713633303679905982 // 1000000000)
+dt = datetime.datetime.fromtimestamp(1392646728514937000 // 1000000000)
 s1 = dt.strftime('%Y-%m-%d %H:%M:%S')
 s1 += '.' + str(int(1360287003083988472 % 1000000000)).zfill(9)
 print(s1)
