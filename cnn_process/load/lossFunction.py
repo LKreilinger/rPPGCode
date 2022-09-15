@@ -42,3 +42,28 @@ class Neg_Pearson(nn.Module):  # Pearson range [-1, 1] so if < 0, abs|loss| ; if
 
         loss = loss / preds.shape[0]
         return loss
+
+    '''
+    Formula (idea) of 'Siamese-rPPG Network: Remote Photoplethysmography Signal Estimation from Face Videos'
+    By https://doi.org/10.1145/3341105.3373905
+    '''
+
+class pearson_correlatio(nn.Module):  # loss between 0 and 1
+    def __init__(self):
+        super(pearson_correlatio, self).__init__()
+        return
+
+    def forward(self, preds, labels):  # tensor [Batch, Temporal]
+        loss = 0
+        x = preds
+        y = labels
+
+        vx = x - torch.mean(x)
+        vy = y - torch.mean(y)
+
+        r = torch.sum(vx * vy) / (torch.sqrt(torch.sum(vx ** 2)) * torch.sqrt(torch.sum(vy ** 2)))
+        if r < 0:
+            loss = 1 - r
+        else:
+            loss = r
+        return loss
