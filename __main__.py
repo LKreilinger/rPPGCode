@@ -36,7 +36,7 @@ if __name__ == '__main__':
     #   - evaluate model
     # batch_sizes = [4, 8, 16, 32]
     # learning_rates = [0.01, 0.001, 0.0001] #default 0.0001
-    size = 2
+    size = 8
     learning_rates = [0.0001, 0.001]
     lr = 0.0001
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -50,7 +50,7 @@ if __name__ == '__main__':
         fps=30,
         nFramesVideo=n_FRAMES_VIDEO,
         device=device,
-        epochs=20,
+        epochs=10,
         batch_size=size,
         learning_rate=lr,
         dataset="UBFC_rPPG",
@@ -94,7 +94,7 @@ if __name__ == '__main__':
         fps=30,
         nFramesVideo=n_FRAMES_VIDEO,
         device=device,
-        epochs=20,
+        epochs=10,
         batch_size=size,
         learning_rate=lr,
         dataset="UBFC_rPPG",
