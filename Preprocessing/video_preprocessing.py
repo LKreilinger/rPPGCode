@@ -28,11 +28,15 @@ def video_pre_ubfc(config, data_split):
             destinationPath = os.path.join(path_dataset_split, name)
             tempPath = os.path.join(config['tempPathNofile'], name)
             if fnmatch(name, config['patternVideo']):
-                os.mkdir(destinationPath)  # make as many folders as videos excist, Foldername is equal the videoname
+                os.mkdir(destinationPath)# make as many folders as videos excist, Foldername is equal the videoname
+                destinationPath_augmen=False
+                # Image augmentations
+                if config['augmentation']:
+                    destinationPath_augmen = destinationPath.replace("d_s", "d_a_s")
+                    os.mkdir(destinationPath_augmen)
                 os.makedirs(config['tempPathNofile'], exist_ok=True)
                 noFaceList = FaceDetection.viola_jonas_face_detector(currentPath, destinationPath, tempPath,
-                                                                     config['newFpsVideo'], config['newSizeImage'],
-                                                                     config)
+                                                                     config, destinationPath_augmen)
                 n_zeros = np.count_nonzero(noFaceList == 0)
                 n_ones = np.count_nonzero(noFaceList == 1)
                 shutil.rmtree(config['tempPathNofile'])

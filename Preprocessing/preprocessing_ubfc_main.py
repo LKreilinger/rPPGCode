@@ -30,7 +30,7 @@ def pre_ubfc(config):
 
             # Make annotation.txt of the images and the pulse data
             path_dataset_split = os.path.join(config['datasetPath'], split)
-            makeTxt.makeAnnotation(config['tempPathNofile'], path_dataset_split, config['nFramesVideo'])
+            makeTxt.makeAnnotation(config, path_dataset_split)
         if idx == 2:
             break
 

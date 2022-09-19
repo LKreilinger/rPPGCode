@@ -14,7 +14,7 @@ def load_main(config):
 
     # Load the loss and optimizer
     optimizer = torch.optim.Adam(model.parameters(), lr=config.learning_rate)
-    loss_Inst = lossFunction.pearson_correlatio()
+    loss_Inst = lossFunction.Neg_Pearson()
 
 
     return model, train_loader, validation_loader, loss_Inst, optimizer

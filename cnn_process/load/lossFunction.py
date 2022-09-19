@@ -54,7 +54,6 @@ class pearson_correlatio(nn.Module):  # loss between 0 and 1
         return
 
     def forward(self, preds, labels):  # tensor [Batch, Temporal]
-        loss = 0
         x = preds
         y = labels
 

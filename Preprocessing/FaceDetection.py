@@ -4,14 +4,15 @@ Created on Tue May 10 13:18:27 2022
 """
 
 import cv2
-import os
 from moviepy.editor import *
 import numpy as np
 import shutil
 import warnings
+# internal modules
+from Preprocessing.Augmentation import augmentations
 
-def viola_jonas_face_detector(currentPath: str, destinationPath: str, tempPath: str, NewSamplingRate: int,
-                              newsizeImage: tuple, config) -> np.ndarray:
+
+def viola_jonas_face_detector(currentPath: str, destinationPath: str, tempPath: str, config, destinationPath_augmen):
     """
     Face detection with Viola Jonas Algorythm.
     Saving every resized (Face)Frame separately
@@ -25,8 +26,6 @@ def viola_jonas_face_detector(currentPath: str, destinationPath: str, tempPath: 
     :param currentPath:
     :param destinationPath:
     :param tempPath:
-    :param NewSamplingRate:
-    :param newsizeImage:
     """
     # load trained modul for face detection
     faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_alt2.xml")
@@ -35,19 +34,19 @@ def viola_jonas_face_detector(currentPath: str, destinationPath: str, tempPath: 
     clip = VideoFileClip(currentPath)
     fpsOriginal = clip.fps
     # !!!!! only first n seconds!!!!
-    # clip = clip.subclip(0, 1)
+    # clip = clip.subclip(0, 5)
     # !!!!! only first n seconds!!!!
     # %%
-    if fpsOriginal < NewSamplingRate + 1:
+    if fpsOriginal < config['newFpsVideo'] + 1:
         # copy file to tempPath
         shutil.copyfile(currentPath, tempPath)
         # !!!!! only first n seconds!!!!
         # clip = VideoFileClip(currentPath)
-        # clip = clip.subclip(0, 1)
-        # clip.write_videofile(tempPath, fps=NewSamplingRate, codec="libx264")
+        # clip = clip.subclip(0, 5)
+        # clip.write_videofile(tempPath, fps=config['newFpsVideo'], codec="libx264")
         # !!!!! only first n seconds!!!!
     else:
-        clip.write_videofile(tempPath, fps=NewSamplingRate, codec="libx264")
+        clip.write_videofile(tempPath, fps=config['newFpsVideo'], codec="libx264")
 
     video_capture = cv2.VideoCapture(tempPath)
     FRAME_COUNT = int(video_capture.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -92,12 +91,17 @@ def viola_jonas_face_detector(currentPath: str, destinationPath: str, tempPath: 
                 # from matplotlib import pyplot as plt
                 # plt.imshow(faceROI, interpolation='nearest')
                 # plt.show()
-                faceROIResized = cv2.resize(faceROI, newsizeImage, interpolation=cv2.INTER_AREA)
-                # save the resulting frame as png
+                faceROIResized = cv2.resize(faceROI, config['newSizeImage'], interpolation=cv2.INTER_AREA)
+                # save the resulting frame as jpg
                 iteratImagIndex = iteratImagIndex + 1
                 iteratImagName = f'{base_string}_{iteratImagIndex:05}.jpg'
                 destinationPathFile = os.path.join(destinationPath, iteratImagName)
                 cv2.imwrite(destinationPathFile, faceROIResized)
+                # augment image and save as jpg
+                if config['augmentation']:
+                    aug_img = augmentations.augment(faceROIResized)
+                    destinationPathFileAug = os.path.join(destinationPath_augmen, iteratImagName)
+                    cv2.imwrite(destinationPathFileAug, aug_img)
             else:
                 warnings.warn('Warning Message: Face detection detected more than one face')
                 noFaceList[iteratingFrames] = 1

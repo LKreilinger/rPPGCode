@@ -53,6 +53,7 @@ def config_datasets(genPath, tempPathNofile, workingPath, n_FRAMES_VIDEO):
         train=90,
         validation=10,
         test=0,
+        augmentation=True,
         randomSeed=randomSeed,
         samplingRatePulse=30,
         newSamplingRatePulse=30,
