@@ -1,10 +1,10 @@
 from kale.loaddata.videos import VideoFrameDataset
 from kale.prepdata.video_transform import ImglistToTensor
+from kale.utils.seed import set_seed
 import os
 from torchvision import transforms
 import torch
-torch.manual_seed(1)
-torch.cuda.manual_seed_all(1)
+
 
 
 def load_data(config):
@@ -12,6 +12,9 @@ def load_data(config):
     # Load data as in xdatasetSplit is saved. The split ratio is defined in splitData.py
     :type outputDataUBFCPath: str
     """
+    torch.manual_seed(1)
+    torch.cuda.manual_seed_all(1)
+    set_seed(seed=1000)
     # transformation and uses GPU if possible
     trans = transforms.Compose([
         ImglistToTensor(),
