@@ -14,7 +14,7 @@ def load_data(config):
     """
     torch.manual_seed(1)
     torch.cuda.manual_seed_all(1)
-    set_seed(seed=1000)
+    set_seed(seed=1)
     # transformation and uses GPU if possible
     trans = transforms.Compose([
         ImglistToTensor(),

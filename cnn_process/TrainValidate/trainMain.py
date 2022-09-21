@@ -75,8 +75,7 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
 
                 rPPG_all, BVP_label_all, first_run = append_matrix.append_truth_prediction_label(
                     BVP_label, rPPG, first_run, rPPG_all, BVP_label_all)
-                if batch_validation_ct % 10 == 9:
-                    wandb.log({"epoch": epoch, "val_loss": avg_vloss})
+        wandb.log({"epoch": epoch, "val_loss": avg_vloss})
 
         print(f"Loss train: {last_loss:.3f}" + f" Loss validation: {avg_vloss:.3f}")
         # Calculate performace of model with test data

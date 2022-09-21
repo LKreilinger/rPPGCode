@@ -134,17 +134,19 @@ if __name__ == '__main__':
     #
     # #######################################################################
     #%% combined rPPG and PURE
-    batch_sizes = [32, 16, 8, 4, 2]
-    learning_rates = [0.01, 0.001, 0.0001]
+    batch_sizes = [8, 32, 16, 4, 2]
+    learning_rates = [0.0001, 0.001, 0.01]
     for size in batch_sizes:
         for lr in learning_rates:
+    #lr = 0.01 0.0001 0.001 0.01
+    #size = 16 32     32    32
             config_cnn_pure_and_UBFC_rPPG = dict(
                 path_dataset=os.path.join(genPath, "output", "PURE_and_rPPG_Dataset"),
                 path_model=os.path.join(genPath, "output", "Model"),
                 fps=30,
                 nFramesVideo=n_FRAMES_VIDEO,
                 device=device,
-                epochs=50,
+                epochs=30,
                 batch_size=size,
                 learning_rate=lr,
                 dataset="UBFC_rPPG_and_PURE",
