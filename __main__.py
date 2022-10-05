@@ -51,7 +51,7 @@ if __name__ == '__main__':
         dataset="UBFC_rPPG",
         architecture="PhysNet")
 
-    #model = cnn_process_main.cnn_process_main(config_cnn_ubfc_rppg)
+    model = cnn_process_main.cnn_process_main(config_cnn_ubfc_rppg)
     # Test model with PURE data
     config_cnn_test_pure = dict(
         path_dataset=os.path.join(genPath, "output", "PURE_Dataset", "test"),
@@ -65,7 +65,7 @@ if __name__ == '__main__':
         dataset="WCD",
         architecture="PhysNet")
 
-    #test_wcd.test_model(config_cnn_test_pure)
+    test_wcd.test_model(config_cnn_test_pure)
 
     #  Test model with WCD data
     config_cnn_test_wcd = dict(
