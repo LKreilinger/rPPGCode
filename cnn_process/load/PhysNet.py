@@ -1,5 +1,5 @@
-'''
-Code of 'Remote Photoplethysmograph Signal Measurement from Facial Videos Using Spatio-Temporal Networks' 
+"""
+Code of 'Remote Photoplethysmograph Signal Measurement from Facial Videos Using Spatio-Temporal Networks'
 By Zitong Yu, 2019/05/05
 If you use the code, please cite:
 @inproceedings{yu2019remote,
@@ -10,10 +10,11 @@ If you use the code, please cite:
 }
 Only for research purpose, and commercial use is not allowed.
 MIT License
-Copyright (c) 2019 
-'''
+Copyright (c) 2019
+"""
 
 import torch.nn as nn
+
 
 class PhysNet_padding_Encoder_Decoder_MAX(nn.Module):
     def __init__(self, frames=128):  
