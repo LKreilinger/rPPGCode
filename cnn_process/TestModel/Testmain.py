@@ -45,20 +45,20 @@ def test_model(config, test_loader):
         #number_videos = config.subjects * 3
         number_videos = 30
         elements_video = int(data_elements / number_videos)
-        for sx_tx in range(number_videos):
-            BVP_label_sx_tx = BVP_label_all[:, int(sx_tx * elements_video): int(elements_video * (sx_tx + 1))]
-            rPPG_all_sx_tx = rPPG_all[:, int(sx_tx * elements_video): int(elements_video * (sx_tx + 1))]
-            try:
-                MAE, RMSE, STD = performance_metrics.eval_model_fft(BVP_label_sx_tx, rPPG_all_sx_tx, config)
-                print(f"Test fft MAE: {MAE:.3f}" + f" Test RMSE: {RMSE:.3f}")
-                MAE, RMSE, STD = performance_metrics.eval_model(BVP_label_sx_tx, rPPG_all_sx_tx, config)
-                print(f"Test MAE: {MAE:.3f}" + f" Test RMSE: {RMSE:.3f}")
-            except Exception:
-                print("Could not determine pulse for given signal.")
+        # for sx_tx in range(number_videos):
+        #     BVP_label_sx_tx = BVP_label_all[:, int(sx_tx * elements_video): int(elements_video * (sx_tx + 1))]
+        #     rPPG_all_sx_tx = rPPG_all[:, int(sx_tx * elements_video): int(elements_video * (sx_tx + 1))]
+        #     try:
+        #         MAE, RMSE, STD = performance_metrics.eval_model_fft(BVP_label_sx_tx, rPPG_all_sx_tx, config)
+        #         print(f"Test fft MAE: {MAE:.3f}" + f" Test RMSE: {RMSE:.3f}")
+        #         MAE, RMSE, STD = performance_metrics.eval_model(BVP_label_sx_tx, rPPG_all_sx_tx, config)
+        #         print(f"Test MAE: {MAE:.3f}" + f" Test RMSE: {RMSE:.3f}")
+        #     except Exception:
+        #         print("Could not determine pulse for given signal.")
 
         try:
             print("Resluts with complete test dataset")
-            MAE, RMSE, STD = performance_metrics.eval_model_fft(BVP_label_sx_tx, rPPG_all_sx_tx, config)
+            MAE, RMSE, STD = performance_metrics.eval_model_fft(BVP_label_all, rPPG_all, config)
             print(f"Test fft MAE: {MAE:.3f}" + f" Test RMSE: {RMSE:.3f}")
             MAE, RMSE, STD = performance_metrics.eval_model(BVP_label_all, rPPG_all, config)
             print(f"Test MAE: {MAE:.3f}" + f" Test RMSE: {RMSE:.3f}")
