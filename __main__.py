@@ -40,12 +40,12 @@ if __name__ == '__main__':
 
     #%% 1 #####################################################################
     config_cnn_ubfc_rppg = dict(
-        path_dataset=os.path.join(genPath, "output", "UBFC_rPPG_Dataset"),
+        path_dataset=os.path.join(genPath, "output", "UBFC_rPPG_Dataset_no_aug"),
         path_model=os.path.join(genPath, "output", "Model"),
         fps=30,
         nFramesVideo=n_FRAMES_VIDEO,
         device=device,
-        epochs=15,
+        epochs=8,
         batch_size=size,
         learning_rate=lr,
         dataset="UBFC_rPPG",
@@ -84,6 +84,7 @@ if __name__ == '__main__':
         config_cnn_test_wcd["path_dataset"] = os.path.join(config_cnn_test_wcd["path_dataset"], folder)
         config_cnn_test_wcd["dataset"] = "WCD_" + folder
         test_wcd.test_model(config_cnn_test_wcd)
+        config_cnn_test_wcd["path_dataset"] = os.path.join(genPath, "output", "WCD_Dataset", "test")
 
 
 
