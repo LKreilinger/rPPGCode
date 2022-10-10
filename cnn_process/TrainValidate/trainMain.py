@@ -40,9 +40,9 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
             inputs, BVP_label = data
             loss = train_batch.train_batch(inputs, BVP_label, optimizer, model, loss_Inst)
 
-            if math.isnan(loss):
-                print("loss = NaN")
-                break
+            # if math.isnan(loss):
+            #     print("loss = NaN")
+            #     break
 
             running_loss += loss.item()
 
@@ -56,9 +56,9 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
                 print(f"Loss after " + str(batch_ct + 1).zfill(4) + f" batches: {last_loss:.3f}")
                 running_loss = 0.
         wandb.log({"train_loss": last_loss, "epoch": epoch})
-        if math.isnan(loss):
-            print("loss = NaN")
-            break
+        # if math.isnan(loss):
+        #     print("loss = NaN")
+        #     break
         # Validate model
         model.eval()
         running_vloss = 0.0
