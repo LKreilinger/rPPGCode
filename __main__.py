@@ -41,7 +41,7 @@ if __name__ == '__main__':
     #train_rppg.train_rppg(genPath, augmentation, n_FRAMES_VIDEO, device, batch, lr, epochs, n)
 
     # 2 train rPPG with augment             -> test PURE and WCD (split subject and video)
-    epochs = 80
+    epochs = 37
     n = "2"  # 2 train rPPG with augment
     augmentation = True
     train_rppg.train_rppg(genPath, augmentation, n_FRAMES_VIDEO, device, batch, lr, epochs, n)
