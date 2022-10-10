@@ -18,7 +18,7 @@ from Preprocessing.PURE import preprocessing_pure_main
 from cnn_process import train_rppg, train_pure
 
 if __name__ == '__main__':
-    docker = False
+    docker = True
     n_FRAMES_VIDEO = 128  # number of Frames used for training Model
     tempPathNofile, genPath, workingPath = pre_config.pre_config(docker)
 
