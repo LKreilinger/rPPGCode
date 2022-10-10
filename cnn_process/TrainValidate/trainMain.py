@@ -17,6 +17,8 @@ from cnn_process.TestModel import append_matrix, performance_metrics
 
 def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, optimizer, config):
     wandb.watch(model, loss_Inst, log="all", log_freq=10)
+    # define our custom x axis metric
+    wandb.define_metric("epoch")
     # print(torch.cuda.memory_summary(device=config.device, abbreviated=False))
     # %% train and validate model
     epoch_number = 0
@@ -50,9 +52,10 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
             if batch_ct % 10 == 9:
                 # print(torch.cuda.memory_summary(device=config.device, abbreviated=False))
                 last_loss = running_loss / 10
-                wandb.log({"epoch": epoch, "train_loss": last_loss})
+
                 print(f"Loss after " + str(batch_ct + 1).zfill(4) + f" batches: {last_loss:.3f}")
                 running_loss = 0.
+        wandb.log({"train_loss": last_loss, "epoch": epoch})
         if math.isnan(loss):
             print("loss = NaN")
             break
@@ -75,7 +78,7 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
 
                 rPPG_all, BVP_label_all, first_run = append_matrix.append_truth_prediction_label(
                     BVP_label, rPPG, first_run, rPPG_all, BVP_label_all)
-        wandb.log({"epoch": epoch, "val_loss": avg_vloss})
+        wandb.log({"val_loss": avg_vloss, "epoch": epoch})
 
         print(f"Loss train: {last_loss:.3f}" + f" Loss validation: {avg_vloss:.3f}")
         # Calculate performace of model with test data
