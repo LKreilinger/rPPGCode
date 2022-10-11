@@ -20,8 +20,8 @@ if __name__ == '__main__':
     tempPathNofile, genPath, workingPath = pre_config.pre_config(docker)
 
     # Preprocessing datasets
-    config_pre_UBFC_Phys, config_pre_WCD, config_pre_UBFC_rPPG, config_pre_PURE = config_dataset.config_datasets(genPath, tempPathNofile, workingPath, n_FRAMES_VIDEO)
-    preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_Phys)
+    # config_pre_UBFC_Phys, config_pre_WCD, config_pre_UBFC_rPPG, config_pre_PURE = config_dataset.config_datasets(genPath, tempPathNofile, workingPath, n_FRAMES_VIDEO)
+    # preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_Phys)
     # preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_rPPG)
     # PreprocessingWCDMain.preprocessing_wcd_dataset(config_pre_WCD)
     # preprocessing_pure_main.pre_pure(config_pre_PURE)
