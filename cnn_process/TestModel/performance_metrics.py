@@ -70,8 +70,8 @@ def eval_model_fft(ground_truth, predicted_label, config):
     predict_mean = np.mean(pulse_predic)
     for i in range(ground_truth.shape[1]):
         nummerator += (pulse_predic[0, i] - predict_mean)*(pulse_label[0, i] - label_mean)
-        denominator1 += (pulse_predic[0, i] - predict_mean)
-        denominator2 += (pulse_label[0, i] - label_mean)
+        denominator1 += (pulse_predic[0, i] - predict_mean) ** 2
+        denominator2 += (pulse_label[0, i] - label_mean) ** 2
     R = (nummerator / (np.sqrt(denominator1)*np.sqrt(denominator2)))
 
     return MAE, RMSE, R
