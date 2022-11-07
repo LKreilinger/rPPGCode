@@ -49,7 +49,7 @@ if __name__ == '__main__':
     train_pure.train_pure(genPath, n_FRAMES_VIDEO, device, batch, lr, epochs, n)
 
     # 4 train rPPG (augment) and PURE       -> test WCD (split subject and video)
-    epochs = 23
+    epochs = 9
     n = "4"  # 4 train rPPG (augment) and PURE
     train_pure_rppg.train_pure_rppg(genPath, n_FRAMES_VIDEO, device, batch, lr, epochs, n)
 

@@ -22,7 +22,7 @@ def train_rppg(genPath, augmentation, n_FRAMES_VIDEO, device, size, lr, epochs, 
         dataset="UBFC_rPPG",
         architecture="PhysNet")
 
-    #model = cnn_process_main.cnn_process_main(config_cnn_ubfc_rppg)
+    model = cnn_process_main.cnn_process_main(config_cnn_ubfc_rppg)
     # Test model with PURE data
     config_cnn_test_pure = dict(
         path_dataset=os.path.join(genPath, "output", "PURE_Dataset", "test"),

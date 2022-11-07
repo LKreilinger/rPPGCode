@@ -82,9 +82,9 @@ def train_and_validate_model(model, train_loader, validation_loader, loss_Inst, 
 
         print(f"Loss train: {last_loss:.3f}" + f" Loss validation: {avg_vloss:.3f}")
         # Calculate performace of model with test data
-        MAE, RMSE, STD = performance_metrics.eval_model_fft(BVP_label_all, rPPG_all, config)
-        wandb.log({"FFT MAE": MAE, "FFT MSE": RMSE})
-        print(f"FFT Validation MAE: {MAE:.3f}" + f" Validation RMSE: {RMSE:.3f}")
+        MAE, RMSE, R = performance_metrics.eval_model_fft(BVP_label_all, rPPG_all, config)
+        wandb.log({"FFT MAE": MAE, "FFT MSE": RMSE, "FFT R": R})
+        print(f"FFT Validation MAE: {MAE:.3f}" + f" Validation RMSE: {RMSE:.3f}" + f" Validation R: {R:.3f}")
         try:
             MAE, RMSE, STD = performance_metrics.eval_model(BVP_label_all, rPPG_all, config)
             wandb.log({"MAE": MAE, "MSE": RMSE})

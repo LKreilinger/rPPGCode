@@ -46,21 +46,32 @@ def eval_model_fft(ground_truth, predicted_label, config):
     # mean square error (RMSE)
     sum = 0
     for i in range(ground_truth.shape[1]):
-        sum += abs(pulse_label[0, i] - pulse_predic[0, i]) ** 2
+        sum += (pulse_predic[0, i] - pulse_label[0, i]) ** 2
 
     RMSE = np.sqrt(sum / ground_truth.shape[1])
     # mean absolute error (MAE)
     sum = 0
     for i in range(ground_truth.shape[1]):
-        sum += abs(pulse_label[0, i] - pulse_predic[0, i])
+        sum += abs(pulse_predic[0, i] - pulse_label[0, i])
 
     MAE = sum / ground_truth.shape[1]
 
-    #  standard deviation (SD)
-    diff_vector = np.zeros(ground_truth.shape[1])
+    # #  standard deviation (SD)
+    # diff_vector = np.zeros(ground_truth.shape[1])
+    # for i in range(ground_truth.shape[1]):
+    #     diff_vector[i] = abs(pulse_label[0, i] - pulse_predic[0, i])
+    # STD = np.std(diff_vector)
+
+    # pearson correlation coefficien (R)
+    nummerator = 0
+    denominator1 = 0
+    denominator2 = 0
+    label_mean = np.mean(pulse_label)
+    predict_mean = np.mean(pulse_predic)
     for i in range(ground_truth.shape[1]):
-        diff_vector[i] = abs(pulse_label[0, i] - pulse_predic[0, i])
-    STD = np.std(diff_vector)
+        nummerator += (pulse_predic[0, i] - predict_mean)*(pulse_label[0, i] - label_mean)
+        denominator1 += (pulse_predic[0, i] - predict_mean)
+        denominator2 += (pulse_label[0, i] - label_mean)
+    R = (nummerator / (np.sqrt(denominator1)*np.sqrt(denominator2)))
 
-
-    return MAE, RMSE, STD
+    return MAE, RMSE, R

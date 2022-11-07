@@ -58,8 +58,8 @@ def test_model(config, test_loader):
 
         try:
             print("Resluts with complete test dataset")
-            MAE, RMSE, STD = performance_metrics.eval_model_fft(BVP_label_all, rPPG_all, config)
-            print(f"Test fft MAE: {MAE:.3f}" + f" Test RMSE: {RMSE:.3f}")
+            MAE, RMSE, R = performance_metrics.eval_model_fft(BVP_label_all, rPPG_all, config)
+            print(f"Test fft MAE: {MAE:.3f}" + f" Test RMSE: {RMSE:.3f}" + f" Test R: {R:.3f}")
             MAE, RMSE, STD = performance_metrics.eval_model(BVP_label_all, rPPG_all, config)
             print(f"Test MAE: {MAE:.3f}" + f" Test RMSE: {RMSE:.3f}")
         except Exception:
