@@ -20,8 +20,8 @@ if __name__ == '__main__':
     tempPathNofile, genPath, workingPath = pre_config.pre_config(docker)
 
     # Preprocessing datasets
-    # config_pre_UBFC_Phys, config_pre_WCD, config_pre_UBFC_rPPG, config_pre_PURE = config_dataset.config_datasets(genPath, tempPathNofile, workingPath, n_FRAMES_VIDEO)
-    # preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_Phys)
+    #config_pre_UBFC_Phys, config_pre_WCD, config_pre_UBFC_rPPG, config_pre_PURE = config_dataset.config_datasets(genPath, tempPathNofile, workingPath, n_FRAMES_VIDEO)
+    #preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_Phys)
     # preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_rPPG)
     # PreprocessingWCDMain.preprocessing_wcd_dataset(config_pre_WCD)
     # preprocessing_pure_main.pre_pure(config_pre_PURE)
@@ -35,18 +35,18 @@ if __name__ == '__main__':
     epochs = 7
     n = "1"  # 1 train rPPG
     augmentation = False
-    #train_rppg.train_rppg(genPath, augmentation, n_FRAMES_VIDEO, device, batch, lr, epochs, n)
+    train_rppg.train_rppg(genPath, augmentation, n_FRAMES_VIDEO, device, batch, lr, epochs, n)
 
     # 2 train rPPG with augment             -> test PURE and WCD (split subject and video)
     epochs = 37
     n = "2"  # 2 train rPPG with augment
     augmentation = True
-    #train_rppg.train_rppg(genPath, augmentation, n_FRAMES_VIDEO, device, batch, lr, epochs, n)
+    train_rppg.train_rppg(genPath, augmentation, n_FRAMES_VIDEO, device, batch, lr, epochs, n)
 
     # 3 train PURE                          -> test rPPG and WCD (split subject and video)
     epochs = 13
     n = "3"  # 3 train PURE
-    #train_pure.train_pure(genPath, n_FRAMES_VIDEO, device, batch, lr, epochs, n)
+    train_pure.train_pure(genPath, n_FRAMES_VIDEO, device, batch, lr, epochs, n)
 
     # 4 train rPPG (augment) and PURE       -> test WCD (split subject and video)
     epochs = 23

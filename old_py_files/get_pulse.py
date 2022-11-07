@@ -5,7 +5,7 @@ def get_rfft_pulse(signal,fps):
     signal = signal.flatten()
     fft_data = np.fft.rfft(signal)  # FFT
     fft_data = np.abs(fft_data)
-    minFreq = 0.9  #
+    minFreq = 0.67  #
     maxFreq = 3  #
     fps = float(fps)
     fft_spec = []

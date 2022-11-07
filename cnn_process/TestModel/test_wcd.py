@@ -12,7 +12,7 @@ def test_model(parameters):
     with wandb.init(project="pytorch-demo", config=parameters):
         # access all HPs through wandb.config, so logging matches execution!
         config = wandb.config
-
+        print("Results", config.path_dataset)
         test_loader = load_test_data.load_test_data(config)
         BVP_label_all, rPPG_all = Testmain.test_model(config, test_loader)
 
@@ -28,5 +28,3 @@ def test_model(parameters):
         open_file = open(path_rPPG_all, "wb")
         pickle.dump(rPPG_all, open_file)
         open_file.close()
-
-
