@@ -17,7 +17,7 @@ def train_pure(genPath, n_FRAMES_VIDEO, device, size, lr, epochs, n):
         dataset="UBFC_rPPG",
         architecture="PhysNet")
 
-    model = cnn_process_main.cnn_process_main(config_cnn_pure)
+    #model = cnn_process_main.cnn_process_main(config_cnn_pure)
     # %% Test model with UBFC rPPG data
     config_cnn_test_UBFC_rPPG = dict(
         path_dataset=os.path.join(genPath, "output", "UBFC_rPPG_Dataset_no_aug", "test"),
