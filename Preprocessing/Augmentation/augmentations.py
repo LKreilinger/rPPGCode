@@ -4,6 +4,10 @@ from Preprocessing.Augmentation import illumination
 
 
 def augment(img_in):
+    # p = r"C:\Users\Chaputa\Documents\Trier\Master\Masterarbeit\documentation\Bilder\Preprocessing_augmentation\img_02046noaug.jpg"
+    # img_in = cv2.imread(p)
+    # cv2.imshow('image', img_in)
+    # cv2.waitKey(0)
     # Flip the image vertically
     v_flip = cv2.flip(img_in, 0)
     # Flip the image horizontally

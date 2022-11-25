@@ -1,11 +1,18 @@
 """
-Change venv:    Run in Terminal -> .\venv\Scripts\activate
-                if error -> first:
-                Set-ExecutionPolicy Unrestricted -Scope Process
+Master Thesis
+Laurens Kreilinger B. Sc.
+Title: Deep learning-based contactless pulse rate measurement from mobile patients
+
+Information to change  venv.:
+    Run in Terminal -> .\venv\Scripts\activate
+            if error -> first:
+            Set-ExecutionPolicy Unrestricted -Scope Process
 
 Install required packages
 pip install -r .\pythonPackages.txt
-pip uninstall
+
+If docker is used set:
+docker = True
 """
 import torch
 # internal modules
@@ -20,11 +27,11 @@ if __name__ == '__main__':
     tempPathNofile, genPath, workingPath = pre_config.pre_config(docker)
 
     # Preprocessing datasets
-    #config_pre_UBFC_Phys, config_pre_WCD, config_pre_UBFC_rPPG, config_pre_PURE = config_dataset.config_datasets(genPath, tempPathNofile, workingPath, n_FRAMES_VIDEO)
-    #preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_Phys)
-    # preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_rPPG)
-    # PreprocessingWCDMain.preprocessing_wcd_dataset(config_pre_WCD)
-    # preprocessing_pure_main.pre_pure(config_pre_PURE)
+    config_pre_UBFC_Phys, config_pre_WCD, config_pre_UBFC_rPPG, config_pre_PURE = config_dataset.config_datasets(genPath, tempPathNofile, workingPath, n_FRAMES_VIDEO)
+    preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_Phys)
+    preprocessing_ubfc_main.pre_ubfc(config_pre_UBFC_rPPG)
+    PreprocessingWCDMain.preprocessing_wcd_dataset(config_pre_WCD)
+    preprocessing_pure_main.pre_pure(config_pre_PURE)
 
     # %% Complete cnn process
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
