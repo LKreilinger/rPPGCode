@@ -3,13 +3,8 @@ Master Thesis
 Laurens Kreilinger B. Sc.
 Title: Deep learning-enabled remote monitoring of pulse rate for versatile patients
 
-Information to change  venv.:
-    Run in Terminal -> .\venv\Scripts\activate
-            if error -> first:
-            Set-ExecutionPolicy Unrestricted -Scope Process
-
 Install required packages
-pip install -r .\pythonPackages.txt
+pip install -r .\requirements.txt
 
 If docker is used set:
 docker = True
@@ -22,7 +17,7 @@ from Preprocessing.PURE import preprocessing_pure_main
 from cnn_process import train_rppg, train_pure, train_pure_rppg
 
 if __name__ == '__main__':
-    docker = True
+    docker = False
     tempPathNofile, genPath, workingPath = pre_config.pre_config(docker)
 
     # Preprocessing datasets
