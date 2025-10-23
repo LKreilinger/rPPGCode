@@ -13,11 +13,11 @@ ENV PYTHONUNBUFFERED=1
 #RUN python3 -m venv $VIRTUAL_ENV
 #ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
-ARG USER=lkreilinger
+ARG USER=xxx
 ARG UID=1004
 ARG GID=1004
 # default password for user
-ARG PW=29653847
+ARG PW=123456789
 # Option1: Using unencrypted password/ specifying password
 RUN useradd -m ${USER} --uid=${UID} && echo "${USER}:${PW}" | \
       chpasswd
