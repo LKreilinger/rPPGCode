@@ -10,7 +10,7 @@ from Preprocessing.UBFC_rPPG import pulse_ubfc_rppg_convert
 def pulse_pre_ubfc(config, noFaceListAllVideos, delete_videos, data_split):
     if os.path.exists(config['tempPathNofile']) and os.path.isdir(config['tempPathNofile']):
         shutil.rmtree(config['tempPathNofile'])
-    os.mkdir(config['tempPathNofile'])
+    os.makedirs(config['tempPathNofile'])
     path_raw_data_split = os.path.join(config['genPathData'], data_split)
     for path, subdirs, files in os.walk(path_raw_data_split):
         for name in files:
@@ -22,7 +22,7 @@ def pulse_pre_ubfc(config, noFaceListAllVideos, delete_videos, data_split):
                 correspondingVidName = np.array([tempvidFile])
                 correspondingVidNameType = tempvidFile + ".avi"
                 if not(correspondingVidNameType in delete_videos):
-                    index = noFaceListAllVideos.index(correspondingVidName)
+                    index = noFaceListAllVideos[0::2].index(tempvidFile) * 2
                     noFaceList = noFaceListAllVideos[index + 1]
                     if os.path.splitext(name)[-1] == ".txt":
                         tempPath = os.path.join(config['tempPathNofile'], nameNoExten + ".csv")

@@ -33,7 +33,7 @@ def split_data(config):
 
     random.shuffle(list_subdir)
     for idx, key in enumerate(config):
-        if config[key] is not 0:
+        if config[key] != 0:
             ran_split_list = list_subdir[:number_s_splits[idx]]
             list_subdir = list_subdir[number_s_splits[idx]:]
             split_path = os.path.join(config['genPathData'], key)

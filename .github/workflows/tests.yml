@@ -1,0 +1,26 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install system packages for OpenCV and MoviePy
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg libgl1
+      - name: Install Python packages
+        run: |
+          python -m pip install --upgrade pip
+          # CPU build of PyTorch, the default Linux build with CUDA is several GB larger
+          pip install torch==2.6.0 torchvision==0.21.0 --index-url https://download.pytorch.org/whl/cpu
+          pip install -r requirements.txt -r requirements-dev.txt
+      - name: Run tests
+        run: pytest

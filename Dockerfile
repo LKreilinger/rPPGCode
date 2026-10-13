@@ -1,6 +1,6 @@
 # Zugrundeliegendes Image
-#FROM pytorch/pytorch:1.12.0-cuda11.3-cudnn8-runtime
-FROM wallies/python-cuda:3.8-cuda11.3-runtime
+# The torch wheel from requirements.txt brings its own CUDA libraries
+FROM python:3.12-slim
 
 
 
@@ -28,10 +28,8 @@ RUN useradd -m ${USER} --uid=${UID} && echo "${USER}:${PW}" | \
 #COPY /etc/shadow /etc/shadow
 
 # install the cv2 dependencies
-RUN rm /etc/apt/sources.list.d/cuda.list
-RUN rm /etc/apt/sources.list.d/nvidia-ml.list
 RUN apt-get update
-RUN apt-get install ffmpeg libsm6 libxext6  -y
+RUN apt-get install ffmpeg libsm6 libxext6 libgl1 libglib2.0-0 -y
 
 
 USER ${UID}:${GID}
@@ -40,5 +38,4 @@ COPY . ./
 
 # Install dependencies:
 RUN pip install --no-cache-dir -r requirements.txt --user
-RUN pip install --no-cache-dir torch==1.9.0+cu111 torchvision==0.10.0+cu111 -f https://download.pytorch.org/whl/torch_stable.html --user
-CMD ["python3", "__main__.py"]
+CMD ["python3", "__main__.py", "--docker"]

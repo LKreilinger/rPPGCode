@@ -2,7 +2,7 @@
 version: '3'
 services:
  kreilinger:
-    image: masterarbeitkreilinger:1.0
+    image: masterarbeit_kreilinger_cross-dataset_augemtation:1.0
     user: $UID:$GID
     working_dir: $HOME
     stdin_open: true

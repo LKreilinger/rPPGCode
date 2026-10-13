@@ -5,7 +5,6 @@ Created on Tue May 10 13:18:27 2022
 
 import cv2
 import os
-from moviepy.editor import *
 import numpy as np
 import shutil
 import warnings
@@ -61,8 +60,8 @@ def viola_jonas_face_detector_img(currentPath: str, destinationPath: str,
             (xF, yF, wF, hF) = faces.T
             if wF.__len__() == 1:
                 firstRectagle = 1
-                wF = int(wF)
-                hF = int(hF)
+                wF = int(wF[0])
+                hF = int(hF[0])
             else:
                 warnings.warn('Warning Message: Face detection detected more than one face')
 
@@ -72,8 +71,8 @@ def viola_jonas_face_detector_img(currentPath: str, destinationPath: str,
         if len(faces) != 0:
             (x, y, w, h) = faces.T
             if x.__len__() == 1:
-                x = int(x)
-                y = int(y)
+                x = int(x[0])
+                y = int(y[0])
                 faceROI = frame[y:y + hF, x:x + wF]
                 # # only to show single faceROI
                 # from matplotlib import pyplot as plt

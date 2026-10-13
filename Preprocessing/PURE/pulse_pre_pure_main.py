@@ -8,12 +8,12 @@ from Preprocessing.PURE import pulse_from_json
 def pulse_pure(config, noFaceListAllVideos, delete_videos, data_split):
     if os.path.exists(config['tempPathNofile']) and os.path.isdir(config['tempPathNofile']):
         shutil.rmtree(config['tempPathNofile'])
-    os.mkdir(config['tempPathNofile'])
+    os.makedirs(config['tempPathNofile'])
     path_raw_data_split = os.path.join(config['genPathData'], data_split)
 
     if os.path.exists(config['tempPathNofile']) and os.path.isdir(config['tempPathNofile']):
         shutil.rmtree(config['tempPathNofile'])
-    os.mkdir(config['tempPathNofile'])
+    os.makedirs(config['tempPathNofile'])
     file_extension = "False"
     for path, subdirs, files in os.walk(path_raw_data_split):
         if files != []:
@@ -32,7 +32,7 @@ def pulse_pure(config, noFaceListAllVideos, delete_videos, data_split):
                 correspondingVidName = np.array([tempvidFile])
                 correspondingVidNameType = tempvidFile + ".avi"
                 if not (correspondingVidNameType in delete_videos):
-                    index = noFaceListAllVideos.index(correspondingVidName)
+                    index = noFaceListAllVideos[0::2].index(tempvidFile) * 2
                     noFaceList = noFaceListAllVideos[index + 1]
                     pulse_from_json.pulse_pure(currentPath, tempPathName)
                     pulse_adjust_fps_no_face.pulse_prepro(tempPathName, tempPathName, config["samplingRatePulse"],

@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the master thesis."
+title: "Deep learning-enabled remote monitoring of pulse rate for versatile patients"
+type: software
+authors:
+  - family-names: Kreilinger
+    given-names: Laurens
+repository-code: "https://github.com/LKreilinger/rPPGCode"
+license: MIT
+preferred-citation:
+  type: thesis
+  thesis-type: "Master Thesis"
+  title: "Deep learning-enabled remote monitoring of pulse rate for versatile patients"
+  authors:
+    - family-names: Kreilinger
+      given-names: Laurens
+  institution:
+    name: "Trier University of Applied Sciences and Rosenheim University of Applied Sciences"
+  year: 2022

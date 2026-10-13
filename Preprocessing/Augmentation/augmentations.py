@@ -13,7 +13,7 @@ def augment(img_in):
     # Flip the image horizontally
     h_flip = cv2.flip(v_flip, 1)
     # Rotate image 90° clockwise
-    r_90 = cv2.rotate(h_flip, cv2.cv2.ROTATE_90_CLOCKWISE)
+    r_90 = cv2.rotate(h_flip, cv2.ROTATE_90_CLOCKWISE)
     # change brightness (darken) and contrast
     contrast = 2
     brightness = -70

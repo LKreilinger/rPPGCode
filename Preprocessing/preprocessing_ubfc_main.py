@@ -14,7 +14,7 @@ def pre_ubfc(config):
 
     if os.path.exists(config['datasetPath']) and os.path.isdir(config['datasetPath']):
         shutil.rmtree(config['datasetPath'])
-    os.mkdir(config['datasetPath'])
+    os.makedirs(config['datasetPath'])
 
     for idx, split in enumerate(config):
         if config[split] != 0:

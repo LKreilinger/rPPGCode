@@ -1,3 +1,11 @@
 runs/
 wandb/
 venv/
+.venv/
+temp/
+__pycache__/
+*.pyc
+.pytest_cache/
+.idea/
+.vscode/
+.env

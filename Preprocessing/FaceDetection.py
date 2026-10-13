@@ -3,8 +3,9 @@
 Created on Tue May 10 13:18:27 2022
 """
 
+import os
 import cv2
-from moviepy.editor import *
+from moviepy import VideoFileClip
 import numpy as np
 import shutil
 import warnings
@@ -74,8 +75,8 @@ def viola_jonas_face_detector(currentPath: str, destinationPath: str, tempPath: 
             (xF, yF, wF, hF) = faces.T
             if wF.__len__() == 1:
                 firstRectagle = 1
-                wF = int(wF)
-                hF = int(hF)
+                wF = int(wF[0])
+                hF = int(hF[0])
             else:
                 warnings.warn('Warning Message: Face detection detected more than one face')
                 noFaceList[iteratingFrames] = 1
@@ -84,8 +85,8 @@ def viola_jonas_face_detector(currentPath: str, destinationPath: str, tempPath: 
         if len(faces) != 0:
             (x, y, w, h) = faces.T
             if x.__len__() == 1:
-                x = int(x)
-                y = int(y)
+                x = int(x[0])
+                y = int(y[0])
                 faceROI = frame[y:y + hF, x:x + wF]
                 # # only to show single faceROI
                 # from matplotlib import pyplot as plt

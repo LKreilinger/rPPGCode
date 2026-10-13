@@ -1,0 +1,7 @@
+# Additional packages for the recording scripts in data_collection/.
+# Install after requirements.txt. Not needed for preprocessing or training.
+
+pyrealsense2==2.59.1.11053
+keyboard==0.13.5
+# playsound 1.3.0 does not build with current pip
+playsound==1.2.2

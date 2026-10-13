@@ -8,13 +8,13 @@ from Preprocessing import pulse_adjust_fps_no_face
 def pulse_wcd(config, noFaceListAllVideos, delete_videos, data_split):
     if os.path.exists(config['tempPathNofile']) and os.path.isdir(config['tempPathNofile']):
         shutil.rmtree(config['tempPathNofile'])
-    os.mkdir(config['tempPathNofile'])
+    os.makedirs(config['tempPathNofile'])
     path_raw_pulse_data_split = os.path.join(config['dataPulse'])
     path_raw_image_data_split = os.path.join(config['dataImages'])
 
     if os.path.exists(config['tempPathNofile']) and os.path.isdir(config['tempPathNofile']):
         shutil.rmtree(config['tempPathNofile'])
-    os.mkdir(config['tempPathNofile'])
+    os.makedirs(config['tempPathNofile'])
     for path, subdirs, files in os.walk(path_raw_pulse_data_split):
         if path_raw_pulse_data_split != path and (os.path.split(os.path.split(path)[0])[1] != "data_Polar"):
             for file in files:
@@ -30,7 +30,7 @@ def pulse_wcd(config, noFaceListAllVideos, delete_videos, data_split):
                     correspondingVidName = np.array([tempvidFile])
                     correspondingVidNameType = tempvidFile + ".avi"
                     if not (correspondingVidNameType in delete_videos):
-                        index = noFaceListAllVideos.index(correspondingVidName)
+                        index = noFaceListAllVideos[0::2].index(tempvidFile) * 2
                         noFaceList = noFaceListAllVideos[index + 1]
                         convertPolarData.convert_polar_data(currentPath, tempPathName, camera_data_path)
                         pulse_adjust_fps_no_face.pulse_prepro(tempPathName, tempPathName, config["samplingRatePulse"],

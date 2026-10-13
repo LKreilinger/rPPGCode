@@ -19,7 +19,7 @@ def video_pre_ubfc(config, data_split):
 
     if os.path.exists(config['tempPathNofile']) and os.path.isdir(config['tempPathNofile']):
         shutil.rmtree(config['tempPathNofile'])
-    os.mkdir(config['tempPathNofile'])
+    os.makedirs(config['tempPathNofile'])
 
     # %% Face detection and save images in folder of video name
     for path, subdirs, files in os.walk(path_raw_data_split):

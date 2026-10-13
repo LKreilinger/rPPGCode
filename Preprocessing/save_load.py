@@ -10,9 +10,7 @@ def save_variable(config, noFaceListAllVideos, delete_videos, data_split):
     path_deleted_videos = os.path.join(list_path, name_deleted_videos)
     path_no_face = os.path.join(list_path, name_no_face)
 
-    if os.path.exists(list_path) and os.path.isdir(list_path):
-        shutil.rmtree(list_path)
-    os.mkdir(list_path)
+    os.makedirs(list_path, exist_ok=True)
 
     open_file = open(path_no_face, "wb")
     pickle.dump(noFaceListAllVideos, open_file)

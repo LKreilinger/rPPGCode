@@ -14,7 +14,7 @@ def train_pure(genPath, n_FRAMES_VIDEO, device, size, lr, epochs, n):
         epochs=epochs,
         batch_size=size,
         learning_rate=lr,
-        dataset="UBFC_rPPG",
+        dataset="PURE",
         architecture="PhysNet")
 
     model = cnn_process_main.cnn_process_main(config_cnn_pure)
@@ -28,7 +28,7 @@ def train_pure(genPath, n_FRAMES_VIDEO, device, size, lr, epochs, n):
         device=device,
         batch_size=size,
         subjects=2,
-        dataset="WCD",
+        dataset="UBFC_rPPG",
         architecture="PhysNet")
 
     test_wcd.test_model(config_cnn_test_UBFC_rPPG)
@@ -46,9 +46,4 @@ def train_pure(genPath, n_FRAMES_VIDEO, device, size, lr, epochs, n):
         dataset="WCD",
         architecture="PhysNet")
 
-    list_split = os.listdir(config_cnn_test_wcd["path_dataset"])
-    for folder in list_split:
-        config_cnn_test_wcd["path_dataset"] = os.path.join(config_cnn_test_wcd["path_dataset"], folder)
-        config_cnn_test_wcd["dataset"] = "WCD_" + folder
-        test_wcd.test_model(config_cnn_test_wcd)
-        config_cnn_test_wcd["path_dataset"] = os.path.join(genPath, "output", "WCD_Dataset", "test")
+    test_wcd.test_model_wcd(config_cnn_test_wcd)

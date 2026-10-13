@@ -14,7 +14,7 @@ def pre_pure(config):
 
     if os.path.exists(config['datasetPath']) and os.path.isdir(config['datasetPath']):
         shutil.rmtree(config['datasetPath'])
-    os.mkdir(config['datasetPath'])
+    os.makedirs(config['datasetPath'])
 
     for idx, split in enumerate(config):
         if config[split] != 0:
@@ -28,6 +28,6 @@ def pre_pure(config):
             pulse_pre_pure_main.pulse_pure(config, noFaceListAllVideos, delete_videos, split)
             # Make annotation.txt of the images and the pulse data
             path_dataset_split = os.path.join(config['datasetPath'], split)
-            makeTxt.makeAnnotation(config['tempPathNofile'], path_dataset_split, config['nFramesVideo'])
+            makeTxt.makeAnnotation(config, path_dataset_split)
         if idx == 2:
             break

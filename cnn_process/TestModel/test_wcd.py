@@ -18,6 +18,7 @@ def test_model(parameters):
 
         name_BVP_label_all = "BVP_label" + config.dataset + ".pkl"
         list_path = config.variblesPath
+        os.makedirs(list_path, exist_ok=True)
         path_BVP_label_all = os.path.join(list_path, name_BVP_label_all)
         open_file = open(path_BVP_label_all, "wb")
         pickle.dump(BVP_label_all, open_file)
@@ -28,3 +29,17 @@ def test_model(parameters):
         open_file = open(path_rPPG_all, "wb")
         pickle.dump(rPPG_all, open_file)
         open_file.close()
+
+
+def test_model_wcd(parameters):
+    # WCD test folder: one dataset (annotations.txt) or one subfolder per split, each with its own annotations.txt
+    path_test = parameters["path_dataset"]
+    if os.path.isfile(os.path.join(path_test, "annotations.txt")):
+        test_model(parameters)
+        return
+    for folder in sorted(os.listdir(path_test)):
+        if os.path.isdir(os.path.join(path_test, folder)):
+            parameters["path_dataset"] = os.path.join(path_test, folder)
+            parameters["dataset"] = "WCD_" + folder
+            test_model(parameters)
+    parameters["path_dataset"] = path_test

@@ -32,9 +32,4 @@ def train_pure_rppg(genPath, n_FRAMES_VIDEO, device, size, lr, epochs, n):
         subjects=2,
         dataset="WCD",
         architecture="PhysNet")
-    list_split = os.listdir(config_cnn_test_wcd["path_dataset"])
-    for folder in list_split:
-        config_cnn_test_wcd["path_dataset"] = os.path.join(config_cnn_test_wcd["path_dataset"], folder)
-        config_cnn_test_wcd["dataset"] = "WCD_" + folder
-        test_wcd.test_model(config_cnn_test_wcd)
-        config_cnn_test_wcd["path_dataset"] = os.path.join(genPath, "output", "WCD_Dataset", "test")
+    test_wcd.test_model_wcd(config_cnn_test_wcd)
